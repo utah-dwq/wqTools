@@ -8,8 +8,9 @@
 #' @param TP_mgL Name of total phosphorus variable in mg/L
 #' @param SD_m Name of secchi disk depth variable in m
 #' @examples 
-#' head(calcTSI_example_matrix)
-#' tsi=calcTSI(calcTSI_example_matrix,chl_ugL="ChlA",TP_mgL="Phosphate.phosphorus.Total",SD_m="Depth.Secchi.disk.depth")
+#' data(ul_trophic)
+#' head(ul_trophic)
+#' tsi=calcTSI(ul_trophic,chl_ugL="ChlA",TP_mgL="Phosphate.phosphorus.Total",SD_m="Depth.Secchi.disk.depth")
 #' head(tsi)
 #' plot(TSIchl~ChlA,tsi)
 

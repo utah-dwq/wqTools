@@ -23,8 +23,9 @@ This function calculates TSI values according to Utah's IR methods from input da
 Note that inputs for these parameters must be specified in units of ug/L, mg/L, and meters, respectively.
 }
 \examples{
-head(calcTSI_example_matrix)
-tsi=calcTSI(calcTSI_example_matrix,chl_ugL="ChlA",TP_mgL="Phosphate.phosphorus.Total",SD_m="Depth.Secchi.disk.depth")
+data(ul_trophic)
+head(ul_trophic)
+tsi=calcTSI(ul_trophic,chl_ugL="ChlA",TP_mgL="Phosphate.phosphorus.Total",SD_m="Depth.Secchi.disk.depth")
 head(tsi)
 plot(TSIchl~ChlA,tsi)
 }
