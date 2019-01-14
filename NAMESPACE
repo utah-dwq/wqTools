@@ -2,4 +2,6 @@
 
 export(calcTSI)
 export(readECHO)
+export(readECHO_ec)
 importFrom(jsonlite,fromJSON)
+importFrom(plyr,ldply)
