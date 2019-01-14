@@ -1,8 +1,10 @@
 #' Read effluent chart data from EPA ECHO webservices
 #'
-#' This function extracts effluent chart data from EPA ECHO for multiple stations & combinations of parameters 
+#' This function extracts effluent chart data from EPA ECHO for multiple stations & combinations of parameters. All arguments are optional except p_id. At least one p_id must be specified.
 #' @param p_id Permitted facility ID. Either a single text value (in quotes) or a vector of text values.
 #' @param parameter_code Parameter code. Either a single text value (in quotes) or a vector of text values.
+#' @param start_date Query start date in "mm/dd/yyyy" format.
+#' @param end_date Query end date in "mm/dd/yyyy" format.
 #' @param ... additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/effluent-charts#!/Effluent_Charts/get_eff_rest_services_download_effluent_chart optional arguments for effluent chart data reads. Note that arguments for output are ignored.
 #' @return A flat data frame of EPA ECHO effluent chart data
 #' @importFrom plyr ldply

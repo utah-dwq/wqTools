@@ -12,12 +12,16 @@ readECHO_ec(...)
 \item{p_id}{Permitted facility ID. Either a single text value (in quotes) or a vector of text values.}
 
 \item{parameter_code}{Parameter code. Either a single text value (in quotes) or a vector of text values.}
+
+\item{start_date}{Query start date in "mm/dd/yyyy" format.}
+
+\item{end_date}{Query end date in "mm/dd/yyyy" format.}
 }
 \value{
 A flat data frame of EPA ECHO effluent chart data
 }
 \description{
-This function extracts effluent chart data from EPA ECHO for multiple stations & combinations of parameters
+This function extracts effluent chart data from EPA ECHO for multiple stations & combinations of parameters. All arguments are optional except p_id. At least one p_id must be specified.
 }
 \examples{
 #Extract effluent chart data for facility UT0025241, all outfalls
