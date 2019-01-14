@@ -11,25 +11,16 @@
 
 
 #' @export
-readECHO<-function(type="", ...){
+readECHO_fac<-function(type="", ...){
 args=list(...)
-
-p_st="ut"
-p_act="y"
-p_impw="y"
-args=list(p_st=p_st,p_act=p_act,p_impw=p_impw)
 
 path="https://ofmpub.epa.gov/echo/cwa_rest_services.get_facility_info"
 args$output="JSON"
 
 path=paste0(path, "?")
-for(n in 1:length(args)){
-	for(i in 1:length(unlist(args[n]))){
-		arg_ni=paste0(names(args[n]),"=",unlist(args[n])[i],"&")
-		path=paste0(path,arg_ni)
-	}
-}
-path=gsub('.{1}$', '', path)
+
+arg_path=paste0(names(args),"=",args,collapse="&")
+path=paste0(path,arg_path)
 
 print("Querying facility information...")
 fac_query=jsonlite::fromJSON(path)
@@ -41,3 +32,6 @@ result=fac_geoJSON$features
 return(result)
 
 }
+
+
+

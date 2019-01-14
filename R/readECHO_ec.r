@@ -29,7 +29,13 @@
 readECHO_ec<-function(...){
 args=list(...)
 
-base_path="https://ofmpub.epa.gov/echo/eff_rest_services.download_effluent_chart"
+base_path="https://ofmpub.epa.gov/echo/eff_rest_services.download_effluent_chart?"
+
+p_id=c("UT0025241","UT0021717")
+parameter_code=c("50050","00665")
+
+args=list(p_id=p_id, parameter_code=parameter_code)
+
 
 if(!any(names(args)=="p_id")){stop("Error: at least one p_id must be provided")}
 
@@ -42,44 +48,16 @@ if(any(names(args)=="end_date")){
 
 args$output="CSV"
 
-
-if(any(names(args)=="parameter_code")){
-	args_all=list()
-	id_pc=merge(args$p_id, args$parameter_code)
-	for(n in 1:dim(id_pc)[1]){
-		args_n=args[names(args)!="p_id" & names(args)!="parameter_code"]
-		args_n$p_id=id_pc[n,1]
-		args_n$parameter_code=id_pc[n,2]
-		#print(n)
-		#print(args_n)
-		args_all=append(args_all,list(args_n))
-	}
-}else{
-	args_all=list()
-	for(n in 1:length(args$p_id)){
-		args_n=args[names(args)!="p_id"]
-		args_n$p_id=args$p_id[n]
-		args_all=append(args_all,list(args_n))
-	}
+for(n in 1:(length(args)-1)){
+	if(n==1){args_mrg=merge(args[n],args[(n+1)])
+	}else{args_mrg=merge(args_mrg,args[(n+1)])}
 }
 
-length(args_all)
+pastecollapse=function(x){paste0(names(x), "=", x, collapse="&")}
+arg_paths=apply(args_mrg,1,'pastecollapse')
+paths_all=paste0(base_path,arg_paths)
 
-paths_all=list()
-for(j in 1:length(args_all)){
-	path=paste0(base_path, "?")
-	for(n in 1:length(args_all[[j]])){
-		for(i in 1:length(unlist(args_all[[j]][n]))){
-			arg_ni=paste0(names(args_all[[j]][n]),"=",unlist(args_all[[j]][n])[i],"&")
-			path=paste0(path,arg_ni)
-		}
-	}
-	path_j=gsub('.{1}$', '', path)
-	paths_all=append(paths_all, list(path_j))
-}
-
-
-result=plyr::ldply(paths_all,read.csv,.progress="text")
+result=plyr::ldply(paths_all,read.csv,.progress="win")
 print("Queried facility IDs and parameter counts:")
 print(table(result$npdes_id,result$parameter_desc))
 
