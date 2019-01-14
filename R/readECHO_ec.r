@@ -31,12 +31,6 @@ args=list(...)
 
 base_path="https://ofmpub.epa.gov/echo/eff_rest_services.download_effluent_chart?"
 
-p_id=c("UT0025241","UT0021717")
-parameter_code=c("50050","00665")
-
-args=list(p_id=p_id, parameter_code=parameter_code)
-
-
 if(!any(names(args)=="p_id")){stop("Error: at least one p_id must be provided")}
 
 if(any(names(args)=="start_date")){
