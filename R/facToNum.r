@@ -1,4 +1,5 @@
 #' Convert factors to numeric equivalents
+#' 
 #' Converts input object to number if class=="factor". If class !="factor", input object is returned un-altered.
 #' @param x Input vector object
 

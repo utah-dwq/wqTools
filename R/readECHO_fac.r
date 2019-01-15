@@ -1,7 +1,7 @@
 #' Read facility information from EPA ECHO webservices
 #'
 #' This function extracts facility information from EPA ECHO based on argument inputs.
-#' @param ... additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/facility-search-water#!/Facility_Information/get_cwa_rest_services_get_facility_info for optional arguments for facilities. Note that arguments for output are ignored.
+#' @param ... Additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/facility-search-water#!/Facility_Information/get_cwa_rest_services_get_facility_info for optional arguments for facilities. Note that arguments for output are ignored.
 #' @return A data frame of EPA ECHO facility information
 #' @importFrom jsonlite fromJSON
 #' @examples

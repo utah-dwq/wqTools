@@ -7,7 +7,7 @@
 readECHO_fac(type = "", ...)
 }
 \arguments{
-\item{...}{additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/facility-search-water#!/Facility_Information/get_cwa_rest_services_get_facility_info for optional arguments for facilities. Note that arguments for output are ignored.}
+\item{...}{Additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/facility-search-water#!/Facility_Information/get_cwa_rest_services_get_facility_info for optional arguments for facilities. Note that arguments for output are ignored.}
 }
 \value{
 A data frame of EPA ECHO facility information

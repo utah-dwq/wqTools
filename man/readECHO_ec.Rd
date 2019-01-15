@@ -4,10 +4,12 @@
 \alias{readECHO_ec}
 \title{Read effluent chart data from EPA ECHO webservices}
 \usage{
-readECHO_ec(...)
+readECHO_ec(..., print = TRUE)
 }
 \arguments{
 \item{...}{additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/effluent-charts#!/Effluent_Charts/get_eff_rest_services_download_effluent_chart optional arguments for effluent chart data reads. Note that arguments for output are ignored.}
+
+\item{print}{Logical. If TRUE (default), print summary table of facilities & parameters returned.}
 
 \item{p_id}{Permitted facility ID. Either a single text value (in quotes) or a vector of text values.}
 
@@ -28,15 +30,14 @@ This function extracts effluent chart data from EPA ECHO for multiple stations &
 UT0025241_ec=readECHO_ec(type="ec",p_id="UT0025241")
 head(UT0025241_ec)
 
-#Extract effluent total phosphorus data from outfall 001 for facility UT0025241 (note that monitoring_location_desc is not an available argument for download_effluent_chart ECHO web services)
+# Extract effluent total phosphorus data from outfall 001 for facility UT0025241 
 UT0025241_tp_001=readECHO_ec(p_id="UT0025241", parameter_code="00665", outfall="001")
 UT0025241_tp_001_effluent=UT0025241_tp_001[UT0025241_tp_001$monitoring_location_desc=="Effluent Gross",]
 head(UT0025241_tp_001_effluent)
 
-#Extract flow through facility from UT0021717
+# Extract flow through facility from UT0021717
 UT0021717_flow=readECHO_ec(p_id="UT0021717", parameter_code="50050")
-ggplot2::qplot(as.Date(monitoring_period_end_date, '\%m/\%d/\%Y'),dmr_value_standard_units,data=UT0021717_flow[UT0021717_flow$monitoring_location_desc=="Effluent Gross",],color=statistical_base_short_desc, ylab="Flow (mgd)", xlab="Date") +ggplot2::theme_bw()
 
-#Extract flow & TP from UT0025241 & UT0021717
+# Extract flow & TP from UT0025241 & UT0021717
 tp_flow=readECHO_ec(p_id=c("UT0025241","UT0021717"), parameter_code=c("50050","00665"))
 }

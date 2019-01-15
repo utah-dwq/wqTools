@@ -14,10 +14,16 @@
 #' nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"), startDateLo="01-01-2016", startDateHi="12-31-2018")
 #' 
 #' # Read just Arsenic, Cadmium, and DO, all dates
-#' nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"), characteristicName=c("Arsenic","Cadmium","Dissolved oxygen (DO)"))
+#' nr=readWQP(type="narrowresult",
+#' 		  siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
+#' 		  characteristicName=c("Arsenic","Cadmium","Dissolved oxygen (DO)"))
 #' 
 #' # Read all Total dissolved solids statewide (2016-2018) (& note statecode for Utah)
-#' tds_sw=readWQP(type="result", statecode="US:49", characteristicName="Total dissolved solids", startDateLo="01-01-2016", startDateHi="12-31-2018", print=F)
+#' tds_sw=readWQP(type="result",
+#'				  statecode="US:49",
+#'				  characteristicName="Total dissolved solids",
+#'				  startDateLo="01-01-2016", startDateHi="12-31-2018",
+#'				  print=F)
 #' 
 #' # Read sites in Utah
 #' sites=readWQP(type="sites", statecode="US:49")

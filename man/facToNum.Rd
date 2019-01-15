@@ -2,8 +2,7 @@
 % Please edit documentation in R/facToNum.r
 \name{facToNum}
 \alias{facToNum}
-\title{Convert factors to numeric equivalents
-Converts input object to number if class=="factor". If class !="factor", input object is returned un-altered.}
+\title{Convert factors to numeric equivalents}
 \usage{
 facToNum(x)
 }
@@ -11,6 +10,5 @@ facToNum(x)
 \item{x}{Input vector object}
 }
 \description{
-Convert factors to numeric equivalents
 Converts input object to number if class=="factor". If class !="factor", input object is returned un-altered.
 }
