@@ -5,19 +5,22 @@
 #' @return A data frame of EPA ECHO facility information
 #' @importFrom jsonlite fromJSON
 #' @examples
-#' #Extract facility locations in Utah
+#' # Read facility locations in Utah
 #' ut_fac=readECHO_fac(p_st="ut", p_act="y")
 #' head(ut_fac)
-
+#' # Read facility locations for two permit IDs
+#' two_fac=readECHO_fac(p_pid=c("UT0021717","UT0025241"))
+#' two_fac
 
 #' @export
 readECHO_fac<-function(type="", ...){
 args=list(...)
 
-path="https://ofmpub.epa.gov/echo/cwa_rest_services.get_facility_info"
-args$output="JSON"
+pastecollapse=function(x){paste0(x, collapse="%2C%20")}
+args=plyr::llply(args,pastecollapse)
 
-path=paste0(path, "?")
+path="https://ofmpub.epa.gov/echo/cwa_rest_services.get_facility_info?"
+args$output="JSON"
 
 arg_path=paste0(names(args),"=",args,collapse="&")
 path=paste0(path,arg_path)
@@ -28,6 +31,7 @@ geoJSON_path=paste0("https://ofmpub.epa.gov/echo/cwa_rest_services.get_geojson?o
 print("Querying facility geometries...")
 fac_geoJSON=jsonlite::fromJSON(geoJSON_path)
 result=fac_geoJSON$features
+print("Read facilities complete...")
 
 return(result)
 
