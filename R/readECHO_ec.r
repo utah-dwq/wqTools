@@ -5,6 +5,7 @@
 #' @param parameter_code Parameter code. Either a single text value (in quotes) or a vector of text values.
 #' @param start_date Query start date in "mm/dd/yyyy" format.
 #' @param end_date Query end date in "mm/dd/yyyy" format.
+#' @param print Logical. If TRUE (default), print summary table of facilities & parameters returned.
 #' @param ... additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/effluent-charts#!/Effluent_Charts/get_eff_rest_services_download_effluent_chart optional arguments for effluent chart data reads. Note that arguments for output are ignored.
 #' @return A flat data frame of EPA ECHO effluent chart data
 #' @importFrom plyr ldply
@@ -26,7 +27,7 @@
 #' tp_flow=readECHO_ec(p_id=c("UT0025241","UT0021717"), parameter_code=c("50050","00665"))
 
 #' @export
-readECHO_ec<-function(...){
+readECHO_ec<-function(..., print=TRUE){
 args=list(...)
 
 base_path="https://ofmpub.epa.gov/echo/eff_rest_services.download_effluent_chart?"
@@ -52,8 +53,11 @@ arg_paths=apply(args_mrg,1,'pastecollapse')
 paths_all=paste0(base_path,arg_paths)
 
 result=plyr::ldply(paths_all,read.csv,.progress="win")
-print("Queried facility IDs and parameter counts:")
-print(table(result$npdes_id,result$parameter_desc))
+
+if(print){
+	print("Queried facility IDs and parameter counts:")
+	print(table(result$npdes_id,result$parameter_desc))
+}
 
 return(result)
 
