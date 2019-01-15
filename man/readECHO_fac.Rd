@@ -16,7 +16,10 @@ A data frame of EPA ECHO facility information
 This function extracts facility information from EPA ECHO based on argument inputs.
 }
 \examples{
-#Extract facility locations in Utah
+# Read facility locations in Utah
 ut_fac=readECHO_fac(p_st="ut", p_act="y")
 head(ut_fac)
+# Read facility locations for two permit IDs
+two_fac=readECHO_fac(p_pid=c("UT0021717","UT0025241"))
+two_fac
 }

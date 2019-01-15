@@ -16,6 +16,7 @@
 readECHO_fac<-function(type="", ...){
 args=list(...)
 
+#args=list(p_st="ut", p_pid=c("UT0021717","UT0020834","UT0020109","UT0020427"))
 pastecollapse=function(x){paste0(x, collapse="%2C%20")}
 args=plyr::llply(args,pastecollapse)
 
@@ -24,8 +25,9 @@ args$output="JSON"
 
 arg_path=paste0(names(args),"=",args,collapse="&")
 path=paste0(path,arg_path)
+print(path)
 
-print("Querying facility information...")
+#print("Querying facility information...")
 fac_query=jsonlite::fromJSON(path)
 geoJSON_path=paste0("https://ofmpub.epa.gov/echo/cwa_rest_services.get_geojson?output=GEOJSON&qid=",fac_query$Results$QueryID)
 print("Querying facility geometries...")
