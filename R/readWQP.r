@@ -11,7 +11,8 @@
 #' @return A data frame of WQP data
 #' @examples
 #' # Read some data from Mantua Reservoir (2016-2018)
-#' nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"), startDateLo="01-01-2016", startDateHi="12-31-2018")
+#' nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
+#'			  startDateLo="01-01-2016", startDateHi="12-31-2018")
 #' 
 #' # Read just Arsenic, Cadmium, and DO, all dates
 #' nr=readWQP(type="narrowresult",
