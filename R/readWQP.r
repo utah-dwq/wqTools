@@ -4,31 +4,31 @@
 #' All arguments except type are optional, but at least one should be provided to limit download size and prevent errors connecting to WQP.
 #' Note that some, but not all, special characters in characteristic names have been accounted if. If in doubt, use the WQP web interface to determine the appropriate sytax for odd characteristic names.
 #' @param type Data type to read. One of "result", "narrowresult", "sites", "activity", or "detquantlim".
-#' @param startDateHi Query start date in 'mm-dd-yyyy' format.
-#' @param startDateLo Query end date in 'mm-dd-yyyy' format.
+#' @param start_date Query start date in "mm/dd/yyyy" format.
+#' @param end_date Query end date in "mm/dd/yyyy" format.
 #' @param ... additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.
 #' @param print Logical. Print summary table of sites & characteristics (only for result or narrowresult types).
 #' @return A data frame of WQP data
 #' @examples
-#' # Read some data from Mantua Reservoir (2016-2018)
-#' nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
-#'			  startDateLo="01-01-2016", startDateHi="12-31-2018")
-#' 
-#' # Read just Arsenic, Cadmium, and DO, all dates
-#' nr=readWQP(type="narrowresult",
-#' 		  siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
-#' 		  characteristicName=c("Arsenic","Cadmium","Dissolved oxygen (DO)"))
-#' 
-#' # Read all Total dissolved solids statewide (2016-2018) (& note statecode for Utah)
-#' tds_sw=readWQP(type="result",
-#'				  statecode="US:49",
-#'				  characteristicName="Total dissolved solids",
-#'				  startDateLo="01-01-2016", startDateHi="12-31-2018",
-#'				  print=F)
-#' 
-#' # Read sites in Utah
-#' sites=readWQP(type="sites", statecode="US:49")
-#' plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
+# Read some data from Mantua Reservoir (2016-2018)
+nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
+		  start_date="01/01/2016", end_date="12/31/2018")
+
+# Read just Arsenic, Cadmium, and DO, all dates
+nr=readWQP(type="narrowresult",
+		  siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
+		  characteristicName=c("Arsenic","Cadmium","Dissolved oxygen (DO)"))
+
+# Read all Total dissolved solids statewide (2016-2018) (& note statecode for Utah)
+tds_sw=readWQP(type="result",
+			  statecode="US:49",
+			  characteristicName="Total dissolved solids",
+			  start_date="01/01/2016", end_date="12/31/2018",
+			  print=F)
+
+# Read sites in Utah
+sites=readWQP(type="sites", statecode="US:49")
+plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
 
 #' @export
 readWQP<-function(type="result", ..., print=TRUE){
@@ -36,9 +36,19 @@ args=list(...)
 
 #type="sites"
 #statecode="US:49"
-##siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470")
-##characteristicName=c("Phosphate-phosphorus", "Mercury", "Arsenic", "2,4-D", "Dissolved oxygen (DO)")
-#args=list(statecode=statecode)
+#siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470")
+#characteristicName=c("Phosphate-phosphorus", "Mercury", "Arsenic", "2,4-D", "Dissolved oxygen (DO)")
+#args=list(statecode=statecode, siteid=siteid, characteristicName=characteristicName)
+#args$start_date="01/01/2016"
+#args$end_date="12/31/2018"
+
+if(any(names(args)=="start_date")){
+	args$startDateLo=format(as.Date(args$start_date, format='%m/%d/%Y'), format="%m-%d-%Y")
+	args=args[names(args)!="start_date"]}
+
+if(any(names(args)=="end_date")){
+	args$startDateHi=format(as.Date(args$end_date, format='%m/%d/%Y'), format="%m-%d-%Y")
+	args=args[names(args)!="end_date"]}
 
 if(type=="result" | type=="narrowresult"){base_path="https://www.waterqualitydata.us/data/Result/search?"}
 if(type=="narrowresult"){args$dataProfile="narrowResult"}
