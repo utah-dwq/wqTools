@@ -1,7 +1,6 @@
-#' Beneficial use class polygon shapes
+#' Utah's beneficial use polygon shapes
 #'
-#' @docType data
+#' Polygons containing beneficial use designations and water body type information. Used to assign uses or standards to site locations.
 #'
-#' @usage data(bu_poly)
-#'
-#' @format An object of class \code{"cross"}; see \code{\link[qtl]{read.cross}}.
+#' @format An sf type polygon shapefile
+"bu_poly"

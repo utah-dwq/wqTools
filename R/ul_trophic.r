@@ -4,4 +4,5 @@
 #'
 #' @usage data(ul_trophic)
 #'
-#' @format An object of class \code{"cross"}; see \code{\link[qtl]{read.cross}}.
+#' @format A data.frame with 729 rows and 15 columns
+"ul_trophic"
