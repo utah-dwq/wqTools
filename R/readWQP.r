@@ -10,25 +10,25 @@
 #' @param print Logical. Print summary table of sites & characteristics (only for result or narrowresult types).
 #' @return A data frame of WQP data
 #' @examples
-# Read some data from Mantua Reservoir (2016-2018)
-nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
-		  start_date="01/01/2016", end_date="12/31/2018")
-
-# Read just Arsenic, Cadmium, and DO, all dates
-nr=readWQP(type="narrowresult",
-		  siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
-		  characteristicName=c("Arsenic","Cadmium","Dissolved oxygen (DO)"))
-
-# Read all Total dissolved solids statewide (2016-2018) (& note statecode for Utah)
-tds_sw=readWQP(type="result",
-			  statecode="US:49",
-			  characteristicName="Total dissolved solids",
-			  start_date="01/01/2016", end_date="12/31/2018",
-			  print=F)
-
-# Read sites in Utah
-sites=readWQP(type="sites", statecode="US:49")
-plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
+#' # Read some data from Mantua Reservoir (2016-2018)
+#' nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
+#' 		  start_date="01/01/2016", end_date="12/31/2018")
+#' 
+#' # Read just Arsenic, Cadmium, and DO, all dates
+#' nr=readWQP(type="narrowresult",
+#' 		  siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
+#' 		  characteristicName=c("Arsenic","Cadmium","Dissolved oxygen (DO)"))
+#' 
+#' # Read all Total dissolved solids statewide (2016-2018) (& note statecode for Utah)
+#' tds_sw=readWQP(type="result",
+#' 			  statecode="US:49",
+#' 			  characteristicName="Total dissolved solids",
+#' 			  start_date="01/01/2016", end_date="12/31/2018",
+#' 			  print=F)
+#' 
+#' # Read sites in Utah
+#' sites=readWQP(type="sites", statecode="US:49")
+#' plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
 
 #' @export
 readWQP<-function(type="result", ..., print=TRUE){
