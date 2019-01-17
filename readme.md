@@ -1,4 +1,4 @@
-# Utah DWQ's wqTools R-package
+## Utah DWQ's wqTools R-package
 
 ### Description
 wqTools is a collection of R tools developed and designed for use by Utah Division of Water Quality staff.
