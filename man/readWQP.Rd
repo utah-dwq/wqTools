@@ -13,9 +13,9 @@ readWQP(type = "result", ..., print = TRUE)
 
 \item{print}{Logical. Print summary table of sites & characteristics (only for result or narrowresult types).}
 
-\item{startDateHi}{Query start date in 'mm-dd-yyyy' format.}
+\item{start_date}{Query start date in "mm/dd/yyyy" format.}
 
-\item{startDateLo}{Query end date in 'mm-dd-yyyy' format.}
+\item{end_date}{Query end date in "mm/dd/yyyy" format.}
 }
 \value{
 A data frame of WQP data
@@ -28,7 +28,7 @@ Note that some, but not all, special characters in characteristic names have bee
 \examples{
 # Read some data from Mantua Reservoir (2016-2018)
 nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
-		  startDateLo="01-01-2016", startDateHi="12-31-2018")
+		  start_date="01/01/2016", end_date="12/31/2018")
 
 # Read just Arsenic, Cadmium, and DO, all dates
 nr=readWQP(type="narrowresult",
@@ -39,7 +39,7 @@ nr=readWQP(type="narrowresult",
 tds_sw=readWQP(type="result",
 			  statecode="US:49",
 			  characteristicName="Total dissolved solids",
-			  startDateLo="01-01-2016", startDateHi="12-31-2018",
+			  start_date="01/01/2016", end_date="12/31/2018",
 			  print=F)
 
 # Read sites in Utah

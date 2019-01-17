@@ -50,14 +50,3 @@ assignUses=function(x, lat="LatitudeMeasure", long="LongitudeMeasure", flatten=F
 return(result)
 
 }
-
-
-#bu_poly=sf::st_read("F:\\R\\udwqTools\\data","Beneficial_Uses_All_2020IR_wgs84")
-#save(file="F:\\R\\udwqTools\\data\\bu_poly.rdata", bu_poly)
-
-
-#leaflet::leaflet(x) %>%
-#	leaflet::addTiles() %>%
-#	leaflet::addProviderTiles("Esri.WorldTopoMap", group = "Topo") %>%
-#	leaflet::addProviderTiles("Esri.WorldImagery", group = "Satellite") %>%
-#	mapview::addFeatures(x, group="Sites", color="orange")
