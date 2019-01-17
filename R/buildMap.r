@@ -6,6 +6,7 @@
 #' @param sites Site locations queried via readWQP(type="sites"). May also be a data file with WQP site information merged to it.
 #' @import leaflet
 #' @importFrom mapview addFeatures
+#' @importFrom RColorBrewer brewer.pal
 #' @examples
 #' # Read sites & facility locations
 #' jr_sites=readWQP(type="sites",
@@ -85,10 +86,9 @@ buildMap=function(fac, sites){
 	
 	
 		#Color palette for points
-		pal <- leaflet::colorFactor(
-		palette = 'Dark2',
-		domain = locs$locationType
-		)
+		
+		pal <- colorRampPalette(RColorBrewer::brewer.pal(8, "Dark2"))(length(unique(locs$locationType)))
+		pal=leaflet::colorFactor(pal, domain = locs$locationType)
 	
 		#Build map
 		data(bu_poly)

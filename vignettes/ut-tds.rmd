@@ -1,0 +1,101 @@
+---
+title: "Utah TDS patterns by use and waterbody type"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Utah TDS patterns by use and waterbody type}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+This vignette shows an example of using wqTools functions to extract and analyze statewide patterns of one water quality parameter, total dissolved solids.
+
+# Install and load Utah wqTools package
+```{r}
+devtools::install_github("utah-dwq/wqTools")
+library(wqTools)
+```
+<br>
+
+# Read Utah monitoring locations
+```{r}
+sites=readWQP(type="sites", statecode="US:49")
+plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,]) #Some positive longitudes were present.
+```
+<br>
+
+
+# Read all TDS data (2015-2018)
+```{r}
+tds_sw=readWQP(type="result",
+			  statecode="US:49",
+			  characteristicName="Total dissolved solids",
+			  start_date="01/01/2015", end_date="12/31/2018",
+			  print=F)
+```
+<br>
+
+# Check on units present in data
+```{r}
+knitr::kable(table(tds_sw$ProviderName, tds_sw$ResultMeasure.MeasureUnitCode))
+```
+
+# Subset data to desired units
+*Note:* A process for converting data to target units is potentially in the works. In this case, load based results are not appropriate anyway.
+```{r}
+dim(tds_sw)
+tds_sw=subset(tds_sw, ResultMeasure.MeasureUnitCode=="mg/l")
+dim(tds_sw)
+```
+
+# Fill non-detect values
+*Note:* Tool in process. NAs not plotted here.
+
+# Merge site locations to data
+```{r}
+tds_sites=merge(tds_sw, sites, all.x=T)
+dim(tds_sites)
+```
+<br>
+
+
+
+# Assign beneficial uses
+```{r}
+tds_sites_uses=assignUses(tds_sites, flatten=T)
+```
+*Flattening output so all uses can be plotted. Note that individual results are now duplicated when multiple uses apply to a site.*
+<br>
+
+# Build a map of all sites w/ TDS data
+buildMap(sites=tds_sites)
+
+# Plot TDS by year & month
+```{r}
+tds_sites_uses=within(tds_sites_uses,{
+	year=lubridate::year(ActivityStartDate)
+	month=lubridate::month(ActivityStartDate)
+})
+
+boxplot(
+
+```
+<br>
+
+# Plot TDS by lat & long
+
+
+# Plot TDS by use
+```{r}
+
+
+```
+<br>
+
+# Plot TDS by waterbody type
+```{r}
+
+```
+<br>
+
+
+
