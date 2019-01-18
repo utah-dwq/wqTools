@@ -11,7 +11,7 @@ This vignette shows an example of using wqTools functions to extract and analyze
 
 # Install and load Utah wqTools package
 ```{r install}
-devtools::install_github("utah-dwq/wqTools")
+devtools::install_local("utah-dwq/wqTools")
 library(wqTools)
 ```
 <br>

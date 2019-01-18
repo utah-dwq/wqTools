@@ -13,6 +13,9 @@ assignAUs(x, lat = "LatitudeMeasure", long = "LongitudeMeasure")
 
 \item{long}{Name of longitude column. Default matches WQP objects.}
 }
+\value{
+Returns the input data frame with assessment unit information appended.
+}
 \description{
 This function assigns assessment units to water quality portal type site objects (or data with site information attached). This can be done before or after assigning beneficial uses.
 }
