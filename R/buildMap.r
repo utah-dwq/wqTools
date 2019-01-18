@@ -43,7 +43,8 @@ buildMap=function(fac, sites){
 			map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1,weight=3,color="orange",
 				popup=paste0(
 					"AU name: ", au_poly$AU_NAME,
-					"<br> AU ID: ", au_poly$ASSESS_ID)
+					"<br> AU ID: ", au_poly$ASSESS_ID,
+					"<br> AU type: ", au_poly$AU_Type)
 				)
 			map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue",
 				popup=paste0("SS std: ", ss_poly$SiteSpecif)
@@ -87,9 +88,9 @@ buildMap=function(fac, sites){
 	
 		#Color palette for points
 		
-		pal <- colorRampPalette(RColorBrewer::brewer.pal(8, "Dark2"))(length(unique(locs$locationType)))
-		pal=leaflet::colorFactor(pal, domain = locs$locationType)
-	
+		pal <- colorRampPalette(RColorBrewer::brewer.pal(8, "Dark2"))
+		pal=leaflet::colorFactor(pal(length(unique(locs$locationType))), domain = locs$locationType)
+		
 		#Build map
 		data(bu_poly)
 		data(au_poly)
@@ -102,9 +103,9 @@ buildMap=function(fac, sites){
 				popup = paste0(
 					"Location ID: ", locs$locationID,
 					"<br> Name: ", locs$locationName,
+					"<br> Type: ", locs$locationType,
 					"<br> Lat: ", locs$LatitudeMeasure,
-					"<br> Long: ", locs$LongitudeMeasure
-				))
+					"<br> Long: ", locs$LongitudeMeasure))
 			map=leaflet::addLabelOnlyMarkers(map, group="Labels", lat=locs$LatitudeMeasure, lng=locs$LongitudeMeasure,
 				label=locs$locationID,labelOptions = leaflet::labelOptions(noHide = T, textsize = "15px"),
 				clusterOptions=leaflet::markerClusterOptions(spiderfyOnMaxZoom=T))
@@ -116,7 +117,8 @@ buildMap=function(fac, sites){
 			map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1,weight=3,color="orange",
 				popup=paste0(
 					"AU name: ", au_poly$AU_NAME,
-					"<br> AU ID: ", au_poly$ASSESS_ID)
+					"<br> AU ID: ", au_poly$ASSESS_ID,
+					"<br> AU type: ", au_poly$AU_Type)
 				)
 			map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue",
 				popup=paste0("SS std: ", ss_poly$SiteSpecif)

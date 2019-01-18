@@ -16,7 +16,7 @@ assignAUs=function(x, lat="LatitudeMeasure", long="LongitudeMeasure"){
 	
 	data(au_poly)
 	poly=sf::st_as_sf(au_poly)
-	poly=poly[,c("AU_NAME","ASSESS_ID","AU_DESCRIP")]
+	poly=poly[,c("AU_NAME","ASSESS_ID","AU_DESCRIP","AU_Type")]
 	
 	x=sf::st_as_sf(x, coords=c(long,lat), crs=4326, remove=F)
 	x=sf::st_set_crs(x, sf::st_crs(poly))	

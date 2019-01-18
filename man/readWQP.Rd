@@ -24,6 +24,7 @@ A data frame of WQP data
 This function extracts water quality data from EPA's Water Quality Portal based on user arguemnt inputs. Note that connections to the WQP occassionally time out during download. This function tries to download requested files up to 10 times before exiting.
 All arguments except type are optional, but at least one should be provided to limit download size and prevent errors connecting to WQP.
 Note that some, but not all, special characters in characteristic names have been accounted if. If in doubt, use the WQP web interface to determine the appropriate sytax for odd characteristic names.
+This function coerces non-numeric values in ResultMeasureValue column (for result & narrowresult type queries). This may generate NA values with a warning for special characters.
 }
 \examples{
 # Read some data from Mantua Reservoir (2016-2018)

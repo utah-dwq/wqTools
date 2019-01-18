@@ -10,22 +10,24 @@ vignette: >
 This vignette shows an example of using wqTools functions to extract and analyze statewide patterns of one water quality parameter, total dissolved solids.
 
 # Install and load Utah wqTools package
-```{r}
+```{r install}
 devtools::install_github("utah-dwq/wqTools")
 library(wqTools)
 ```
 <br>
 
 # Read Utah monitoring locations
-```{r}
+```{r read-locations, fig.height=5, fig.width=4.25}
 sites=readWQP(type="sites", statecode="US:49")
-plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,]) #Some positive longitudes were present.
+plot(LatitudeMeasure~LongitudeMeasure, sites) 
+sites=sites[sites$LongitudeMeasure< -100,] #Some wrong longitudes were present.
+plot(LatitudeMeasure~LongitudeMeasure, sites)
 ```
 <br>
 
 
 # Read all TDS data (2015-2018)
-```{r}
+```{r read-tds}
 tds_sw=readWQP(type="result",
 			  statecode="US:49",
 			  characteristicName="Total dissolved solids",
@@ -35,13 +37,13 @@ tds_sw=readWQP(type="result",
 <br>
 
 # Check on units present in data
-```{r}
-knitr::kable(table(tds_sw$ProviderName, tds_sw$ResultMeasure.MeasureUnitCode))
+```{r unit-table}
+knitr::kable(table(tds_sw$ProviderName, tds_sw$ResultMeasure.MeasureUnitCode), caption="Units present in TDS dataset.")
 ```
 
 # Subset data to desired units
 *Note:* A process for converting data to target units is potentially in the works. In this case, load based results are not appropriate anyway.
-```{r}
+```{r unit-subset}
 dim(tds_sw)
 tds_sw=subset(tds_sw, ResultMeasure.MeasureUnitCode=="mg/l")
 dim(tds_sw)
@@ -51,9 +53,35 @@ dim(tds_sw)
 *Note:* Tool in process. NAs not plotted here.
 
 # Merge site locations to data
+```{r, tds-site-merge}
+tds_sites=merge(tds_sw, sites)
+dim(tds_sites) #Note, some TDS records were not associated with a known site
+```
+### TDS records w/o a site:
+```{r, tds-no-site-table}
+knitr::kable(subset(tds_sw,!MonitoringLocationIdentifier%in%sites$MonitoringLocationIdentifier), caption="TDS records without an associated site.")
+```
+<br>
+
+# Check site types present
+```{r site-types}
+knitr::kable(table(droplevels(tds_sites$MonitoringLocationTypeName),tds_sites$ProviderName), caption="Site types present in TDS dataset")
+```
+
+# Subset to lakes, streams, and canals, lump canals
 ```{r}
-tds_sites=merge(tds_sw, sites, all.x=T)
 dim(tds_sites)
+tds_sites=subset(tds_sites, MonitoringLocationTypeName %in% c("Lake","Lake, Reservoir, Impoundment","Canal Drainage","Canal Irrigation","Canal Transport","River/Stream","Stream"))
+dim(tds_sites)
+levels(tds_sites$MonitoringLocationTypeName)=append(levels(tds_sites$MonitoringLocationTypeName),"Canal")
+tds_sites$MonitoringLocationTypeName[tds_sites$MonitoringLocationTypeName %in% c("Canal Drainage","Canal Irrigation","Canal Transport")]="Canal"
+knitr::kable(table(droplevels(tds_sites$MonitoringLocationTypeName),tds_sites$ProviderName), caption="Site types present in TDS dataset following subset to desired site types and grouping canals to single type.")
+```
+
+# Assign assessment units (& AU waterbody types)
+```{r}
+tds_sites=assignAUs(tds_sites)
+knitr::kable(table(tds_sites$ProviderName, tds_sites$WaterbodyType))
 ```
 <br>
 
@@ -67,32 +95,60 @@ tds_sites_uses=assignUses(tds_sites, flatten=T)
 <br>
 
 # Build a map of all sites w/ TDS data
-buildMap(sites=tds_sites)
+```{r}
+sites_w_tds=subset(sites, MonitoringLocationIdentifier %in% tds_sites$MonitoringLocationIdentifier) #Extract selected sites w/ TDS data 
+buildMap(sites=sites_w_tds)
+```
 
 # Plot TDS by year & month
 ```{r}
 tds_sites_uses=within(tds_sites_uses,{
-	year=lubridate::year(ActivityStartDate)
-	month=lubridate::month(ActivityStartDate)
+	year=as.factor(lubridate::year(ActivityStartDate))
+	month=as.factor(lubridate::month(ActivityStartDate))
 })
 
-boxplot(
-
+boxplot(ResultMeasureValue~year,tds_sites_uses, ylab="TDS (mg/L)", xlab="Year")
+boxplot(ResultMeasureValue~month,tds_sites_uses, ylab="TDS (mg/L)", xlab="Month")
 ```
 <br>
 
-# Plot TDS by lat & long
+# Trim GSL sites
+Some of the really high values are probably coming from Great Salt Lake sampling sites. Let's remove those and try again.
+```{r trim-gsl}
+dim(tds_sites_uses)
+tds_sites_uses=subset(tds_sites_uses, !BeneficialUse %in% c("5A","5B","5C","5D","5E"))
+dim(tds_sites_uses)
+boxplot(ResultMeasureValue~year,tds_sites_uses, ylab="TDS (mg/L)", xlab="Year")
+boxplot(ResultMeasureValue~month,tds_sites_uses, ylab="TDS (mg/L)", xlab="Month")
+```
+That looks better. Still some high values, but they appear to be coming from non-GSL waterbodies. Let's find these sites...
+<br>
 
+# Find sites w/ TDS values > 5000 recorded
+```{r tds5000}
+tds_5000=subset(tds_sites_uses, ResultMeasureValue >=5000)
+sites_tds_5000=subset(sites, MonitoringLocationIdentifier %in% tds_5000$MonitoringLocationIdentifier)
+buildMap(sites=sites_tds_5000)
+```
+
+# Plot TDS by lat & long
+```{r tds-lat-longl}
+par(mfrow=c(1,2))
+plot(ResultMeasureValue~LongitudeMeasure, tds_sites_uses, xlab="Longitude (dd)", ylab="TDS (mg/L)", log='y')
+plot(ResultMeasureValue~LatitudeMeasure, tds_sites_uses, xlab="Latitude (dd)", ylab="TDS (mg/L)", log='y')
+```
+*No obvious north/south or east/west patterns*
 
 # Plot TDS by use
 ```{r}
-
+boxplot(ResultMeasureValue~BeneficialUse, tds_sites_uses, log='y')
 
 ```
 <br>
 
 # Plot TDS by waterbody type
 ```{r}
+boxplot(ResultMeasureValue~BeneficialUse, tds_sites_uses, log='y')
 
 ```
 <br>
