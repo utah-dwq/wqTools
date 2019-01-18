@@ -11,7 +11,7 @@ This vignette shows an example of using wqTools functions to extract and analyze
 
 # Install and load Utah wqTools package
 ```{r install}
-devtools::install_local("utah-dwq/wqTools")
+#devtools::install_github("utah-dwq/wqTools")
 library(wqTools)
 ```
 <br>
@@ -81,15 +81,15 @@ knitr::kable(table(droplevels(tds_sites$MonitoringLocationTypeName),tds_sites$Pr
 # Assign assessment units (& AU waterbody types)
 ```{r}
 tds_sites=assignAUs(tds_sites)
-knitr::kable(table(tds_sites$ProviderName, tds_sites$WaterbodyType))
+knitr::kable(table(tds_sites$ProviderName, tds_sites$AU_Type), caption="AU types present in TDS dataset by database provider.")
 ```
 <br>
-
 
 
 # Assign beneficial uses
 ```{r}
 tds_sites_uses=assignUses(tds_sites, flatten=T)
+knitr::kable(table(tds_sites_uses$AU_Type, tds_sites_uses$BeneficialUse))
 ```
 *Flattening output so all uses can be plotted. Note that individual results are now duplicated when multiple uses apply to a site.*
 <br>
@@ -141,14 +141,14 @@ plot(ResultMeasureValue~LatitudeMeasure, tds_sites_uses, xlab="Latitude (dd)", y
 
 # Plot TDS by use
 ```{r}
-boxplot(ResultMeasureValue~BeneficialUse, tds_sites_uses, log='y')
+boxplot(ResultMeasureValue~BeneficialUse, tds_sites_uses, ylab="TDS (mg/L)", log='y', xlab="Beneficial ues class")
 
 ```
 <br>
 
 # Plot TDS by waterbody type
 ```{r}
-boxplot(ResultMeasureValue~BeneficialUse, tds_sites_uses, log='y')
+boxplot(ResultMeasureValue~AU_Type, tds_sites_uses, log='y', ylab="TDS (mg/L)", xlab="AU waterbody type")
 
 ```
 <br>
