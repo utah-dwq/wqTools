@@ -11,4 +11,4 @@ This package is in active development and can be installed via GitHub with devto
 See wqTools-manual.pdf in GitHub for more information.
 
 ### Vignettes
-Use `r devtools::build_vignettes(paste0(.libPaths(),"/wqTools"))` then `r browseVignettes("wqTools")` to see detailed examples of package usage.
+Use `devtools::build_vignettes(paste0(.libPaths(),"/wqTools"))` then `browseVignettes("wqTools")` to see detailed examples of package usage.
