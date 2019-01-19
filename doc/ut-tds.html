@@ -1,0 +1,5696 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Utah TDS patterns by use and waterbody type</title>
+
+<script>$(document).ready(function(){
+    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+    if ($('[data-toggle="popover"]').popover === 'function') {
+        $('[data-toggle="popover"]').popover();
+    }
+});
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Utah TDS patterns by use and waterbody type</h1>
+
+
+
+<p>This vignette shows an example of using wqTools functions to extract and analyze statewide patterns of one water quality parameter, total dissolved solids.</p>
+<div id="install-and-load-utah-wqtools-package" class="section level2">
+<h2>Install and load Utah wqTools package</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co">#devtools::install_github(&quot;utah-dwq/wqTools&quot;)</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(wqTools)</a></code></pre></div>
+<p><br></p>
+</div>
+<div id="read-utah-monitoring-locations" class="section level2">
+<h2>Read Utah monitoring locations</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">sites=<span class="kw">readWQP</span>(<span class="dt">type=</span><span class="st">&quot;sites&quot;</span>, <span class="dt">statecode=</span><span class="st">&quot;US:49&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">plot</span>(LatitudeMeasure<span class="op">~</span>LongitudeMeasure, sites)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><em>Some wrong coordinates are present, let’s get rid of those.</em></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">sites=<span class="kw">subset</span>(sites, LongitudeMeasure<span class="op">&lt;</span><span class="st"> </span><span class="dv">-100</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">plot</span>(LatitudeMeasure<span class="op">~</span>LongitudeMeasure, sites)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --> <br> <br></p>
+</div>
+<div id="read-all-tds-data-2015-2018" class="section level2">
+<h2>Read all TDS data (2015-2018)</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">tds_sw=<span class="kw">readWQP</span>(<span class="dt">type=</span><span class="st">&quot;result&quot;</span>,</a>
+<a class="sourceLine" id="cb5-2" title="2">              <span class="dt">statecode=</span><span class="st">&quot;US:49&quot;</span>,</a>
+<a class="sourceLine" id="cb5-3" title="3">              <span class="dt">characteristicName=</span><span class="st">&quot;Total dissolved solids&quot;</span>,</a>
+<a class="sourceLine" id="cb5-4" title="4">              <span class="dt">start_date=</span><span class="st">&quot;01/01/2015&quot;</span>, <span class="dt">end_date=</span><span class="st">&quot;12/31/2018&quot;</span>,</a>
+<a class="sourceLine" id="cb5-5" title="5">              <span class="dt">print=</span>F)</a></code></pre></div>
+<p><br> <br></p>
+</div>
+<div id="check-on-units-present-in-data" class="section level2">
+<h2>Check on units present in data</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">table</span>(tds_sw<span class="op">$</span>ProviderName, tds_sw<span class="op">$</span>ResultMeasure.MeasureUnitCode), <span class="dt">caption=</span><span class="st">&quot;Units present in TDS dataset.&quot;</span>)</a></code></pre></div>
+<table>
+<caption>Units present in TDS dataset.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">mg/l</th>
+<th align="right">tons/ac ft</th>
+<th align="right">tons/day</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NWIS</td>
+<td align="right">2565</td>
+<td align="right">1356</td>
+<td align="right">628</td>
+</tr>
+<tr class="even">
+<td>STORET</td>
+<td align="right">6252</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td><br></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td><br></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="subset-data-to-desired-units" class="section level2">
+<h2>Subset data to desired units</h2>
+<p><em>Note:</em> A process for converting data to target units is potentially in the works. In this case, load based results are not appropriate anyway.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">dim</span>(tds_sw)</a></code></pre></div>
+<pre><code>## [1] 10804    63</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">tds_sw=<span class="kw">subset</span>(tds_sw, ResultMeasure.MeasureUnitCode<span class="op">==</span><span class="st">&quot;mg/l&quot;</span>)</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw">dim</span>(tds_sw)</a></code></pre></div>
+<pre><code>## [1] 8817   63</code></pre>
+<p><br> <br></p>
+</div>
+<div id="fill-non-detect-values" class="section level2">
+<h2>Fill non-detect values</h2>
+<p><em>Note:</em> Tool in process. NAs not plotted here. <br> <br></p>
+</div>
+<div id="merge-site-locations-to-data" class="section level2">
+<h2>Merge site locations to data</h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">tds_sites=<span class="kw">merge</span>(tds_sw, sites)</a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="kw">dim</span>(tds_sites) <span class="co">#Note, some TDS records were not associated with a known site</span></a></code></pre></div>
+<pre><code>## [1] 8794   95</code></pre>
+<p><br> <br></p>
+<div id="tds-records-wo-a-site" class="section level4">
+<h4>TDS records w/o a site:</h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">kableExtra<span class="op">::</span><span class="kw">scroll_box</span>(knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">subset</span>(tds_sw,<span class="op">!</span>MonitoringLocationIdentifier<span class="op">%in%</span>sites<span class="op">$</span>MonitoringLocationIdentifier)), <span class="dt">width=</span><span class="st">&quot;100%&quot;</span>, <span class="dt">height=</span><span class="st">&quot;500px&quot;</span>)</a></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+OrganizationIdentifier
+</th>
+<th style="text-align:left;">
+OrganizationFormalName
+</th>
+<th style="text-align:left;">
+ActivityIdentifier
+</th>
+<th style="text-align:left;">
+ActivityTypeCode
+</th>
+<th style="text-align:left;">
+ActivityMediaName
+</th>
+<th style="text-align:left;">
+ActivityMediaSubdivisionName
+</th>
+<th style="text-align:left;">
+ActivityStartDate
+</th>
+<th style="text-align:left;">
+ActivityStartTime.Time
+</th>
+<th style="text-align:left;">
+ActivityStartTime.TimeZoneCode
+</th>
+<th style="text-align:left;">
+ActivityEndDate
+</th>
+<th style="text-align:left;">
+ActivityEndTime.Time
+</th>
+<th style="text-align:left;">
+ActivityEndTime.TimeZoneCode
+</th>
+<th style="text-align:left;">
+ActivityDepthHeightMeasure.MeasureValue
+</th>
+<th style="text-align:left;">
+ActivityDepthHeightMeasure.MeasureUnitCode
+</th>
+<th style="text-align:left;">
+ActivityDepthAltitudeReferencePointText
+</th>
+<th style="text-align:right;">
+ActivityTopDepthHeightMeasure.MeasureValue
+</th>
+<th style="text-align:left;">
+ActivityTopDepthHeightMeasure.MeasureUnitCode
+</th>
+<th style="text-align:right;">
+ActivityBottomDepthHeightMeasure.MeasureValue
+</th>
+<th style="text-align:left;">
+ActivityBottomDepthHeightMeasure.MeasureUnitCode
+</th>
+<th style="text-align:left;">
+ProjectIdentifier
+</th>
+<th style="text-align:left;">
+ActivityConductingOrganizationText
+</th>
+<th style="text-align:left;">
+MonitoringLocationIdentifier
+</th>
+<th style="text-align:left;">
+ActivityCommentText
+</th>
+<th style="text-align:left;">
+SampleAquifer
+</th>
+<th style="text-align:left;">
+HydrologicCondition
+</th>
+<th style="text-align:left;">
+HydrologicEvent
+</th>
+<th style="text-align:left;">
+SampleCollectionMethod.MethodIdentifier
+</th>
+<th style="text-align:left;">
+SampleCollectionMethod.MethodIdentifierContext
+</th>
+<th style="text-align:left;">
+SampleCollectionMethod.MethodName
+</th>
+<th style="text-align:left;">
+SampleCollectionEquipmentName
+</th>
+<th style="text-align:left;">
+ResultDetectionConditionText
+</th>
+<th style="text-align:left;">
+CharacteristicName
+</th>
+<th style="text-align:left;">
+ResultSampleFractionText
+</th>
+<th style="text-align:right;">
+ResultMeasureValue
+</th>
+<th style="text-align:left;">
+ResultMeasure.MeasureUnitCode
+</th>
+<th style="text-align:left;">
+MeasureQualifierCode
+</th>
+<th style="text-align:left;">
+ResultStatusIdentifier
+</th>
+<th style="text-align:left;">
+StatisticalBaseCode
+</th>
+<th style="text-align:left;">
+ResultValueTypeName
+</th>
+<th style="text-align:left;">
+ResultWeightBasisText
+</th>
+<th style="text-align:left;">
+ResultTimeBasisText
+</th>
+<th style="text-align:left;">
+ResultTemperatureBasisText
+</th>
+<th style="text-align:left;">
+ResultParticleSizeBasisText
+</th>
+<th style="text-align:left;">
+PrecisionValue
+</th>
+<th style="text-align:left;">
+ResultCommentText
+</th>
+<th style="text-align:right;">
+USGSPCode
+</th>
+<th style="text-align:left;">
+ResultDepthHeightMeasure.MeasureValue
+</th>
+<th style="text-align:left;">
+ResultDepthHeightMeasure.MeasureUnitCode
+</th>
+<th style="text-align:left;">
+ResultDepthAltitudeReferencePointText
+</th>
+<th style="text-align:left;">
+SubjectTaxonomicName
+</th>
+<th style="text-align:left;">
+SampleTissueAnatomyName
+</th>
+<th style="text-align:left;">
+ResultAnalyticalMethod.MethodIdentifier
+</th>
+<th style="text-align:left;">
+ResultAnalyticalMethod.MethodIdentifierContext
+</th>
+<th style="text-align:left;">
+ResultAnalyticalMethod.MethodName
+</th>
+<th style="text-align:left;">
+MethodDescriptionText
+</th>
+<th style="text-align:left;">
+LaboratoryName
+</th>
+<th style="text-align:left;">
+AnalysisStartDate
+</th>
+<th style="text-align:left;">
+ResultLaboratoryCommentText
+</th>
+<th style="text-align:left;">
+DetectionQuantitationLimitTypeName
+</th>
+<th style="text-align:right;">
+DetectionQuantitationLimitMeasure.MeasureValue
+</th>
+<th style="text-align:left;">
+DetectionQuantitationLimitMeasure.MeasureUnitCode
+</th>
+<th style="text-align:left;">
+PreparationStartDate
+</th>
+<th style="text-align:left;">
+ProviderName
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+4642
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D71862-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-06-15
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Gate Canyon Spring 1
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+2270
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-06-22
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4643
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D75226-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-09-15
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Gate Canyon Spring 1
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+3070
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-09-21
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4644
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D80330-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-02-29
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Gate Canyon Spring 1
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1770
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-03-02
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4645
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D83360-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-06-06
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Gate Canyon Spring 1
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+2770
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-06-09
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4646
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D87208-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-09-26
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Gate Canyon Spring 1
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1840
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-09-29
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4647
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D68892-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-03-18
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 1
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1940
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-03-23
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4648
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D71860-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-06-15
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 1
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1670
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-06-22
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4649
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D83359-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-06-06
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 1
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1870
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-06-09
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4650
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D87209-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-09-26
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 1
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1810
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-09-29
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4651
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D68892-2
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-03-18
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 2
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1290
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-03-24
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4652
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D71863-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-06-15
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 2
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1400
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-06-22
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4653
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D75225-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-09-15
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 2
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1610
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-09-21
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4654
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D77806-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-12-01
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 2
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1340
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-12-07
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4655
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D80333-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-02-29
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 2
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1320
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-03-02
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4656
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D83357-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-06-06
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 2
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1520
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-06-09
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4657
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D87210-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-09-26
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 2
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1920
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-09-29
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4658
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-DA3825-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2018-03-25
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 2
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1570
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2018-03-29
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4659
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D68892-3
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-03-18
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 3
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1850
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-03-24
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4660
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D71861-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-06-15
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 3
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1930
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-06-22
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4661
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D75224-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-09-15
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 3
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+2240
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2015-09-21
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4662
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D80332-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-02-29
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 3
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+2250
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-03-02
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4663
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-D83356-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-06-06
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 3
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+1960
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2016-06-09
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4664
+</td>
+<td style="text-align:left;">
+952307_WQX
+</td>
+<td style="text-align:left;">
+LT Environmental Inc. 
+</td>
+<td style="text-align:left;">
+952307_WQX-DA6575-1
+</td>
+<td style="text-align:left;">
+Sample-Routine
+</td>
+<td style="text-align:left;">
+Water
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2018-06-24
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+GASCO - 030812003
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+952307_WQX-Rye Spring 3
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+LTE_SWC
+</td>
+<td style="text-align:left;">
+Sample Collection
+</td>
+<td style="text-align:left;">
+Surface water collection
+</td>
+<td style="text-align:left;">
+Water Bottle
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Total dissolved solids
+</td>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+2870
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Final
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Actual
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2540-C
+</td>
+<td style="text-align:left;">
+APHA
+</td>
+<td style="text-align:left;">
+Total Dissolved Solids in Water
+</td>
+<td style="text-align:left;">
+<a href="https://www.nemi.gov/methods/method_summary/9818/" class="uri">https://www.nemi.gov/methods/method_summary/9818/</a>
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+2018-06-28
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Practical Quantitation Limit
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mg/l
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+STORET
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br> <br></p>
+</div>
+</div>
+<div id="check-site-types-present" class="section level2">
+<h2>Check site types present</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">table</span>(<span class="kw">droplevels</span>(tds_sites<span class="op">$</span>MonitoringLocationTypeName),tds_sites<span class="op">$</span>ProviderName), <span class="dt">caption=</span><span class="st">&quot;Site types present in TDS dataset&quot;</span>)</a></code></pre></div>
+<table>
+<caption>
+Site types present in TDS dataset
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+NWIS
+</th>
+<th style="text-align:right;">
+STORET
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Canal Drainage
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+74
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Canal Irrigation
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Canal Transport
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Facility Other
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+302
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lake
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+908
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lake, Reservoir, Impoundment
+</td>
+<td style="text-align:right;">
+170
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Land
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+River/Stream
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4659
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:right;">
+110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Storm Sewer
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Stream
+</td>
+<td style="text-align:right;">
+1237
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subsurface: Groundwater drain
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subsurface: Tunnel, shaft, or mine
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Waste Sewer
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Well
+</td>
+<td style="text-align:right;">
+1040
+</td>
+<td style="text-align:right;">
+100
+</td>
+</tr>
+</tbody>
+</table>
+<p><br> <br></p>
+</div>
+<div id="lump-canal-types-subset-to-lakes-streams-and-canals" class="section level2">
+<h2>Lump canal types, subset to lakes, streams, and canals,</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">dim</span>(tds_sites)</a></code></pre></div>
+<pre><code>## [1] 8794   95</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">levels</span>(tds_sites<span class="op">$</span>MonitoringLocationTypeName)=<span class="kw">append</span>(<span class="kw">levels</span>(tds_sites<span class="op">$</span>MonitoringLocationTypeName),<span class="st">&quot;Canal&quot;</span>)</a>
+<a class="sourceLine" id="cb17-2" title="2">tds_sites<span class="op">$</span>MonitoringLocationTypeName[tds_sites<span class="op">$</span>MonitoringLocationTypeName <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Canal Drainage&quot;</span>,<span class="st">&quot;Canal Irrigation&quot;</span>,<span class="st">&quot;Canal Transport&quot;</span>)]=<span class="st">&quot;Canal&quot;</span></a>
+<a class="sourceLine" id="cb17-3" title="3">tds_sites=<span class="kw">subset</span>(tds_sites, MonitoringLocationTypeName <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;River/Stream&quot;</span>,<span class="st">&quot;Stream&quot;</span>,<span class="st">&quot;Lake&quot;</span>,<span class="st">&quot;Lake, Reservoir, Impoundment&quot;</span>,<span class="st">&quot;Canal&quot;</span>))</a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="kw">dim</span>(tds_sites)</a></code></pre></div>
+<pre><code>## [1] 7106   95</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">table</span>(<span class="kw">droplevels</span>(tds_sites<span class="op">$</span>MonitoringLocationTypeName),tds_sites<span class="op">$</span>ProviderName), <span class="dt">caption=</span><span class="st">&quot;Site types present in TDS dataset following subset to desired site types and grouping canals to single type.&quot;</span>)</a></code></pre></div>
+<table>
+<caption>
+Site types present in TDS dataset following subset to desired site types and grouping canals to single type.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+NWIS
+</th>
+<th style="text-align:right;">
+STORET
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Lake
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+908
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lake, Reservoir, Impoundment
+</td>
+<td style="text-align:right;">
+170
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+River/Stream
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4659
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Stream
+</td>
+<td style="text-align:right;">
+1237
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Canal
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+132
+</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="assign-assessment-units-au-waterbody-types" class="section level2">
+<h2>Assign assessment units (&amp; AU waterbody types)</h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">tds_sites=<span class="kw">assignAUs</span>(tds_sites)</a>
+<a class="sourceLine" id="cb20-2" title="2">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">table</span>(tds_sites<span class="op">$</span>ProviderName, tds_sites<span class="op">$</span>AU_Type), <span class="dt">caption=</span><span class="st">&quot;AU types present in TDS dataset by database provider.&quot;</span>)</a></code></pre></div>
+<table>
+<caption>
+AU types present in TDS dataset by database provider.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Canal
+</th>
+<th style="text-align:right;">
+Reservoir/Lake
+</th>
+<th style="text-align:right;">
+River/Stream
+</th>
+<th style="text-align:right;">
+Slough
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NWIS
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+170
+</td>
+<td style="text-align:right;">
+1149
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+STORET
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+907
+</td>
+<td style="text-align:right;">
+4540
+</td>
+<td style="text-align:right;">
+39
+</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="assign-beneficial-uses" class="section level2">
+<h2>Assign beneficial uses</h2>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">tds_sites_uses=<span class="kw">assignUses</span>(tds_sites, <span class="dt">flatten=</span>T)</a>
+<a class="sourceLine" id="cb21-2" title="2">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">table</span>(tds_sites_uses<span class="op">$</span>AU_Type, tds_sites_uses<span class="op">$</span>BeneficialUse))  </a></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+1C
+</th>
+<th style="text-align:right;">
+2A
+</th>
+<th style="text-align:right;">
+2B
+</th>
+<th style="text-align:right;">
+3A
+</th>
+<th style="text-align:right;">
+3B
+</th>
+<th style="text-align:right;">
+3C
+</th>
+<th style="text-align:right;">
+3D
+</th>
+<th style="text-align:right;">
+3E
+</th>
+<th style="text-align:right;">
+4
+</th>
+<th style="text-align:right;">
+5A
+</th>
+<th style="text-align:right;">
+5B
+</th>
+<th style="text-align:right;">
+5C
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Canal
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Reservoir/Lake
+</td>
+<td style="text-align:right;">
+744
+</td>
+<td style="text-align:right;">
+736
+</td>
+<td style="text-align:right;">
+189
+</td>
+<td style="text-align:right;">
+798
+</td>
+<td style="text-align:right;">
+127
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+96
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+921
+</td>
+<td style="text-align:right;">
+81
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+39
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+River/Stream
+</td>
+<td style="text-align:right;">
+2638
+</td>
+<td style="text-align:right;">
+583
+</td>
+<td style="text-align:right;">
+5106
+</td>
+<td style="text-align:right;">
+3556
+</td>
+<td style="text-align:right;">
+1345
+</td>
+<td style="text-align:right;">
+767
+</td>
+<td style="text-align:right;">
+619
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5466
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Slough
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<p><em>Flattening output so all uses can be plotted. Note that individual results are now duplicated when multiple uses apply to a site.</em> <br></p>
+</div>
+<div id="build-a-map-of-all-sites-w-tds-data" class="section level2">
+<h2>Build a map of all sites w/ TDS data</h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">sites_w_tds=<span class="kw">subset</span>(sites, MonitoringLocationIdentifier <span class="op">%in%</span><span class="st"> </span>tds_sites<span class="op">$</span>MonitoringLocationIdentifier) <span class="co">#Extract selected sites w/ TDS data </span></a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="co">#buildMap(sites=sites_w_tds) #Build this locally</span></a></code></pre></div>
+<p><br></p>
+</div>
+<div id="plot-tds-by-year-month" class="section level2">
+<h2>Plot TDS by year &amp; month</h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">tds_sites_uses=<span class="kw">within</span>(tds_sites_uses,{</a>
+<a class="sourceLine" id="cb23-2" title="2">    year=<span class="kw">as.factor</span>(lubridate<span class="op">::</span><span class="kw">year</span>(ActivityStartDate))</a>
+<a class="sourceLine" id="cb23-3" title="3">    month=<span class="kw">as.factor</span>(lubridate<span class="op">::</span><span class="kw">month</span>(ActivityStartDate))</a>
+<a class="sourceLine" id="cb23-4" title="4">})</a>
+<a class="sourceLine" id="cb23-5" title="5"></a>
+<a class="sourceLine" id="cb23-6" title="6"><span class="kw">boxplot</span>(ResultMeasureValue<span class="op">~</span>year,tds_sites_uses, <span class="dt">ylab=</span><span class="st">&quot;TDS (mg/L)&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Year&quot;</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">boxplot</span>(ResultMeasureValue<span class="op">~</span>month,tds_sites_uses, <span class="dt">ylab=</span><span class="st">&quot;TDS (mg/L)&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Month&quot;</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --> <br></p>
+<p>Some of the really high values are probably coming from Great Salt Lake sampling sites. Let’s remove those and try again.</p>
+</div>
+<div id="trim-gsl-sites" class="section level2">
+<h2>Trim GSL sites</h2>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">dim</span>(tds_sites_uses)</a></code></pre></div>
+<pre><code>## [1] 24097   105</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">tds_sites_uses=<span class="kw">subset</span>(tds_sites_uses, <span class="op">!</span>BeneficialUse <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;5A&quot;</span>,<span class="st">&quot;5B&quot;</span>,<span class="st">&quot;5C&quot;</span>,<span class="st">&quot;5D&quot;</span>,<span class="st">&quot;5E&quot;</span>))</a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="kw">dim</span>(tds_sites_uses)</a></code></pre></div>
+<pre><code>## [1] 23945   105</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">boxplot</span>(ResultMeasureValue<span class="op">~</span>year,tds_sites_uses, <span class="dt">ylab=</span><span class="st">&quot;TDS (mg/L)&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Year&quot;</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAGACAMAAABFpiBcAAAAVFBMVEUAAAAAADoAAGYAOpAAZrY6AAA6ADo6AGY6Ojo6kNtmAABmADpmAGZmtv+QOgCQkGaQ2/+2ZgC225C2/7a2///bkDrb////tmb/25D//7b//9v///+5XFbBAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAMfElEQVR4nO3dYWPaNheGYZKGbc2WLGyhJvH//5/DyE5IV4NkSzoPR/f1oW/aN9Mx8CBbsi1vekDYxnoDgEsIKKQRUEgjoJBGQCGNgEIaAYU0AgppBBTSCCikEVBII6CQRkAhjYBCGgGFNAIKaQQU0ggopBFQSCOgkEZAIY2AQhoBhTQCCmkEFNIIKKQRUEgjoJBGQCGNgEIaAYU0AgppBBTSCCikEVBII6CQRkAhjYBCGgGFNAIKaQQU0ggopBFQSCOgkEZAIY2AQhoBhTQCCmkEFNIIKKQRUEgjoJBGQCGNgEIaAYU0AgppBBTSCCikEVBII6CQRkAhjYBCGgGFNAIKaQQU0ggopBFQSCOgkEZAIY2AQhoBhTQCCmkEFNIIKKQRUEgjoJBGQCEtc0A3QBSrgOZtDl4RUEgjoJBGQCHNU0ATjqhxKxwFdFOmWZjyE9BNoXZhylNAh108AXXGUUA30x9whIBCmqOAsov3yFNAy7QLU34CyjSTS44CykS9R54CCocIKKQRUEgjoJBGQCGNgEKap4AyzeSQo4AyUe+Rn4ByqtMlAgppBBTS/ASUY1CXCgX0/TmsW3L/mqW5OIziHSoT0P3me/ihm35Y1RzaVSSg788fsdx/+7G6OTSsSEDfHp+mH7uZnTwBRRR6UEgrdQw6dqEcg2KdQqP4t8cwip/pPwkoIjmaB4VHBBTSPE3UwyEm6iGNaSZIY6Ie0uhBIY2Jekhjoh7SmAeFNAIKaUzUQxoT9ZDGNBOkVZ6oT38MONpGDwppTNRDGhP1kMY8KKQRUEgrNIofjjw7JuqxWrmAnsbvZxNOy5uLxeSVQ8UCOkaz4jQTq9t5VCygh+0poPWuqOdpxy756UF5XrxLhQI6zIE+9NNwaWVzcVhh2aVS00zHjN69zJ9IogdFHD/zoByDuuQnoIziXXIUUOZBPVoQ0G68onNmCj5zXbQtNaDHwc9D+On9efZE5nQt04W7kggooiQG9O2v87x9/duZ9+fZk/CpdROwi3eo2F2dDzmbi8KdJB6VGiR1Vw5RmQdFlOUBnTvLnrluYosE1BkCCmmOAsou3iM/AWWQ5JKjgDLN5JGngMKh1In66+eIMtdF2zxdLAKHknvQVf3mgrpoW3IPOuzkM4SUgCLKol18hpASUERZfAy6cmdPQBGFQRKkpQf0bKZpxTX1BBRRFt3yEZYGe5q96T1n3ZQ2OZPkT3pAp2uR999+zC0bkrNuWpMk1Jslu/iwZ+/uX1ec7eS+eERZ0oOGHfvQg0oFlMvtPFpzDHr1xqMcdRNbJKDOLJlmOo3jj53nbsVMaIkelAtCHfIzD0pAXfIU0J5jUH8WBHSaqRc71cko3qUlo/jls58L6ia2SECdWT4PWqlufIvs4j1aPg9aqW5Ck4yRHFpwDHr47aVi3ZQ2yac/SwK6lRwkwaXlF4tUqou2+RkkwaXKg6TPu+qXt4GWeBokwaEVt3wwSEJ5fs7FwyUCCmmpS9/EPeUjY120LbUHjXpOUs66aNuiWz540hxq4RgU0ggopBFQSCOgkEZAIY2AQlpyQA/b76eZprt1V4wQUERJDehh+xQeZXz6oUJdtC01oLvhPNJpzZvdqgvrCSiipJ6LH9asDTd98KQ5VJAc0KcxpQQUNSwJaDj8XLG8ckpdtG3JMeh+GMGvvLmTgCJKakC7u5e3x6HvXLM4aEpdtC15HrTbbI75PGxXriBGQP0pcq8uZ5KQyaYvt2hhzl80aU5C23f7F1r+cultx2vXCHX4UZbpQW6GSkB34VaP/WbdIoz+VrdrfQFdkYB200UieufijVfUaT2gGsegZ7OfaufirVdYbj6gEqP4s+fHrnjMXErdhBaNH6LQ+DGoSkA/duxq5+Kte1DrY2BzZQ6xPAWUZR0tFeogCCjy0BjFxwb0/fnKEo0E1BuVgH6ukXwhoB+zpN3cdCkB9UZjFx/nbJXwuatGCag7EoOkOBEHAh5H8dasv55i00wX0INa8DkPWySgx2PQ8dc4Bq3G/ERFGWUC+jGYmr3oyd+5eGtOD3EKBTRf3YQWXfYg0ZxeC1Bmmilj3fgWW9/F04P28T2oyUR97/EDiuZ0D1JqkMREfXWM4nummaS5fPVFAmo0Ud96QF3iVCekFQkoE/XIpUxALSbqWx/FO1UooLWb691Os7SuckA/p/mzNPeLprO3C1OFAsoV9cij1CCpxYn61r8eCteDxmlzmsnnmZx4ZV6/pyvqbQPq9GqiaIUGqfSg2eo3PotwSzfNNTlRb13fmsZtx7FMJuoJqKVCr9/RRD0BNUVAr7VIQE3dUkDHR9G1NVFvXd/azQX0NH6fvX6UgHpzS6P4IaBjNBuaZiKgNxXQcQ37hibqzQNqXv2mdvH0oCYbYFz+ZgI6bOpD/2VN++XNxbEOiH39vsQuNqH+7QS0P2X07mX+RBIBzV/f+FTrLZ2Lr99cLxAQ8/q9bQ969mf2ZnP+oklzvUJA2q5/S5fb1W+ut/+AWq9/Sxcs12+ut/+AWq9fCAGlvjQCSv2MW1Cg0ey/aNJcb/8B2def/jDbgBIvn4BSP1f9vsQXhIC6qW8+Uf/5Z/Zmc/6iSXO9QEBar3/2Z/Zmc/6iSXO9wAfUfP2eXfzFFs0/oEbqbxZYUS37L5o01zcUENH6TDNda7HxgFjX70t8qASU+jk3wbJNAkr9q5tg2SYBpb4FAkp9aQSU+tIIKPXzbYJlmwSU+lc3wbJNAvpToSTlt4qAGtWNb9H6A1Ion28DlnwNS3x1bzCgJd6GLGrVma2e85VWeikeAzrXYsUozm1CnSpVvqAENDvzfBpeLdzTg+oH1HgXay7vF3RJP12ib/cU0KyNqnxAaZuctTGJ1y8bUOs3SGUXZ9WY9fuf/JqqBzRvveQy1h+Qef2172ycGw6o9QdEfdP60UFJ/sWT9Y/jtn6DWq+/xO2cScrwOG7rD6j1+kvcTEBNHiZbqlHqm9YvEtD5x3Hn+Oaa9xPUr1jfVQ8Kf0odg9Z/HDdcKjSKN3gcN1ySnQcFBgQU0ggopBFQSDMLKBDFKKBFWG8j9VstHsl6G6nfavFI1ttI/VaLR7LeRuq3WjyS9TZSv9Xikay3kfqtFo9kvY3Ub7V4JOttpH6rxSNZbyP1Wy0OXENAIY2AQhoBhTQCCmkEFNIIKKQRUEgjoJBGQCGNgEIaAYU0AgppggE9LeN8Wpys22zuXsI/Hn4f1nsMa0M9mNXvD9vi5S/U78Zbdp8u/ecF6w/Lx5Wu/jO9gL4/H9+U/RCD7vhDF96ht8fTgqSH315M63fffhx/LJvQS/XDj3b198O/1E2oXkAP2+EN2N+/huVId8PH0Y3L4nezi+NXqR/+ZV92Iy69/r58+cuv/2H6l2r0Ahocv7kf79SwHGmI5r7ae/PL+jU68Ev1B4ftzNKsFeoT0E+7+9cQh/GTCf+z+2M6PDKp393/+2hZf/w/7Oqzi58MSziHw5/xIOj0Br09Divn7iok5Nf198OOLnQjJvX74S2o04HO1D8bNlWiGdBuOkb/3wf09cfK9fd3Z32KQf3PvxrVH7rvSscYE8mAhiXwf72Lm47iLeqH8Yld/aPd7OrrFep/HpXWoxjQ8XlhX96O84CWHqrM1u/qzHVdeP1V9vDzr/+8T61EMKDTs0TOpjm+fINL72Ln64cHRdnVr9F727//X+kF9PMY52yieDoGOk1zlO1ELtUfHg919rSo6vVr9F4X33+OQcPZtE0YLO4/x4zjB7Qrf6rtYv2u/DTXxfoVjv+uvv9V8ykYUOAMAYU0AgppBBTSCCikEVBII6CQRkAhjYBCGgGFNAIKaQQU0ggopBFQSCOgkEZAIY2AQhoBhTQCCmkEFNIIKKQRUEgjoJBGQCGNgEIaAYU0AgppBDS76Ykk26pruXtFQPML67/WXefVLQJawLBKYaXF5N0joAUMS2iGDnQ/LVc4rhv59uffG3rWFAS0hN39v6cOdHjqwmnB12Hl3eEv4TkliEdASzhsN0MQw26+u399+/MlLKDNjj8VAS0irPMe1s8e15Xvhn18WOUe8QhoEePzMD6eTnw8Fr3/Z0tA0xHQIn56YMupEz0Q0AUIaBEhmh9xDE8ZYhe/AAEtYuw7T89O3IUHB789br4T0GQEtIhp5z7Mg4bH0G7uXo5JJaCpCCikEVBII6CQRkAhjYBCGgGFNAIKaQQU0ggopBFQSCOgkEZAIY2AQhoBhTQCCmkEFNIIKKQRUEgjoJBGQCGNgEIaAYU0AgppBBTS/gM4TMLDD34UDQAAAABJRU5ErkJggg==" /><!-- --></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">boxplot</span>(ResultMeasureValue<span class="op">~</span>month,tds_sites_uses, <span class="dt">ylab=</span><span class="st">&quot;TDS (mg/L)&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Month&quot;</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>That looks better. Still some high values, but they appear to be coming from non-GSL waterbodies. Let’s find these sites… <br></p>
+</div>
+<div id="find-sites-w-tds-values-5000-recorded" class="section level2">
+<h2>Find sites w/ TDS values &gt; 5000 recorded</h2>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">tds_<span class="dv">5000</span>=<span class="kw">subset</span>(tds_sites_uses, ResultMeasureValue <span class="op">&gt;=</span><span class="dv">5000</span>)</a>
+<a class="sourceLine" id="cb31-2" title="2">sites_tds_<span class="dv">5000</span>=<span class="kw">subset</span>(sites, MonitoringLocationIdentifier <span class="op">%in%</span><span class="st"> </span>tds_<span class="dv">5000</span><span class="op">$</span>MonitoringLocationIdentifier)</a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="co">#buildMap(sites=sites_tds_5000) #Build this locally</span></a></code></pre></div>
+<p><br></p>
+</div>
+<div id="plot-tds-by-lat-long" class="section level2">
+<h2>Plot TDS by lat &amp; long</h2>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb32-2" title="2"><span class="kw">plot</span>(ResultMeasureValue<span class="op">~</span>LongitudeMeasure, tds_sites_uses, <span class="dt">xlab=</span><span class="st">&quot;Longitude (dd)&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;TDS (mg/L)&quot;</span>, <span class="dt">log=</span><span class="st">&#39;y&#39;</span>)</a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="kw">plot</span>(ResultMeasureValue<span class="op">~</span>LatitudeMeasure, tds_sites_uses, <span class="dt">xlab=</span><span class="st">&quot;Latitude (dd)&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;TDS (mg/L)&quot;</span>, <span class="dt">log=</span><span class="st">&#39;y&#39;</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><em>No obvious north/south or east/west patterns</em></p>
+<p><br></p>
+</div>
+<div id="plot-tds-by-use" class="section level2">
+<h2>Plot TDS by use</h2>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">boxplot</span>(ResultMeasureValue<span class="op">~</span>BeneficialUse, tds_sites_uses, <span class="dt">ylab=</span><span class="st">&quot;TDS (mg/L)&quot;</span>, <span class="dt">log=</span><span class="st">&#39;y&#39;</span>, <span class="dt">xlab=</span><span class="st">&quot;Beneficial use class&quot;</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --> <br></p>
+</div>
+<div id="plot-tds-by-au-waterbody-type" class="section level1">
+<h1>Plot TDS by AU waterbody type</h1>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">boxplot</span>(ResultMeasureValue<span class="op">~</span>AU_Type, tds_sites_uses, <span class="dt">log=</span><span class="st">&#39;y&#39;</span>, <span class="dt">ylab=</span><span class="st">&quot;TDS (mg/L)&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;AU waterbody type&quot;</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
