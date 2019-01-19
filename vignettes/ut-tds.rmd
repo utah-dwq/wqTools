@@ -124,7 +124,7 @@ knitr::kable(table(tds_sites_uses$AU_Type, tds_sites_uses$BeneficialUse))
 ## Build a map of all sites w/ TDS data
 ```{r, map1, fig.height=7, fig.width=7}
 sites_w_tds=subset(sites, MonitoringLocationIdentifier %in% tds_sites$MonitoringLocationIdentifier) #Extract selected sites w/ TDS data 
-buildMap(sites=sites_w_tds)
+#buildMap(sites=sites_w_tds) #Build this locally
 ```
 <br>
 
@@ -158,7 +158,7 @@ That looks better. Still some high values, but they appear to be coming from non
 ```{r tds5000, map2, fig.height=7, fig.width=7}
 tds_5000=subset(tds_sites_uses, ResultMeasureValue >=5000)
 sites_tds_5000=subset(sites, MonitoringLocationIdentifier %in% tds_5000$MonitoringLocationIdentifier)
-buildMap(sites=sites_tds_5000)
+#buildMap(sites=sites_tds_5000) #Build this locally
 ```
 <br>
 
