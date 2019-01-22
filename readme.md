@@ -10,3 +10,7 @@ This package is in active development and can be installed via GitHub with `devt
 ### Manual
 See wqTools-manual.pdf in GitHub for more information.
 
+### Vignettes
+Detailed examples of package usage are available as vignettes. To install the wqTools package including vignettes use `devtools::install_github("utah-dwq/wqTools", build_opts = c("--no-resave-data", "--no-manual"))`.
+Note that this install will take considerably longer than a standard install.
+Then use `library(wqTools)` and `browseVignettes("wqTools")` to see vignettes. You may need to install pandoc (https://pandoc.org/installing.html) to install wqTools with vignettes.
