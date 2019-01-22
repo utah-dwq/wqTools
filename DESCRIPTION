@@ -11,3 +11,4 @@ RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
+Repository: github.com/utah-dwq/wqTools

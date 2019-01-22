@@ -1,10 +1,10 @@
 ---
-title: "Utah TDS patterns by use and waterbody type"
+title: "Utah TDS Analyses"
 author: "Jake Vander Laan"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Utah TDS}
+  %\VignetteIndexEntry{Utah TDS Analyses}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -194,7 +194,3 @@ boxplot(ResultMeasureValue~BeneficialUse, tds_sites_uses, ylab="TDS (mg/L)", log
 boxplot(ResultMeasureValue~AU_Type, tds_sites_uses, log='y', ylab="TDS (mg/L)", xlab="AU waterbody type")
 
 ```
-
-
-
-
