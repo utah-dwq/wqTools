@@ -1,11 +1,20 @@
 ---
 title: "Utah TDS patterns by use and waterbody type"
+author: "Jake Vander Laan"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Utah TDS}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
 ---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 This vignette shows an example of using wqTools functions to extract and analyze statewide patterns of one water quality parameter, total dissolved solids.
 
