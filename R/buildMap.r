@@ -4,6 +4,9 @@
 #' This is designed to work with column names as extracted from WQP or ECHO via udwqTools functions readWQP() and readECHO_fac(). Map will launch in default browser (or R-Studio's browser if using R-Studio).
 #' @param fac Facility locations queried via readECHO_fac.
 #' @param sites Site locations queried via readWQP(type="sites"). May also be a data file with WQP site information merged to it.
+#' @param au_poly Optional. Polygon file to be mapped as assessment units. Useful for only mapping a subset of specific assessment units. If missing, the default state wide AU polygon is used.
+#' @param bu_poly Optional. Polygon file to be mapped as beneficial uses. Useful for only mapping a subset of beneficial uses. If missing, the default state wide uses polygon is used.
+#' @param ss_poly Optional. Polygon file to be mapped as site specific standards. Useful for only mapping a subset of ss polygons. If missing, the default state wide ss polygon is used.
 #' @import leaflet
 #' @importFrom mapview addFeatures
 #' @importFrom RColorBrewer brewer.pal
@@ -24,13 +27,15 @@
 #' #html maps can be saved via htmlwidgets package saveWidget(map1, file="your/path/map1.html")
 
 #' @export
-buildMap=function(fac, sites){
+buildMap=function(fac, sites, au_poly, bu_poly, ss_poly){
+	
+	if(missing(au_poly)){get(data("au_poly", envir = environment()))}
+	if(missing(bu_poly)){get(data("bu_poly", envir = environment()))}
+	if(missing(ss_poly)){get(data("ss_poly", envir = environment()))}
+	
 	if(missing(fac) & missing(sites)){
 		print("Building map w/o sites or facilities...")
 		#Build empty map
-		data(bu_poly)
-		data(au_poly)
-		data(ss_poly)
 		
 		map=leaflet::leaflet(bu_poly)
 			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo")
@@ -92,9 +97,6 @@ buildMap=function(fac, sites){
 		pal=leaflet::colorFactor(pal(length(unique(locs$locationType))), domain = locs$locationType)
 		
 		#Build map
-		data(bu_poly)
-		data(au_poly)
-		data(ss_poly)
 		
 		map=leaflet::leaflet(locs)
 			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo")
@@ -138,4 +140,6 @@ buildMap=function(fac, sites){
 return(map)
 
 }
+
+buildMap()
 
