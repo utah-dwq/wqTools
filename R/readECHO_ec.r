@@ -11,7 +11,7 @@
 #' @importFrom plyr ldply
 #' @examples
 #' #Extract effluent chart data for facility UT0025241, all outfalls
-#' UT0025241_ec=readECHO_ec(type="ec",p_id="UT0025241")
+#' UT0025241_ec=readECHO_ec(type="ec",p_id="UT0025241", start_date="01/01/2010", end_date="01/15/2019")
 #' head(UT0025241_ec)
 #' 
 #' # Extract effluent total phosphorus data from outfall 001 for facility UT0025241 
