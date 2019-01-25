@@ -43,7 +43,7 @@ tds_sw=readWQP(type="result",
 			  start_date="01/01/2016", end_date="12/31/2018",
 			  print=F)
 
-# Read sites in Utah
-sites=readWQP(type="sites", statecode="US:49")
+# Read DWQ's sites
+sites=readWQP(type="sites", statecode="US:49", organization="UTAHDWQ_WQX", siteType=c("Lake, Reservoir, Impoundment","Stream"))
 plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
 }

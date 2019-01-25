@@ -11,15 +11,17 @@ buildMap(fac, sites, au_poly, bu_poly, ss_poly)
 
 \item{sites}{Site locations queried via readWQP(type="sites"). May also be a data file with WQP site information merged to it.}
 
-\item{au_poly}{Optional. Polygon file to be mapped as assessment units. Useful for only mapping a subset of specific assessment units. If missing, the default state wide AU polygon is used.}
+\item{au_poly}{Optional. Polygon file to be mapped as assessment units. Useful for mapping a subset of specific assessment units. If missing, the default state wide AU polygon is used.}
 
-\item{bu_poly}{Optional. Polygon file to be mapped as beneficial uses. Useful for only mapping a subset of beneficial uses. If missing, the default state wide uses polygon is used.}
+\item{bu_poly}{Optional. Polygon file to be mapped as beneficial uses. Useful for mapping a subset of beneficial uses. If missing, the default state wide uses polygon is used.}
 
-\item{ss_poly}{Optional. Polygon file to be mapped as site specific standards. Useful for only mapping a subset of ss polygons. If missing, the default state wide ss polygon is used.}
+\item{ss_poly}{Optional. Polygon file to be mapped as site specific standards. Useful for mapping a subset of ss polygons. If missing, the default state wide ss polygon is used.}
 }
 \description{
 Build a map of sample sites, facilities, or both. Map includes sites, beneficial use and assessment unit polygons, and satellite and topo baselayers.
 This is designed to work with column names as extracted from WQP or ECHO via udwqTools functions readWQP() and readECHO_fac(). Map will launch in default browser (or R-Studio's browser if using R-Studio).
+Site and assessment unit features are searchable by idetifier and name via the search button on the left side of the map.
+The most recently turned on layer is "on top" of the map. Only features on top will show their pop-up on click.
 }
 \examples{
 # Read sites & facility locations
