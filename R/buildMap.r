@@ -131,6 +131,16 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly){
 					"<br> Type: ", locs$locationType,
 					"<br> Lat: ", locs$LatitudeMeasure,
 					"<br> Long: ", locs$LongitudeMeasure))
+			map=leaflet::addCircles(map, lat=au_centroids$Y, lng=au_centroids$X, group="au_names", label=au_centroids$AU_NAME, stroke=F, fill=F,
+				popup = paste0(
+					"AU ID: ", au_centroids$ASSESS_ID,
+					"<br> AU Name: ", au_centroids$AU_NAME,
+					"<br> AU Type: ", au_centroids$AU_Type))
+			map=leaflet::addCircles(map, lat=au_centroids$Y, lng=au_centroids$X, group="au_ids", label=au_centroids$ASSESS_ID, stroke=F, fill=F,
+				popup = paste0(
+					"AU name: ", au_centroids$AU_NAME,
+					"<br> AU ID: ", au_centroids$ASSESS_ID,
+					"<br> AU type: ", au_centroids$AU_Type))
 			map=leaflet::addCircles(map, lat=locs$LatitudeMeasure, lng=locs$LongitudeMeasure, group="locationID", label=locs$locationID, stroke=F, fill=F,
 				popup = paste0(
 					"Location ID: ", locs$locationID,
@@ -145,16 +155,6 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly){
 					"<br> Type: ", locs$locationType,
 					"<br> Lat: ", locs$LatitudeMeasure,
 					"<br> Long: ", locs$LongitudeMeasure))
-			map=leaflet::addCircles(map, lat=au_centroids$Y, lng=au_centroids$X, group="au_names", label=au_centroids$AU_NAME, stroke=F, fill=F,
-				popup = paste0(
-					"AU ID: ", au_centroids$ASSESS_ID,
-					"<br> AU Name: ", au_centroids$AU_NAME,
-					"<br> AU Type: ", au_centroids$AU_Type))
-			map=leaflet::addCircles(map, lat=au_centroids$Y, lng=au_centroids$X, group="au_ids", label=au_centroids$ASSESS_ID, stroke=F, fill=F,
-				popup = paste0(
-					"AU name: ", au_centroids$AU_NAME,
-					"<br> AU ID: ", au_centroids$ASSESS_ID,
-					"<br> AU type: ", au_centroids$AU_Type))
 			map=leaflet::addLabelOnlyMarkers(map, group="Labels", lat=locs$LatitudeMeasure, lng=locs$LongitudeMeasure,
 				label=locs$locationID,labelOptions = leaflet::labelOptions(noHide = T, textsize = "15px"),
 				clusterOptions=leaflet::markerClusterOptions(spiderfyOnMaxZoom=T))
@@ -184,7 +184,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly){
 			map=hideGroup(map, "Beneficial uses")
 			#map=addControl(map, "<P><B>Search</B>", position='topleft')
 			map=addSearchFeatures(map,
-				targetGroups = c('locationID','locationName','au_ids','au_names'),
+				targetGroups = c('au_ids','au_names','locationID','locationName'),
 				options = leaflet.extras::searchFeaturesOptions(
 				zoom=12, openPopup = TRUE, firstTipSubmit = TRUE,
 				autoCollapse = TRUE, hideMarkerOnCollapse = TRUE ))
