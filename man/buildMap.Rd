@@ -4,7 +4,8 @@
 \alias{buildMap}
 \title{Build a site map of WQP sites or ECHO facilities}
 \usage{
-buildMap(fac, sites, au_poly, bu_poly, ss_poly)
+buildMap(fac, sites, au_poly, bu_poly, ss_poly, search = c("sites",
+  "aus"))
 }
 \arguments{
 \item{fac}{Facility locations queried via readECHO_fac.}
@@ -16,6 +17,8 @@ buildMap(fac, sites, au_poly, bu_poly, ss_poly)
 \item{bu_poly}{Optional. Polygon file to be mapped as beneficial uses. Useful for mapping a subset of beneficial uses. If missing, the default state wide uses polygon is used.}
 
 \item{ss_poly}{Optional. Polygon file to be mapped as site specific standards. Useful for mapping a subset of ss polygons. If missing, the default state wide ss polygon is used.}
+
+\item{search}{Vector of objects to be made searchable. One or both of "sites" and "aus". Defaults to c("sites","aus"). Any other inputs are ignored.}
 }
 \description{
 Build a map of sample sites, facilities, or both. Map includes sites, beneficial use and assessment unit polygons, and satellite and topo baselayers.
