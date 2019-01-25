@@ -9,6 +9,7 @@
 #' @param au_poly Optional. Polygon file to be mapped as assessment units. Useful for mapping a subset of specific assessment units. If missing, the default state wide AU polygon is used.
 #' @param bu_poly Optional. Polygon file to be mapped as beneficial uses. Useful for mapping a subset of beneficial uses. If missing, the default state wide uses polygon is used.
 #' @param ss_poly Optional. Polygon file to be mapped as site specific standards. Useful for mapping a subset of ss polygons. If missing, the default state wide ss polygon is used.
+#' @param search Vector of objects to be made searchable. One or both of "sites" and "aus". Defaults to c("sites","aus"). Any other inputs are ignored.
 #' @import leaflet
 #' @importFrom leaflet.extras addSearchFeatures
 #' @importFrom RColorBrewer brewer.pal
@@ -31,7 +32,7 @@
 #' #html maps can be saved via htmlwidgets package saveWidget(map1, file="your/path/map1.html")
 
 #' @export
-buildMap=function(fac, sites, au_poly, bu_poly, ss_poly){
+buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")){
 	
 	if(missing(au_poly)){get(data("au_poly", envir = environment()))}
 	if(missing(bu_poly)){get(data("bu_poly", envir = environment()))}
@@ -183,11 +184,29 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly){
 			map=hideGroup(map, "Site-specific standards")
 			map=hideGroup(map, "Beneficial uses")
 			#map=addControl(map, "<P><B>Search</B>", position='topleft')
-			map=addSearchFeatures(map,
-				targetGroups = c('au_ids','au_names','locationID','locationName'),
-				options = leaflet.extras::searchFeaturesOptions(
-				zoom=12, openPopup = TRUE, firstTipSubmit = TRUE,
-				autoCollapse = TRUE, hideMarkerOnCollapse = TRUE ))
+			
+			if("sites" %in% search & "aus" %in% search){
+				map=addSearchFeatures(map,
+					targetGroups = c('au_ids','au_names','locationID','locationName'),
+					options = leaflet.extras::searchFeaturesOptions(
+					zoom=12, openPopup = TRUE, firstTipSubmit = TRUE,
+					autoCollapse = TRUE, hideMarkerOnCollapse = TRUE ))
+			}
+			if("sites" %in% search & !"aus" %in% search){
+				map=addSearchFeatures(map,
+					targetGroups = c('locationID','locationName'),
+					options = leaflet.extras::searchFeaturesOptions(
+					zoom=12, openPopup = TRUE, firstTipSubmit = TRUE,
+					autoCollapse = TRUE, hideMarkerOnCollapse = TRUE ))
+			}
+			if(!"sites" %in% search & "aus" %in% search){
+				map=addSearchFeatures(map,
+					targetGroups = c('au_ids','au_names'),
+					options = leaflet.extras::searchFeaturesOptions(
+					zoom=12, openPopup = TRUE, firstTipSubmit = TRUE,
+					autoCollapse = TRUE, hideMarkerOnCollapse = TRUE ))
+			}
+			
 			map=leaflet::addMeasure(map, position="bottomleft")
 	}
 	
