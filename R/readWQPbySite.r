@@ -8,6 +8,10 @@
 #' @param types Vector of data types to read from WQP for selected sites. See ?wqTools::readWQP for options.
 #' @param merge Logical. If TRUE (default), merge all selected data types to single data frame. Merges are performed as left joins in order they are provided. If FALSE, return list of individual data objects.
 #' @param ... Other arguments to be passed to readWQP (e.g. start_date, end_date, characteristicName, etc.). See ?wqTools::readWQP for more info.
+#' @importFrom sf st_as_sf
+#' @importFrom mapedit selectFeatures
+#' @examples
+#' wqp_data=readWQPbySite()
 #' @export
 readWQPbySite=function(sites, map, mode = "click", types=c('narrowresult', 'activity', 'sites'), merge=T, ...){
 	
@@ -16,7 +20,6 @@ readWQPbySite=function(sites, map, mode = "click", types=c('narrowresult', 'acti
 		sites=readWQP(type="sites", statecode="US:49", print=F, ...)
 		sites=sites[sites$MonitoringLocationTypeName %in% c("Facility","Lake, Reservoir, Impoundment","Spring","Stream","Wetland"),]
 	}
-	if(missing(map) & missing(sites)){map=buildMap()}
 	if(missing(map) & !missing(sites)){map=buildMap(sites=sites)}
 
 	print("Generating site selection map.")

@@ -23,3 +23,6 @@ readWQPbySite(sites, map, mode = "click", types = c("narrowresult",
 \description{
 This function allows the user to read WQP data by selecting desired sites in an interactive map and specifiying desired types of data and output.
 }
+\examples{
+wqp_data=readWQPbySite()
+}
