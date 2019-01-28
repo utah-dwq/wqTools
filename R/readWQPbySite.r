@@ -17,7 +17,7 @@ readWQPbySite=function(sites, map, mode = "click", types=c('narrowresult', 'acti
 		sites=sites[sites$MonitoringLocationTypeName %in% c("Facility","Lake, Reservoir, Impoundment","Spring","Stream","Wetland"),]
 	}
 	if(missing(map) & missing(sites)){map=buildMap()}
-	if(missing(map) & !missing(sites){map=buildMap(sites=sites)}
+	if(missing(map) & !missing(sites)){map=buildMap(sites=sites)}
 
 	print("Generating site selection map.")
 		
