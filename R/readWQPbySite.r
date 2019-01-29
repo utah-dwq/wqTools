@@ -7,18 +7,22 @@
 #' @param mode Mode for map selection. One of "click" or "draw". Click allows site selection by clicking on individual sites. Draw allows site selection by polygons.
 #' @param types Vector of data types to read from WQP for selected sites. See ?wqTools::readWQP for options.
 #' @param merge Logical. If TRUE (default), merge all selected data types to single data frame. Merges are performed as left joins in order they are provided. If FALSE, return list of individual data objects.
+#' @param sitetypes Vector of site types to be included in query (only used if sites argument is not provided).
 #' @param ... Other arguments to be passed to readWQP (e.g. start_date, end_date, characteristicName, etc.). See ?wqTools::readWQP for more info.
 #' @importFrom sf st_as_sf
 #' @importFrom mapedit selectFeatures
 #' @examples
-#' wqp_data=readWQPbySite()
+#' wqp_data=readWQPbySite(start_date="01/01/2016", end_date="12/31/2018")
 #' @export
-readWQPbySite=function(sites, map, mode = "click", types=c('narrowresult', 'activity', 'sites'), merge=T, ...){
+readWQPbySite=function(sites, map, mode = "click", types=c('narrowresult', 'activity', 'sites'), merge=T, 
+						sitetypes=c("Canal Drainage","Canal Irrigation","Canal Transport","Lake","Lake, Reservoir, Impoundment","Reservoir","River/Stream","River/Stream Intermittent",
+									"River/Stream Perennial","Seep","Spring","Stream","Stream: Canal","Stream: Ditch","Wetland","Wetland Undifferentiated"),
+						...){
 	
 	if(missing(sites)){
 		print("Querying WQP site locations.")
 		sites=readWQP(type="sites", statecode="US:49", print=F, ...)
-		sites=sites[sites$MonitoringLocationTypeName %in% c("Facility","Lake, Reservoir, Impoundment","Spring","Stream","Wetland"),]
+		sites=sites[sites$MonitoringLocationTypeName %in% sitetypes,]
 	}
 	if(missing(map) & !missing(sites)){map=buildMap(sites=sites)}
 
@@ -32,6 +36,7 @@ readWQPbySite=function(sites, map, mode = "click", types=c('narrowresult', 'acti
 	
 	result=list()
 	for(n in 1:length(types)){
+		print(types[n])
 		res_n=readWQP(type=paste(types[n]),siteid=as.vector(siteids_sel), print=F, ...)
 		result$res_n=res_n
 		names(result)[n]=types[n]

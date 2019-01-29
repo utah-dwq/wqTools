@@ -25,7 +25,7 @@
 #' profiles=nr_act[!is.na(nr_act$DataLoggerLine),] #Subset to profile data
 #' table(droplevels(profiles$ActivityIdentifier)) #Find activity IDs associated w/ profiles
 #' profilePlot(subset(profiles,ActivityIdentifier=="UTAHDWQ_WQX-BORFG051909-4938550-0519-Pr-F"))
-#' profilePlot(subset(profiles,ActivityIdentifier=="UTAHDWQ_WQX-LC082807-210255-PR3855083007"), do_crit=5, temp_crit=20, pH_crit=c(6.5,9))
+#' profilePlot(subset(profiles,ActivityIdentifier=="UTAHDWQ_WQX-LC082807-210255-PR3855083007"), do_crit=4, temp_crit=20, pH_crit=c(6.5,9))
 #' @export
 profilePlot=function(data, parameter="CharacteristicName", units="ResultMeasure.MeasureUnitCode", depth="Depth, data-logger (ported)", do="Dissolved oxygen (DO)",
 	temp="Temperature, water", pH="pH", value_var="ResultMeasureValue", line_no="DataLoggerLine", do_crit, temp_crit, pH_crit){
