@@ -17,10 +17,18 @@
 #' @param pH_crit Optional. Vector of two pH criteria to display on plot.
 #' @importFrom reshape2 dcast
 #' @importFrom rLakeAnalyzer thermo.depth
-
+#' @examples
+#' # Read in some profile data
+#' nr=readWQP(type="narrowresult", siteid="UTAHDWQ_WQX-4938550", print=F)
+#' act=readWQP(type="activity", siteid="UTAHDWQ_WQX-4938550", print=F)
+#' nr_act=merge(nr, act, all.x=T)
+#' profiles=nr_act[!is.na(nr_act$DataLoggerLine),] #Subset to profile data
+#' table(droplevels(profiles$ActivityIdentifier)) #Find activity IDs associated w/ profiles
+#' profilePlot(subset(profiles,ActivityIdentifier=="UTAHDWQ_WQX-BORFG051909-4938550-0519-Pr-F"))
+#' profilePlot(subset(profiles,ActivityIdentifier=="UTAHDWQ_WQX-LC082807-210255-PR3855083007"), do_crit=5, temp_crit=20, pH_crit=c(6.5,9))
 #' @export
-profilePlot=function(data, parameter="CharacteristicName", units="ResultMeasure.MeasureUnitCode", depth="Depth, data-logger (ported)", do="Dissolved oxygen (DO)", temp="Temperature, water", pH="pH", value_var="ResultMeasureValue", line_no="DataLoggerLine",
-	do_crit=5, temp_crit=20, pH_crit=c(6.5,9)){
+profilePlot=function(data, parameter="CharacteristicName", units="ResultMeasure.MeasureUnitCode", depth="Depth, data-logger (ported)", do="Dissolved oxygen (DO)",
+	temp="Temperature, water", pH="pH", value_var="ResultMeasureValue", line_no="DataLoggerLine", do_crit, temp_crit, pH_crit){
 
 #####
 ##testing
@@ -55,6 +63,7 @@ profilePlot=function(data, parameter="CharacteristicName", units="ResultMeasure.
 #####
 
 # Subset to parameter inputs (in case something else sneaks in w/ !is.na(DataLoggerLine)
+data=data[!is.na(data[,line_no]),]
 data=droplevels(data[data[,parameter] %in% c(depth,do,temp, pH),])
 
 # Simplify parameter names via function argument specifications
@@ -94,10 +103,10 @@ axis(3, cex.axis=1.25)
 abline(h=tc_depth, col="purple", lwd=2, lty=2)
 abline(h=0, lwd=1, lty=3)
 
-if(!missing(do_crit)){abline(v=do_crit, col="deepskyblue3", lty=3, lwd=3) }
-if(!missing(temp_crit)){abline(v=temp_crit, col="orange", lty=3, lwd=3) }
-if(!missing(pH_crit)){abline(v=pH_crit[1], col="green", lty=3, lwd=3) }
-if(!missing(pH_crit)){abline(v=pH_crit[2],col="green", lty=3, lwd=3) }
+if(!missing(do_crit)){abline(v=do_crit, col="deepskyblue3", lty=3, lwd=3)}
+if(!missing(temp_crit)){abline(v=temp_crit, col="orange", lty=3, lwd=3)}
+if(!missing(pH_crit)){abline(v=pH_crit[1], col="green", lty=3, lwd=3)}
+if(!missing(pH_crit)){abline(v=pH_crit[2],col="green", lty=3, lwd=3)}
 
 points(depth~do, prof_matrix, type='b', bg="deepskyblue3", pch=24, cex=1.5)
 points(depth~temp, prof_matrix, type='b', bg="orange", pch=21, cex=1.5)
@@ -116,7 +125,3 @@ legend(x=leg_x, y=leg_y, bty='n',lty=c(NA,NA,NA,3),lwd=c(NA,NA,NA,3), col=c("bla
 par(xpd=FALSE)
 
 }
-
-
-
-
