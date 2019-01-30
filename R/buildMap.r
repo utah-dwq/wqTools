@@ -125,7 +125,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 		map=leaflet::leaflet(locs)
 			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo")
 			map=leaflet::addProviderTiles(map,"Esri.WorldImagery", group = "Satellite")
-			map=leaflet::addCircleMarkers(map, lat=locs$LatitudeMeasure, lng=locs$LongitudeMeasure, group="Sites", color = pal(locs$locationType), opacity=0.8,
+			map=leaflet::addCircleMarkers(map, lat=locs$LatitudeMeasure, lng=locs$LongitudeMeasure, group="Sites", color = pal(locs$locationType), opacity=0.8, layerId=locs$locationID,
 				popup = paste0(
 					"Location ID: ", locs$locationID,
 					"<br> Name: ", locs$locationName,
