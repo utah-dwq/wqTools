@@ -86,7 +86,7 @@ if(any(
 unit_table=unique(data[,c("param_name",units)])
 
 # Cast to matrix
-prof_matrix=reshape2::dcast(MonitoringLocationIdentifier+ActivityIdentifier+ActivityStartDate+get(line_no)~param_name, value.var=paste(value_var), data=data, fun.aggregate='mean')
+prof_matrix=reshape2::dcast(MonitoringLocationIdentifier+ActivityIdentifier+ActivityStartDate+get(line_no)~param_name, value.var=paste(value_var), fun.aggregate=mean, data=data)
 
 # Order matrix by depth
 prof_matrix=prof_matrix[order(prof_matrix$depth),]
