@@ -176,7 +176,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 			map=leaflet::addLayersControl(map,
 				position ="topleft",
 				baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites","Labels","Assessment units","Beneficial uses", "Site-specific standards"),
-				options = leaflet::layersControlOptions(collapsed = FALSE, autoZIndex=FALSE))
+				options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
 			map=leaflet::addLegend(map, position = 'topright',
 				colors = unique(pal(locs$locationType)), 
 				labels = unique(locs$locationType))
