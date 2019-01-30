@@ -66,6 +66,8 @@ profilePlot=function(data, parameter="CharacteristicName", units="ResultMeasure.
 data=data[!is.na(data[,line_no]),]
 data=droplevels(data[data[,parameter] %in% c(depth,do,temp, pH),])
 
+if(all(data[,parameter] != depth)){stop("No depth values associated with this profile")}
+
 # Simplify parameter names via function argument specifications
 param_names=data.frame(rbind(depth,do,temp,pH))
 colnames(param_names)[1]=paste(parameter)

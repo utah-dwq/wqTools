@@ -183,6 +183,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 			map=hideGroup(map, "Assessment units")
 			map=hideGroup(map, "Site-specific standards")
 			map=hideGroup(map, "Beneficial uses")
+			map=hideGroup(map, "Labels")
 			#map=addControl(map, "<P><B>Search</B>", position='topleft')
 			
 			if("sites" %in% search & "aus" %in% search){
