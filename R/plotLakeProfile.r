@@ -60,7 +60,21 @@ profilePlot=function(data, parameter="CharacteristicName", units="ResultMeasure.
 #value_var="ResultMeasureValue"
 #line_no="DataLoggerLine"
 #
+
+
+data=test
+parameter = "R3172ParameterName"
+units = "IR_Unit"
+depth = "Profile depth"
+do = "Minimum Dissolved Oxygen"
+temp = "Temperature, water"
+pH = "pH"
+value_var = "IR_Value"
+line_no = "DataLoggerLine"
+
 #####
+
+
 
 # Subset to parameter inputs (in case something else sneaks in w/ !is.na(DataLoggerLine)
 data=data[!is.na(data[,line_no]),]
@@ -94,12 +108,13 @@ prof_matrix=reshape2::dcast(MonitoringLocationIdentifier+ActivityIdentifier+Acti
 prof_matrix=prof_matrix[order(prof_matrix$depth),]
 
 # Calc thermocline depth
-tc_depth=rLakeAnalyzer::thermo.depth(prof_matrix$temp, prof_matrix$depth)
+tc_data=aggregate(temp~depth,data=prof_matrix,FUN='mean')
+tc_depth=rLakeAnalyzer::thermo.depth(tc_data$temp, tc_data$depth)
 
 # Plotting
 par(mar=c(7.1,5.1,3.1,2.1))
 
-plot(depth~temp, prof_matrix, ylim=rev(range(depth)), xlim=c(min(data[data$param_name!="depth",value_var]),max(data[data$param_name!="depth",value_var])), pch=NA, xlab="",
+plot(depth~temp, prof_matrix, ylim=rev(range(depth)), xlim=c(min(data[data$param_name!="depth",value_var], na.rm=T),max(data[data$param_name!="depth",value_var], na.rm=T)), pch=NA, xlab="",
 	ylab=paste0("Depth (",unit_table[unit_table$param_name=="depth",2],")"), xaxt='n', cex.axis=1.25, cex.lab=1.5)
 axis(3, cex.axis=1.25)
 abline(h=tc_depth, col="purple", lwd=2, lty=2)
@@ -110,9 +125,15 @@ if(!missing(temp_crit)){abline(v=temp_crit, col="orange", lty=3, lwd=3)}
 if(!missing(pH_crit)){abline(v=pH_crit[1], col="green", lty=3, lwd=3)}
 if(!missing(pH_crit)){abline(v=pH_crit[2],col="green", lty=3, lwd=3)}
 
-points(depth~do, prof_matrix, type='b', bg="deepskyblue3", pch=24, cex=1.5)
-points(depth~temp, prof_matrix, type='b', bg="orange", pch=21, cex=1.5)
-points(depth~pH, prof_matrix, type='b', bg="green", pch=22, cex=1.5)
+if(any(!is.na(prof_matrix$do))){
+	points(depth~do, prof_matrix, type='b', bg="deepskyblue3", pch=24, cex=1.5)
+}
+if(any(!is.na(prof_matrix$temp))){
+	points(depth~temp, prof_matrix, type='b', bg="orange", pch=21, cex=1.5)
+}
+if(any(!is.na(prof_matrix$pH))){
+	points(depth~pH, prof_matrix, type='b', bg="green", pch=22, cex=1.5)
+}
 
 leg_x=min(data[data$param_name!="depth",value_var])
 leg_y=max(prof_matrix$depth)*1.05
