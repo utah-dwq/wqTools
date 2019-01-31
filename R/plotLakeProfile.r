@@ -60,19 +60,19 @@ profilePlot=function(data, parameter="CharacteristicName", units="ResultMeasure.
 #value_var="ResultMeasureValue"
 #line_no="DataLoggerLine"
 #
-
-
-data=test
-parameter = "R3172ParameterName"
-units = "IR_Unit"
-depth = "Profile depth"
-do = "Minimum Dissolved Oxygen"
-temp = "Temperature, water"
-pH = "pH"
-value_var = "IR_Value"
-line_no = "DataLoggerLine"
-
-#####
+#
+#
+#data=test
+#parameter = "R3172ParameterName"
+#units = "IR_Unit"
+#depth = "Profile depth"
+#do = "Minimum Dissolved Oxygen"
+#temp = "Temperature, water"
+#pH = "pH"
+#value_var = "IR_Value"
+#line_no = "DataLoggerLine"
+#
+######
 
 
 
