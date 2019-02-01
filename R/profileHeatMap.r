@@ -37,27 +37,29 @@ profileHeatMap=function(data, parameter, depth="Depth_m", param_units, depth_uni
 	
 	data[,date]=as.Date(data[,date])
 	if(missing(criteria)){criteria=c(0,10,15,20,25,30)}
-	data=data[!is.na(data[,parameter]),]
-	if(any(is.na(data[,parameter]))){
-		stop("Missing values in profile for selected parameter")
-	}
-	
-	int=akima::interp(data[,date],data[,depth],data[,parameter],duplicate="strip",linear=TRUE)
-	
-	if(show_dates==TRUE){
-		par(mar=c(8.1,4.1,4.1,2.1))
-		filled.contour(int,color.palette=topo.colors,xlim=c(min_date-1,max_date+1),ylim=rev(range(data[,depth])),
-			ylab=paste0("Depth (",depth_units,")"), main=paste0(param_lab," (",param_units,")"),
-			plot.axes = { contour(int, levels = criteria, drawlabels = TRUE, axes = FALSE, frame.plot = FALSE, add = TRUE);
-									axis(1,at=unique(data[,date]),labels=unique(data[,date]),par(las=2)); axis(2) } )
-			
-	}else{
-		filled.contour(int,color.palette=topo.colors,xlim=c(min_date-1,max_date+1),ylim=rev(range(data[,depth])),
-			ylab=paste0("Depth (",depth_units,")"), main=paste0(param_lab," (",param_units,")"),
-			plot.axes = { contour(int, levels = criteria, 
-				drawlabels = TRUE, axes = FALSE, 
-                frame.plot = FALSE, add = TRUE);
-				axis.Date(side=1,x=as.Date(int$x,origin=lubridate::origin)); axis(2) } )}
+	data=data[!is.na(data[,parameter]) & !is.na(data[,depth]),]
+
+
+		int=akima::interp(data[,date],data[,depth],data[,parameter],duplicate="strip",linear=TRUE)
+		
+		if(param_units!=""){title=paste0(param_lab," (",param_units,")")}else{title=param_lab}
+		
+		if(show_dates==TRUE){
+			par(mar=c(8.1,4.1,4.1,2.1))
+			filled.contour(int,color.palette=topo.colors,xlim=c(min_date-1,max_date+1),ylim=rev(range(data[,depth])),
+				ylab=paste0("Depth (",depth_units,")"), main=title,
+				plot.axes = { contour(int, levels = criteria, drawlabels = TRUE, axes = FALSE, frame.plot = FALSE, add = TRUE);
+										axis(1,at=unique(data[,date]),labels=unique(data[,date]),par(las=2)); axis(2) } )
+				
+		}else{
+			filled.contour(int,color.palette=topo.colors,xlim=c(min_date-1,max_date+1),ylim=rev(range(data[,depth])),
+				ylab=paste0("Depth (",depth_units,")"), main=title,
+				plot.axes = { contour(int, levels = criteria, 
+					drawlabels = TRUE, axes = FALSE, 
+					frame.plot = FALSE, add = TRUE);
+					axis.Date(side=1,x=as.Date(int$x,origin=lubridate::origin)); axis(2) } )}
+		
+
 }
 
 
