@@ -135,11 +135,8 @@ if(any(!is.na(prof_matrix$pH))){
 	points(depth~pH, prof_matrix, type='b', bg="green", pch=22, cex=1.5)
 }
 
-leg_x=min(data[data$param_name!="depth",value_var])
-leg_y=max(prof_matrix$depth)*1.05
-
 par(xpd=TRUE)
-legend(x=leg_x, y=leg_y, bty='n',lty=c(NA,NA,NA,3),lwd=c(NA,NA,NA,3), col=c("black","black","black","purple"),
+legend("bottomleft", inset=c(0.05,-0.3), bty='n',lty=c(NA,NA,NA,3),lwd=c(NA,NA,NA,3), col=c("black","black","black","purple"),
 	legend=c(
 		paste0("Dissolved oxygen (",unit_table[unit_table$param_name=="do",2],")"),
 		paste0("Temperature (",unit_table[unit_table$param_name=="temp",2],")"),
