@@ -5,7 +5,12 @@
 \title{Read WQP data by selecting sites in an interactive map}
 \usage{
 readWQPbySite(sites, map, mode = "click", types = c("narrowresult",
-  "activity", "sites"), merge = T, ...)
+  "activity", "sites"), merge = T, sitetypes = c("Canal Drainage",
+  "Canal Irrigation", "Canal Transport", "Lake",
+  "Lake, Reservoir, Impoundment", "Reservoir", "River/Stream",
+  "River/Stream Intermittent", "River/Stream Perennial", "Seep", "Spring",
+  "Stream", "Stream: Canal", "Stream: Ditch", "Wetland",
+  "Wetland Undifferentiated"), ...)
 }
 \arguments{
 \item{sites}{Optional. A sites object containing lat/long columns named "LatitudeMeasure" & "LongitudeMeasure". If no sites object is provided, a Utah state-wide query of WQP will be generated for you.}
@@ -18,11 +23,13 @@ readWQPbySite(sites, map, mode = "click", types = c("narrowresult",
 
 \item{merge}{Logical. If TRUE (default), merge all selected data types to single data frame. Merges are performed as left joins in order they are provided. If FALSE, return list of individual data objects.}
 
+\item{sitetypes}{Vector of site types to be included in query (only used if sites argument is not provided).}
+
 \item{...}{Other arguments to be passed to readWQP (e.g. start_date, end_date, characteristicName, etc.). See ?wqTools::readWQP for more info.}
 }
 \description{
 This function allows the user to read WQP data by selecting desired sites in an interactive map and specifiying desired types of data and output.
 }
 \examples{
-wqp_data=readWQPbySite()
+wqp_data=readWQPbySite(start_date="01/01/2016", end_date="12/31/2018")
 }
