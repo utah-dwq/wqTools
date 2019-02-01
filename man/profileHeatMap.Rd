@@ -5,9 +5,9 @@
 \title{Profile heat map plot}
 \usage{
 profileHeatMap(data, parameter, depth = "Depth_m", param_units,
-  depth_units = "m", date = as.Date(data$ActivityStartDate),
-  show_dates = TRUE, min_date = min(data[, date], na.rm = T),
-  max_date = max(data[, date], na.rm = T), param_lab = "pH", criteria)
+  depth_units = "m", date = "ActivityStartDate", show_dates = TRUE,
+  min_date = min(data[, date], na.rm = T), max_date = max(data[, date],
+  na.rm = T), param_lab = "pH", criteria)
 }
 \arguments{
 \item{data}{Lake profile data (wide format)}
@@ -30,7 +30,7 @@ profileHeatMap(data, parameter, depth = "Depth_m", param_units,
 
 \item{param_lab}{Character. Label to be used for parameter name. Used to build plot label.}
 
-\item{criteria}{Vector of criteria values to be used as contours on heatmap plot.}
+\item{criteria}{Vector of criteria values to be used as contours on heatmap plot. If not specified, contours from 0-30 at increments of 5 are drawn.}
 }
 \description{
 Plots a lake profile heatmap for a single site and parameter.
