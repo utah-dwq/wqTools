@@ -26,13 +26,13 @@
 #' #Build some maps
 #' map1=buildMap(sites=jr_sites, fac=jr_fac) #define new object for use later
 #' map1 #call generated map object to launch in browser
-#' buildMap(sites=mantua_sites) #just sites, launch w/o generating map object in workspace
+#' buildMap(sites=jr_sites) #just sites, launch w/o generating map object in workspace
 #' buildMap(fac=jr_fac) #just facilities
 #' buildMap() #Build an empty map w/ just AU, BU, and SS std polys
 #' #html maps can be saved via htmlwidgets package saveWidget(map1, file="your/path/map1.html")
 
 #' @export
-buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")){
+buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus"), plot_polys=TRUE){
 	
 	if(missing(au_poly)){get(data("au_poly", envir = environment()))}
 	if(missing(bu_poly)){get(data("bu_poly", envir = environment()))}
@@ -159,31 +159,40 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 			map=leaflet::addLabelOnlyMarkers(map, group="Labels", lat=locs$LatitudeMeasure, lng=locs$LongitudeMeasure,
 				label=locs$locationID,labelOptions = leaflet::labelOptions(noHide = T, textsize = "15px"),
 				clusterOptions=leaflet::markerClusterOptions(spiderfyOnMaxZoom=T))
-			map=addPolygons(map, data=bu_poly,group="Beneficial uses",smoothFactor=4,fillOpacity = 0.1,weight=3,color="green",
-				popup=paste0(
-					"Description: ", bu_poly$R317Descrp,
-					"<br> Uses: ", bu_poly$bu_class)
-				)
-			map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1,weight=3,color="orange",
-				popup=paste0(
-					"AU name: ", au_poly$AU_NAME,
-					"<br> AU ID: ", au_poly$ASSESS_ID,
-					"<br> AU type: ", au_poly$AU_Type)
-				)
-			map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue",
-				popup=paste0("SS std: ", ss_poly$SiteSpecif)
-				)
-			map=leaflet::addLayersControl(map,
-				position ="topleft",
-				baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites","Labels","Assessment units","Beneficial uses", "Site-specific standards"),
-				options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
+			
+			if(plot_polys){
+				map=addPolygons(map, data=bu_poly,group="Beneficial uses",smoothFactor=4,fillOpacity = 0.1,weight=3,color="green",
+					popup=paste0(
+						"Description: ", bu_poly$R317Descrp,
+						"<br> Uses: ", bu_poly$bu_class)
+					)
+				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1,weight=3,color="orange",
+					popup=paste0(
+						"AU name: ", au_poly$AU_NAME,
+						"<br> AU ID: ", au_poly$ASSESS_ID,
+						"<br> AU type: ", au_poly$AU_Type)
+					)
+				map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue",
+					popup=paste0("SS std: ", ss_poly$SiteSpecif)
+					)
+				map=leaflet::addLayersControl(map,
+					position ="topleft",
+					baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites","Labels","Assessment units","Beneficial uses", "Site-specific standards"),
+					options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
+				map=hideGroup(map, "Assessment units")
+				map=hideGroup(map, "Site-specific standards")
+				map=hideGroup(map, "Beneficial uses")
+				map=hideGroup(map, "Labels")
+			}else{
+				map=leaflet::addLayersControl(map,
+					position ="topleft",
+					baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites","Labels"),
+					options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
+				map=hideGroup(map, "Labels")
+			}
 			map=leaflet::addLegend(map, position = 'topright',
 				colors = unique(pal(locs$locationType)), 
 				labels = unique(locs$locationType))
-			map=hideGroup(map, "Assessment units")
-			map=hideGroup(map, "Site-specific standards")
-			map=hideGroup(map, "Beneficial uses")
-			map=hideGroup(map, "Labels")
 			#map=addControl(map, "<P><B>Search</B>", position='topleft')
 			
 			if("sites" %in% search & "aus" %in% search){
