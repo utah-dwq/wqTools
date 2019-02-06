@@ -84,7 +84,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 				options = leaflet.extras::searchFeaturesOptions(
 				zoom=12, openPopup = TRUE, firstTipSubmit = TRUE,
 				autoCollapse = TRUE, hideMarkerOnCollapse = TRUE ))
-			map=leaflet::addMeasure(map, position="bottomleft")
+			map=leaflet::addMeasure(map, position="topright")
 
 	}else{
 		if(!missing(sites)){
@@ -217,7 +217,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 					autoCollapse = TRUE, hideMarkerOnCollapse = TRUE ))
 			}
 			
-			map=leaflet::addMeasure(map, position="bottomleft")
+			map=leaflet::addMeasure(map, position="topright")
 	}
 	
 return(map)
