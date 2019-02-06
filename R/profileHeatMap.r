@@ -54,9 +54,7 @@ profileHeatMap=function(data, parameter, depth="Depth_m", param_units, depth_uni
 		}else{
 			filled.contour(int,color.palette=topo.colors,xlim=c(min_date-1,max_date+1),ylim=rev(range(data[,depth])),
 				ylab=paste0("Depth (",depth_units,")"), main=title,
-				plot.axes = { contour(int, levels = criteria, 
-					drawlabels = TRUE, axes = FALSE, 
-					frame.plot = FALSE, add = TRUE);
+				plot.axes = { contour(int, levels = criteria, lwd=2, col="red", drawlabels = TRUE, axes = FALSE, frame.plot = FALSE, add = TRUE, labcex=2);
 					axis.Date(side=1,x=as.Date(int$x,origin=lubridate::origin)); axis(2) } )}
 		
 
