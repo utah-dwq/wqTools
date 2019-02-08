@@ -171,7 +171,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 						"Description: ", bu_poly$R317Descrp,
 						"<br> Uses: ", bu_poly$bu_class)
 					)
-				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1,weight=3,color="orange", options = pathOptions(pane = "polygons"),
+				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$ASSESS_ID,weight=3,color="orange", options = pathOptions(pane = "polygons"),
 					popup=paste0(
 						"AU name: ", au_poly$AU_NAME,
 						"<br> AU ID: ", au_poly$ASSESS_ID,
