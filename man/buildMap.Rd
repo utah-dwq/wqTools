@@ -5,7 +5,7 @@
 \title{Build a site map of WQP sites or ECHO facilities}
 \usage{
 buildMap(fac, sites, au_poly, bu_poly, ss_poly, search = c("sites",
-  "aus"))
+  "aus"), plot_polys = TRUE)
 }
 \arguments{
 \item{fac}{Facility locations queried via readECHO_fac.}
@@ -37,7 +37,7 @@ jr_fac=readECHO_fac(p_pid=c("UT0024392","UT0024384","UT0025852","UT0021725"))
 #Build some maps
 map1=buildMap(sites=jr_sites, fac=jr_fac) #define new object for use later
 map1 #call generated map object to launch in browser
-buildMap(sites=mantua_sites) #just sites, launch w/o generating map object in workspace
+buildMap(sites=jr_sites) #just sites, launch w/o generating map object in workspace
 buildMap(fac=jr_fac) #just facilities
 buildMap() #Build an empty map w/ just AU, BU, and SS std polys
 #html maps can be saved via htmlwidgets package saveWidget(map1, file="your/path/map1.html")
