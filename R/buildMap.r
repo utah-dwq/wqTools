@@ -126,7 +126,8 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo")
 			map=leaflet::addProviderTiles(map,"Esri.WorldImagery", group = "Satellite")
 			
-			map=addMapPane(map,"polygons", zIndex = 410)
+			map=addMapPane(map,"underlay_polygons", zIndex = 410)
+			map=addMapPane(map,"au_poly", zIndex = 415)
 			map=addMapPane(map,"markers", zIndex = 420)
 
 			map=leaflet::addCircleMarkers(map, lat=locs$LatitudeMeasure, lng=locs$LongitudeMeasure, group="Sites", 
@@ -166,18 +167,18 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 				clusterOptions=leaflet::markerClusterOptions(spiderfyOnMaxZoom=T))
 			
 			if(plot_polys){
-				map=addPolygons(map, data=bu_poly,group="Beneficial uses",smoothFactor=4,fillOpacity = 0.1,weight=3,color="green", options = pathOptions(pane = "polygons"),
+				map=addPolygons(map, data=bu_poly,group="Beneficial uses",smoothFactor=4,fillOpacity = 0.1,weight=3,color="green", options = pathOptions(pane = "underlay_polygons"),
 					popup=paste0(
 						"Description: ", bu_poly$R317Descrp,
 						"<br> Uses: ", bu_poly$bu_class)
 					)
-				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$ASSESS_ID,weight=3,color="orange", options = pathOptions(pane = "polygons"),
+				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$ASSESS_ID,weight=3,color="orange", options = pathOptions(pane = "au_poly"),
 					popup=paste0(
 						"AU name: ", au_poly$AU_NAME,
 						"<br> AU ID: ", au_poly$ASSESS_ID,
 						"<br> AU type: ", au_poly$AU_Type)
 					)
-				map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue", options = pathOptions(pane = "polygons"),
+				map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue", options = pathOptions(pane = "underlay_polygons"),
 					popup=paste0("SS std: ", ss_poly$SiteSpecif)
 					)
 				map=leaflet::addLayersControl(map,

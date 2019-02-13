@@ -37,19 +37,43 @@ args=list(...)
 
 #type="result"
 #statecode="US:49"
-#characteristicName="Total dissolved solids"
+#characteristicName=c("Total dissolved solids","Arsenic","Cadmium")
+#siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470")
 #start_date="01/01/2015"
 #end_date="12/31/2018"
-#args=list(statecode=statecode, characteristicName=characteristicName,start_date=start_date, end_date=end_date)
+#args=list(statecode=statecode, siteid=siteid, characteristicName=characteristicName,start_date=start_date, end_date=end_date)
 
+
+pastecollapse=function(x){
+	return(paste0(names(x), "=", x, collapse="&"))
+}
 
 if(any(names(args)=="start_date")){
 	args$startDateLo=format(as.Date(args$start_date, format='%m/%d/%Y'), format="%m-%d-%Y")
-	args=args[names(args)!="start_date"]}
+	args=args[names(args)!="start_date"]
+}
 
 if(any(names(args)=="end_date")){
 	args$startDateHi=format(as.Date(args$end_date, format='%m/%d/%Y'), format="%m-%d-%Y")
-	args=args[names(args)!="end_date"]}
+	args=args[names(args)!="end_date"]
+}
+
+
+args$mimeType="csv"
+args$zip="no"
+
+
+for(n in 1:length(args)){
+	name=names(args)[n]
+	x=unlist(args[n])
+	names(x)=rep(name,length(x))
+	args[n]=pastecollapse(x)
+}
+
+
+names(args)=NULL
+arg_path=paste0(args,collapse="&")
+
 
 if(type=="result" | type=="narrowresult"){base_path="https://www.waterqualitydata.us/data/Result/search?"}
 if(type=="narrowresult"){args$dataProfile="narrowResult"}
@@ -60,27 +84,17 @@ if(type=="activity"){
 	}
 if(type=="detquantlim"){base_path="https://www.waterqualitydata.us/data/ResultDetectionQuantitationLimit/search?"}
 
-args$mimeType="csv"
-args$zip="no"
+path=paste0(base_path,arg_path)
 
-for(n in 1:(length(args)-1)){
-	if(n==1){args_mrg=merge(args[n],args[(n+1)])
-	}else{args_mrg=merge(args_mrg,args[(n+1)])}
-}
-
-pastecollapse=function(x){paste0(names(x), "=", x, collapse="&")}
-arg_paths=apply(args_mrg,1,'pastecollapse')
-paths_all=paste0(base_path,arg_paths)
-
-paths_all=gsub("US:", "US%3A", paths_all)
-paths_all=gsub(" ", "%20", paths_all)
-paths_all=gsub(",", "%2C", paths_all)
+path=gsub("US:", "US%3A", path)
+path=gsub(" ", "%20", path)
+path=gsub(",", "%2C", path)
 
 n=1
 while(!exists('result',inherits=F) & n<=10){
 	n=n+1
 	try({
-		suppressWarnings({result=plyr::ldply(paths_all,.fun=read.csv, na.strings=c(""," ","NA"),.progress="text")})
+		suppressWarnings({result=plyr::ldply(path,.fun=read.csv, na.strings=c(""," ","NA"),.progress="text")})
 	})
 }
 
