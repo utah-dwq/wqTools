@@ -4,10 +4,10 @@
 \alias{readWQPbySite}
 \title{Read WQP data by selecting sites in an interactive map}
 \usage{
-readWQPbySite(sites, map, mode = "click", types = c("narrowresult",
-  "activity", "sites"), merge = T, sitetypes = c("Canal Drainage",
-  "Canal Irrigation", "Canal Transport", "Lake",
-  "Lake, Reservoir, Impoundment", "Reservoir", "River/Stream",
+readWQPbySite(sites, map, mode = "click", types = c("sites",
+  "narrowresult", "activity"), merge = T, edit = T,
+  sitetypes = c("Canal Drainage", "Canal Irrigation", "Canal Transport",
+  "Lake", "Lake, Reservoir, Impoundment", "Reservoir", "River/Stream",
   "River/Stream Intermittent", "River/Stream Perennial", "Seep", "Spring",
   "Stream", "Stream: Canal", "Stream: Ditch", "Wetland",
   "Wetland Undifferentiated"), ...)
@@ -23,12 +23,16 @@ readWQPbySite(sites, map, mode = "click", types = c("narrowresult",
 
 \item{merge}{Logical. If TRUE (default), merge all selected data types to single data frame. Merges are performed as left joins in order they are provided. If FALSE, return list of individual data objects.}
 
+\item{edit}{Logical. If TRUE (default) open editor in R console to edit selected sites. To drop sites from the query, update the "keep" column to anything other than "Y", then close edit dialog.}
+
 \item{sitetypes}{Vector of site types to be included in query (only used if sites argument is not provided).}
 
-\item{...}{Other arguments to be passed to readWQP (e.g. start_date, end_date, characteristicName, etc.). See ?wqTools::readWQP for more info.}
+\item{...}{Other arguments to be passed to readWQP (e.g. start_date, end_date, characteristicName, etc.). See ?wqTools::readWQP for more info. This is passed to both the sites query (if sites are not provided) and the results queries.}
 }
 \description{
 This function allows the user to read WQP data by selecting desired sites in an interactive map and specifiying desired types of data and output.
+When map is launched, either click (mode="click") or draw polygons (mode="draw") around desired sites, then click "Done" button at bottom right of map. If edit==TRUE, an edit dialog will open
+in R console. Update "keep" column to anything other than "Y" to reject selected sites, then close dialog to proceed.
 }
 \examples{
 wqp_data=readWQPbySite(start_date="01/01/2016", end_date="12/31/2018")
