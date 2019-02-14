@@ -7,6 +7,7 @@
 #' @param type Data type to read. One of "result", "narrowresult", "sites", "activity", or "detquantlim".
 #' @param start_date Query start date in "mm/dd/yyyy" format.
 #' @param end_date Query end date in "mm/dd/yyyy" format.
+#' @param coerce_num Logical. If TRUE the ResultMeasureValue column in result and narrowresult type reads is coerced to numeric values. This will generate NAs in the ResultMeasureValue column for non-numeric values. Defaults to FALSE.
 #' @param ... additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.
 #' @param print Logical. Print summary table of sites & characteristics (only for result or narrowresult types).
 #' @return A data frame of WQP data
@@ -32,7 +33,7 @@
 #' plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
 
 #' @export
-readWQP<-function(type="result", ..., print=TRUE){
+readWQP<-function(type="result", ..., print=TRUE, coerce_num=FALSE){
 args=list(...)
 
 #type="result"
@@ -42,7 +43,6 @@ args=list(...)
 #start_date="01/01/2015"
 #end_date="12/31/2018"
 #args=list(statecode=statecode, siteid=siteid, characteristicName=characteristicName,start_date=start_date, end_date=end_date)
-
 
 pastecollapse=function(x){
 	return(paste0(names(x), "=", x, collapse="&"))
@@ -105,7 +105,7 @@ if(print & exists('result',inherits=F) & (type=="result" | type=="narrowresult")
 if(!exists('result',inherits=F)){stop("Error - unable to download data - no data available for selected inputs or invalid query.")}
 
 
-if((type=="result" | type=="narrowresult") & class(result$ResultMeasureValue)!="numeric" & class(result$ResultMeasureValue)!="integer"){
+if((type=="result" | type=="narrowresult") & class(result$ResultMeasureValue)!="numeric" & class(result$ResultMeasureValue)!="integer" & coerce_num){
 	ResultMeasureValue=as.character(result$ResultMeasureValue)
 	ResultMeasureValue=gsub(",","",ResultMeasureValue)
 	ResultMeasureValue[ResultMeasureValue=="" | ResultMeasureValue==" "]="NA"
