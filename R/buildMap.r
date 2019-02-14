@@ -41,12 +41,16 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 	au_centroids=cbind(au_centroids,sf::st_coordinates(au_centroids))
 	
 	if(missing(fac) & missing(sites)){
-		print("Building map w/o sites or facilities...")
 		#Build empty map
 		
 		map=leaflet::leaflet(au_poly)
 			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo")
 			map=leaflet::addProviderTiles(map,"Esri.WorldImagery", group = "Satellite")
+			
+			map=addMapPane(map,"underlay_polygons", zIndex = 410)
+			map=addMapPane(map,"au_poly", zIndex = 415)
+			map=addMapPane(map,"markers", zIndex = 420)
+
 			map=leaflet::addCircles(map, lat=au_centroids$Y, lng=au_centroids$X, group="au_names", label=au_centroids$AU_NAME, stroke=F, fill=F,
 				popup = paste0(
 					"AU ID: ", au_centroids$ASSESS_ID,
@@ -57,33 +61,40 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 					"AU name: ", au_centroids$AU_NAME,
 					"<br> AU ID: ", au_centroids$ASSESS_ID,
 					"<br> AU type: ", au_centroids$AU_Type))
-			map=addPolygons(map, data=bu_poly,group="Beneficial uses",smoothFactor=4,fillOpacity = 0.1,weight=3,color="green",
-				popup=paste0(
-					"Description: ", bu_poly$R317Descrp,
-					"<br> Uses: ", bu_poly$bu_class)
-				)
-			map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1,weight=3,color="orange",
-				popup=paste0(
-					"AU name: ", au_poly$AU_NAME,
-					"<br> AU ID: ", au_poly$ASSESS_ID,
-					"<br> AU type: ", au_poly$AU_Type)
-				)
-			map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue",
-				popup=paste0("SS std: ", ss_poly$SiteSpecif)
-				)
-			map=leaflet::addLayersControl(map,
-				position ="topleft",
-				baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards"),
-				options = leaflet::layersControlOptions(collapsed = FALSE, autoZIndex=FALSE))
-			map=hideGroup(map, "Assessment units")
-			map=hideGroup(map, "Site-specific standards")
-			map=hideGroup(map, "Beneficial uses")
-			#map=addControl(map, "<P><B>Search</B>", position='topleft')
-			map=leaflet.extras::addSearchFeatures(map,
-				targetGroups = c('au_ids','au_names'),
-				options = leaflet.extras::searchFeaturesOptions(
-				zoom=12, openPopup = TRUE, firstTipSubmit = TRUE,
-				autoCollapse = TRUE, hideMarkerOnCollapse = TRUE ))
+			
+			if(plot_polys){
+				map=addPolygons(map, data=bu_poly,group="Beneficial uses",smoothFactor=4,fillOpacity = 0.1,weight=3,color="green", options = pathOptions(pane = "underlay_polygons"),
+					popup=paste0(
+						"Description: ", bu_poly$R317Descrp,
+						"<br> Uses: ", bu_poly$bu_class)
+					)
+				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$ASSESS_ID,weight=3,color="orange", options = pathOptions(pane = "au_poly"),
+					popup=paste0(
+						"AU name: ", au_poly$AU_NAME,
+						"<br> AU ID: ", au_poly$ASSESS_ID,
+						"<br> AU type: ", au_poly$AU_Type)
+					)
+				map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue", options = pathOptions(pane = "underlay_polygons"),
+					popup=paste0("SS std: ", ss_poly$SiteSpecif)
+					)
+				map=leaflet::addLayersControl(map,
+					position ="topleft",
+					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards"),
+					options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
+				map=hideGroup(map, "Assessment units")
+				map=hideGroup(map, "Site-specific standards")
+				map=hideGroup(map, "Beneficial uses")
+
+			}
+			
+			if("aus" %in% search){
+				map=addSearchFeatures(map,
+					targetGroups = c('au_ids','au_names'),
+					options = leaflet.extras::searchFeaturesOptions(
+					zoom=12, openPopup = TRUE, firstTipSubmit = TRUE,
+					autoCollapse = TRUE, hideMarkerOnCollapse = TRUE ))
+			}
+			
 			map=leaflet::addMeasure(map, position="topright")
 
 	}else{
