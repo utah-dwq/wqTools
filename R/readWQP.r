@@ -36,13 +36,13 @@
 readWQP<-function(type="result", ..., print=TRUE, coerce_num=FALSE){
 args=list(...)
 
-#type="result"
-#statecode="US:49"
-#characteristicName=c("Total dissolved solids","Arsenic","Cadmium")
+#type="narrowresult"
+##statecode="US:49"
+##characteristicName=c("Total dissolved solids","Arsenic","Cadmium")
 #siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470")
-#start_date="01/01/2015"
-#end_date="12/31/2018"
-#args=list(statecode=statecode, siteid=siteid, characteristicName=characteristicName,start_date=start_date, end_date=end_date)
+##start_date="01/01/2015"
+##end_date="12/31/2018"
+#args=list(siteid=siteid)
 
 pastecollapse=function(x){
 	return(paste0(names(x), "=", x, collapse="&"))
@@ -63,6 +63,15 @@ args$mimeType="csv"
 args$zip="no"
 
 
+if(type=="result" | type=="narrowresult"){base_path="https://www.waterqualitydata.us/data/Result/search?"}
+if(type=="narrowresult"){args$dataProfile="narrowResult"}
+if(type=="sites"){base_path="https://www.waterqualitydata.us/data/Station/search?"}
+if(type=="activity"){
+	base_path="https://www.waterqualitydata.us/data/Activity/search?"
+	args$dataProfile="activityAll"
+	}
+if(type=="detquantlim"){base_path="https://www.waterqualitydata.us/data/ResultDetectionQuantitationLimit/search?"}
+
 for(n in 1:length(args)){
 	name=names(args)[n]
 	x=unlist(args[n])
@@ -72,17 +81,8 @@ for(n in 1:length(args)){
 
 
 names(args)=NULL
+
 arg_path=paste0(args,collapse="&")
-
-
-if(type=="result" | type=="narrowresult"){base_path="https://www.waterqualitydata.us/data/Result/search?"}
-if(type=="narrowresult"){args$dataProfile="narrowResult"}
-if(type=="sites"){base_path="https://www.waterqualitydata.us/data/Station/search?"}
-if(type=="activity"){
-	base_path="https://www.waterqualitydata.us/data/Activity/search?"
-	args$dataProfile="activityAll"
-	}
-if(type=="detquantlim"){base_path="https://www.waterqualitydata.us/data/ResultDetectionQuantitationLimit/search?"}
 
 path=paste0(base_path,arg_path)
 
