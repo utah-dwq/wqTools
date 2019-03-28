@@ -33,16 +33,16 @@
 #' plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
 
 #' @export
-readWQP<-function(type="result", ..., print=TRUE, coerce_num=FALSE){
+readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE){
 args=list(...)
 
-#type="narrowresult"
+#type="sites"
 ##statecode="US:49"
 ##characteristicName=c("Total dissolved solids","Arsenic","Cadmium")
 #siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470")
-##start_date="01/01/2015"
-##end_date="12/31/2018"
-#args=list(siteid=siteid)
+#start_date="01/01/2018"
+#end_date="12/31/2018"
+#args=list(siteid=siteid, start_date=start_date, end_date=end_date)
 
 pastecollapse=function(x){
 	return(paste0(names(x), "=", x, collapse="&"))
@@ -90,6 +90,9 @@ path=gsub("US:", "US%3A", path)
 path=gsub(" ", "%20", path)
 path=gsub(",", "%2C", path)
 
+
+print(path)
+
 n=1
 while(!exists('result',inherits=F) & n<=10){
 	n=n+1
@@ -97,6 +100,18 @@ while(!exists('result',inherits=F) & n<=10){
 		suppressWarnings({result=plyr::ldply(path,.fun=read.csv, na.strings=c(""," ","NA"),.progress="text")})
 	})
 }
+
+
+#path="https://www.waterqualitydata.us/data/Result/search?siteid=UTAHDWQ_WQX-4900440&siteid=UTAHDWQ_WQX-4900470&startDateLo=01-01-2018&startDateHi=12-31-2018&mimeType=csv&zip=no&dataProfile=narrowResult"
+#connection=curl::curl("path")
+#lines=readLines(connection)
+#split=strsplit(lines, sep=',')
+#names=split[[1]]
+#split=split[2:length(split)]
+#df=as.data.frame(do.call(rbind, split))[,1:length(split[[1]])]
+#names(df)=names
+#result=df
+
 
 if(print & exists('result',inherits=F) & (type=="result" | type=="narrowresult")){
 	print("Queried sites and parameters:")
