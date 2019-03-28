@@ -8,6 +8,9 @@
 #' @param end_date Query end date in "mm/dd/yyyy" format.
 #' @param unnest_results If TRUE (default) and type=="results", the result data frame is unnested from the query return object.
 #' @param ... additional arguments to be passed to AWQMS query path. See http://www.awqms.org/files/AWQMS_Training/AWQMS%20REST%20Web%20Services%20User%20Guide.pdf for optional arguments.
+#' @importFrom plyr ldply
+#' @importFrom jsonlite fromJSON
+#' @importFrom tidyr unnest
 
 #' @return A data frame of AWQMS data
 #' @examples
