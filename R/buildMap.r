@@ -1,7 +1,7 @@
 #' Build a site map of WQP sites or ECHO facilities
 #' 
 #' Build a map of sample sites, facilities, or both. Map includes sites, beneficial use and assessment unit polygons, and satellite and topo baselayers.
-#' This is designed to work with column names as extracted from WQP or ECHO via udwqTools functions readWQP() and readECHO_fac(). Map will launch in default browser (or R-Studio's browser if using R-Studio).
+#' This is designed to work with column names as extracted from WQP or AWQMS & ECHO via udwqTools functions readWQP(), readAWQMS() and readECHO_fac(). Map will launch in default browser (or R-Studio's browser if using R-Studio).
 #' Site and assessment unit features are searchable by idetifier and name via the search button on the left side of the map.
 #' The most recently turned on layer is "on top" of the map. Only features on top will show their pop-up on click.
 #' @param fac Facility locations queried via readECHO_fac.
