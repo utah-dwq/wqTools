@@ -11,7 +11,7 @@ readAWQMS(type = "results", unnest_results = TRUE, ...)
 
 \item{unnest_results}{If TRUE (default) and type=="results", the result data frame is unnested from the query return object.}
 
-\item{...}{additional arguments to be passed to AWQMS query path. See http://www.awqms.org/files/AWQMS_Training/AWQMS%20REST%20Web%20Services%20User%20Guide.pdf for optional arguments.}
+\item{...}{additional arguments to be passed to AWQMS query path. See http://awqms.org/node/2 --> AWQMS Tutorials - Web Services for optional arguments.}
 
 \item{start_date}{Query start date in "mm/dd/yyyy" format.}
 
@@ -42,4 +42,6 @@ results2=readAWQMS(type='results', MonitoringLocationIdentifiersCsv=c("4900440",
 
 # Read Utah DWQ projects
 projects=readAWQMS(type="projects",OrganizationIdentifiersCsv="UTAHDWQ_WQX")
+# Read state-wide TDS
+ut_tds=readAWQMS(type='results', start_date="01/01/2016", end_date="12/31/2018", StateCode="UT", Characteristic=c("Total dissolved solids"))
 }
