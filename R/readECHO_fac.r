@@ -13,7 +13,7 @@
 #' two_fac
 
 #' @export
-readECHO_fac<-function(type="", ...){
+readECHO_fac<-function(...){
 args=list(...)
 
 #args=list(p_st="ut", p_pid=c("UT0021717","UT0020834","UT0020109","UT0020427"))
