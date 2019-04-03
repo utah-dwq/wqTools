@@ -103,7 +103,6 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 			names(site_coords)[names(site_coords)=="MonitoringLocationIdentifier"]="locationID"
 			names(site_coords)[names(site_coords)=="MonitoringLocationName"]="locationName"
 			names(site_coords)[names(site_coords)=="MonitoringLocationTypeName"]="locationType"
-			site_coords=sf::st_as_sf(site_coords, coords=c("LongitudeMeasure","LatitudeMeasure"), crs=4326, remove=F)
 		}
 		if(!missing(fac)){
 			fac_coords=do.call(rbind.data.frame,fac$geometry$coordinates)
@@ -114,7 +113,6 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 			names(fac_coords)[names(fac_coords)=="CWPFacilityTypeIndicator"]="locationType"
 			names(fac_coords)[names(fac_coords)=="dec_long"]="LongitudeMeasure"
 			names(fac_coords)[names(fac_coords)=="dec_lat"]="LatitudeMeasure"
-			fac_coords=sf::st_as_sf(fac_coords, coords=c("LongitudeMeasure","LatitudeMeasure"), crs=4326, remove=F)
 		}
 	
 		if(exists('site_coords')){
