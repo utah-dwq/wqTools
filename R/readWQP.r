@@ -8,8 +8,9 @@
 #' @param start_date Query start date in "mm/dd/yyyy" format.
 #' @param end_date Query end date in "mm/dd/yyyy" format.
 #' @param coerce_num Logical. If TRUE the ResultMeasureValue column in result and narrowresult type reads is coerced to numeric values. This will generate NAs in the ResultMeasureValue column for non-numeric values. Defaults to FALSE.
-#' @param ... additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.
+#' @param #' @param ... additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.
 #' @param print Logical. Print summary table of sites & characteristics (only for result or narrowresult types).
+#' @param url_only Logical. If FALSE (default) read and return data. If TRUE, return just the query url.
 #' @return A data frame of WQP data
 #' @examples
 #' # Read some data from Mantua Reservoir (2016-2018)
@@ -33,7 +34,7 @@
 #' plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
 
 #' @export
-readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE){
+readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE, url_only=FALSE){
 args=list(...)
 
 #type="sites"
@@ -90,7 +91,7 @@ path=gsub("US:", "US%3A", path)
 path=gsub(" ", "%20", path)
 path=gsub(",", "%2C", path)
 
-
+if(url_only==FALSE){
 print(path)
 
 n=1
@@ -100,18 +101,6 @@ while(!exists('result',inherits=F) & n<=10){
 		suppressWarnings({result=plyr::ldply(path,.fun=read.csv, na.strings=c(""," ","NA"),.progress="text")})
 	})
 }
-
-
-#path="https://www.waterqualitydata.us/data/Result/search?siteid=UTAHDWQ_WQX-4900440&siteid=UTAHDWQ_WQX-4900470&startDateLo=01-01-2018&startDateHi=12-31-2018&mimeType=csv&zip=no&dataProfile=narrowResult"
-#connection=curl::curl("path")
-#lines=readLines(connection)
-#split=strsplit(lines, sep=',')
-#names=split[[1]]
-#split=split[2:length(split)]
-#df=as.data.frame(do.call(rbind, split))[,1:length(split[[1]])]
-#names(df)=names
-#result=df
-
 
 if(print & exists('result',inherits=F) & (type=="result" | type=="narrowresult")){
 	print("Queried sites and parameters:")
@@ -129,6 +118,7 @@ if((type=="result" | type=="narrowresult") & class(result$ResultMeasureValue)!="
 	}
 
 return(result)
+}else{return(path)}
 
 }
 
