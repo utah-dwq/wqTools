@@ -1,7 +1,7 @@
 Package: wqTools
 Title: A Collection of R Tools for Utah Division of Water Quality
 Version: 0.0.0.9000
-Authors: Jake Vander Laan, Utah Division of Water Quality, jvander@utah.gov [aut, cre]
+Authors: Jake Vander Laan, Utah Division of Water Quality, jvander@utah.gov [aut, cre], Elise Hinman, Utah Division of Water Quality, ehinman@utah.gov [aut]
 Description: This package is intended to house R tools developed and for use by UDWQ staff as well as support the UDWQ irTools package.
 Depends: R (>= 3.4.4)
 License: MIT + file LICENSE

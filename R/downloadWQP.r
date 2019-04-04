@@ -1,4 +1,4 @@
-#' Download water quality, station, and other data for Utah from USEPA WQP (version 2.0)
+#' Download water quality, station, and other data from USEPA Water Quality Portal
 #'
 #' Download data from EPA's Water Quality Portal (WQP) as .csv files to outfile_path folder.
 #' @param outfile_path Path for file outputs. Defaults to current working directory.

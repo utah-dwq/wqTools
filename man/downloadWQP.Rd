@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadWQP.r
 \name{downloadWQP}
 \alias{downloadWQP}
-\title{Download water quality, station, and other data for Utah from USEPA WQP (version 2.0)}
+\title{Download water quality, station, and other data from USEPA Water Quality Portal}
 \usage{
 downloadWQP(outfile_path = getwd(), start_date, end_date,
   retrieve = c("narrowresult", "activity", "sites", "detquantlim"),
