@@ -4,20 +4,23 @@
 \alias{readWQP}
 \title{Read EPA Water Quality Portal Data}
 \usage{
-readWQP(type = "result", ..., print = TRUE, coerce_num = FALSE)
+readWQP(type = "result", ..., print = FALSE, coerce_num = FALSE,
+  url_only = FALSE)
 }
 \arguments{
 \item{type}{Data type to read. One of "result", "narrowresult", "sites", "activity", or "detquantlim".}
-
-\item{...}{additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.}
 
 \item{print}{Logical. Print summary table of sites & characteristics (only for result or narrowresult types).}
 
 \item{coerce_num}{Logical. If TRUE the ResultMeasureValue column in result and narrowresult type reads is coerced to numeric values. This will generate NAs in the ResultMeasureValue column for non-numeric values. Defaults to FALSE.}
 
+\item{url_only}{Logical. If FALSE (default) read and return data. If TRUE, return just the query url.}
+
 \item{start_date}{Query start date in "mm/dd/yyyy" format.}
 
 \item{end_date}{Query end date in "mm/dd/yyyy" format.}
+
+\item{#'}{@param ... additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.}
 }
 \value{
 A data frame of WQP data
