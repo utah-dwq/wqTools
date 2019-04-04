@@ -4,25 +4,29 @@
 #' @param outfile_path Path for file outputs. Defaults to current working directory.
 #' @param StartDate Query start date. "mm/dd/yyyy" format.
 #' @param EndDate Query end date. "mm/dd/yyyy" format.
-#' @param retrieve Vector of data type names to retrieve from WQP. One or more of: "result","narrowresult","activity","activitymetric","sites","detquantlim". Defaults to query all.
+#' @param retrieve Vector of data type names to retrieve from WQP. One or more of: "result","narrowresult","activity","sites","detquantlim". Defaults to query narrowresult, activity, sites, and detquantlim.
+#' @param zip Logical. If FALSE (default) files are downloaded straight as csv. If TRUE, files are downloaded as zipped folders (helps prevent server time-outs, recommend for large downloads).
+#' @param zip Logical. If FALSE (default) files downloaded as zip folders are not automatically unzipped. If TRUE, the function will unzip all downloaded zip files. Only used if zip==TRUE.
+#' @param ... Other arguments to be passed to readWQP when generating a query URL.
 #' @return Exports .csv files for all selected data types during selected date period in specified output path.
 #' @examples
 #' # Read 2018 download narrow result & sites
 #' downloadWQP(outfile_path='C:\\Your\\Folder\\Path', start_date="01/01/2018", end_date="12/31/2018", retrieve=c("narrowresult","sites"))
 
 #' @export
-downloadWQP<-function(outfile_path=getwd(),start_date,end_date,retrieve=c("narrowresult","activity","sites","detquantlim"),
+downloadWQP<-function(outfile_path=getwd(),retrieve=c("narrowresult","activity","sites","detquantlim"),
 	siteType=c('Aggregate surface-water-use','Lake, Reservoir, Impoundment','Spring','Stream'),
-	statecode="US:49", ...){
+	statecode="US:49", zip=FALSE, unzip=FALSE, ...){
 
-#outfile_path='P:\\WQ\\Integrated Report\\Automation_Development\\R_package\\draft_code'
-#start_date="01/01/2018"
+#outfile_path='C:\\Users\\jvander\\Documents\\R\\irTools-test-16\\01-raw-data'
+#start_date="01/01/2014"
 #end_date="12/31/2018"
-#retrieve=c("narrowresult","sites")
+#retrieve=c("narrowresult","sites", 'result', 'activity','detquantlim')
 #statecode="US:49"
 ##retrieve=c("sites")
 #siteType=c('Aggregate surface-water-use','Lake, Reservoir, Impoundment','Spring','Stream')
-
+#zip=T
+#unzip=T
 
 # Warning that all WQP data used in irTools should come from the same download.
 complete <- c("narrowresult","activity","sites","detquantlim")
@@ -31,26 +35,52 @@ if(any(!(complete%in%retrieve))){
 }
 rm(complete)
 
-
 substrRight <- function(x, n){
   substr(x, nchar(x)-n+1, nchar(x))
 }
 
-if(substrRight(outfile_path, 1) != '/' | substrRight(outfile_path, 2) != '\\'){
-	outfile_path=paste0(outfile_path,'/')
-}
-
-retvd_objects=list()
-
+zip_file_names=vector(length=length(retrieve))
 for(n in 1:length(retrieve)){
-	file_name_n=paste0(outfile_path,retrieve[n],'-',Sys.Date(),'.csv')
-	url_n=readWQP(type=retrieve[n], start_date=start_date, end_date=end_date, statecode=statecode, siteType=siteType, url_only=T, ...)
-	if(file.exists(file_name_n)){warning(paste('WARNING:', file_name_n, 'already exists and will not be downloaded and overwritten. Move, rename, or delete this file from outfile_path to re-download this file.'))}
+	file_name_n=paste0(outfile_path,"/",retrieve[n],'-',Sys.Date(),'.csv')
+	url_n=readWQP(type=retrieve[n], statecode=statecode, siteType=siteType, url_only=T, ...)
+	if(zip){
+		url_n=gsub('zip=no', 'zip=yes', url_n)
+		file_name_n=gsub('.csv', '.zip', file_name_n)
+		zip_file_names[n]=file_name_n
+	}
+	if(file.exists(file_name_n)){stop(paste('ERROR:', file_name_n, 'already exists and will not be downloaded and overwritten. Move, rename, or delete this file from outfile_path to re-download this file.'))}
 	i=1
 	while(!file.exists(file_name_n) & i <=10){
-		try({download.file(url_n, file_name_n)})
+		try({download.file(url_n, file_name_n, mode='wb')})
 		i=i+1
 	}
 }
 
+
+if(zip & unzip){
+	unzipped_file_names=gsub(paste0("-",Sys.Date(),".zip"), '.csv', zip_file_names)
+	unzipped_file_names=gsub('sites', 'station', unzipped_file_names)
+	unzipped_file_names=gsub('detquantlim', 'resdetectqntlmt', unzipped_file_names)
+	unzipped_file_names=gsub('activity', 'activityall', unzipped_file_names)
+	
+	csv_file_names=gsub('zip', 'csv', zip_file_names)
+	for(n in 1:length(zip_file_names)){
+		unzip(zip_file_names[n], exdir=outfile_path)
+		file.rename(unzipped_file_names[n], csv_file_names[n])
+		file.remove(zip_file_names[n])
+	}
 }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
