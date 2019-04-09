@@ -4,20 +4,26 @@
 \alias{downloadWQP}
 \title{Download water quality, station, and other data from USEPA Water Quality Portal}
 \usage{
-downloadWQP(outfile_path = getwd(), start_date, end_date,
-  retrieve = c("narrowresult", "activity", "sites", "detquantlim"),
+downloadWQP(outfile_path = getwd(), retrieve = c("narrowresult",
+  "activity", "sites", "detquantlim"),
   siteType = c("Aggregate surface-water-use",
   "Lake, Reservoir, Impoundment", "Spring", "Stream"),
-  statecode = "US:49", ...)
+  statecode = "US:49", zip = FALSE, unzip = FALSE, ...)
 }
 \arguments{
 \item{outfile_path}{Path for file outputs. Defaults to current working directory.}
 
-\item{retrieve}{Vector of data type names to retrieve from WQP. One or more of: "result","narrowresult","activity","activitymetric","sites","detquantlim". Defaults to query all.}
+\item{retrieve}{Vector of data type names to retrieve from WQP. One or more of: "result","narrowresult","activity","sites","detquantlim". Defaults to query narrowresult, activity, sites, and detquantlim.}
+
+\item{zip}{Logical. If FALSE (default) files are downloaded straight as csv. If TRUE, files are downloaded as zipped folders (helps prevent server time-outs, recommend for large downloads).}
+
+\item{...}{Other arguments to be passed to readWQP when generating a query URL.}
 
 \item{StartDate}{Query start date. "mm/dd/yyyy" format.}
 
 \item{EndDate}{Query end date. "mm/dd/yyyy" format.}
+
+\item{zip}{Logical. If FALSE (default) files downloaded as zip folders are not automatically unzipped. If TRUE, the function will unzip all downloaded zip files. Only used if zip==TRUE.}
 }
 \value{
 Exports .csv files for all selected data types during selected date period in specified output path.
