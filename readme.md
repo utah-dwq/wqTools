@@ -8,7 +8,7 @@ This includes functions for reading data from EPA's water quality portal, EPA EC
 This package is in active development and can be installed via GitHub with `devtools::install_github("utah-dwq/wqTools")`.
 
 ### Manual
-See [wqTools-manual.pdf](https://github.com/utah-dwq/wqTools/blob/master/wqTools-manual.pdf) in GitHub for more information.
+See [wqTools-manual.pdf](https://github.com/utah-dwq/wqTools/blob/master/wqTools-manual_0.0.0.9000.pdf) in GitHub for more information.
 
 ### Detailed examples
 See the [wqTools Utah TDS vignette](https://bookdown.org/jvander/wqTools-utah-tds-vignette/) for a detailed example of package usage to answer real water quality questions.
