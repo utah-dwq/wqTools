@@ -37,6 +37,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 	if(missing(au_poly)){get(data("au_poly", envir = environment()))}
 	if(missing(bu_poly)){get(data("bu_poly", envir = environment()))}
 	if(missing(ss_poly)){get(data("ss_poly", envir = environment()))}
+	get(data("ut_poly", envir = environment()))
 	au_centroids=suppressWarnings(sf::st_centroid(au_poly))
 	au_centroids=cbind(au_centroids,sf::st_coordinates(au_centroids))
 	
@@ -77,13 +78,15 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 				map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue", options = pathOptions(pane = "underlay_polygons"),
 					popup=paste0("SS std: ", ss_poly$SiteSpecif)
 					)
+				map=addPolygons(map, data=ut_poly,group="UT boundary",smoothFactor=4,fillOpacity = 0.1,weight=3,color="purple", options = pathOptions(pane = "underlay_polygons"))
 				map=leaflet::addLayersControl(map,
 					position ="topleft",
-					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards"),
+					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "UT boundary"),
 					options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
 				map=hideGroup(map, "Assessment units")
 				map=hideGroup(map, "Site-specific standards")
 				map=hideGroup(map, "Beneficial uses")
+				map=hideGroup(map, "UT boundary")
 
 			}
 			
@@ -190,14 +193,16 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 				map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue", options = pathOptions(pane = "underlay_polygons"),
 					popup=paste0("SS std: ", ss_poly$SiteSpecif)
 					)
+				map=addPolygons(map, data=ut_poly,group="UT boundary",smoothFactor=4,fillOpacity = 0.1,weight=3,color="purple", options = pathOptions(pane = "underlay_polygons"))
 				map=leaflet::addLayersControl(map,
 					position ="topleft",
-					baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites","Labels","Assessment units","Beneficial uses", "Site-specific standards"),
+					baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites","Labels","Assessment units","Beneficial uses", "Site-specific standards", "UT boundary"),
 					options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
 				map=hideGroup(map, "Assessment units")
 				map=hideGroup(map, "Site-specific standards")
 				map=hideGroup(map, "Beneficial uses")
 				map=hideGroup(map, "Labels")
+				map=hideGroup(map, "UT boundary")
 			}else{
 				map=leaflet::addLayersControl(map,
 					position ="topleft",
