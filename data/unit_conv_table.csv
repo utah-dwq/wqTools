@@ -1,0 +1,35 @@
+input_unit,target_unit,conversion_factor,conversion_flag
+#/100ml,(No.)/100 ml,1,ACCEPT
+%,mg/l,,REJECT
+cfu/100ml,(No.)/100 ml,1,ACCEPT
+deg C,deg C,1,ACCEPT
+m,m,1,ACCEPT
+mg,mg/l,,REJECT
+mg/l,mg/l,1,ACCEPT
+mg/l,mg/L,1,ACCEPT
+mg/l,MG/L,1,ACCEPT
+mg/l,pCi/L,,REJECT
+mg/l,ug/L,1000,ACCEPT
+mg/l CaCO3,mg/l,1,ACCEPT
+MPN/100ml,(No.)/100 ml,1,ACCEPT
+ng/l,MG/L,0.000001,ACCEPT
+ng/l,UG/L,0.001,ACCEPT
+None,pH units,1,ACCEPT
+pCi/L,pCi/L,1,ACCEPT
+std units,pH units,1,ACCEPT
+tons/ac ft,mg/l,,REJECT
+tons/ac ft,MG/L,,REJECT
+tons/day,mg/l,,REJECT
+tons/day,MG/L,,REJECT
+ug/l,mg/l,0.001,ACCEPT
+ug/l,MG/L,0.001,ACCEPT
+ug/l,pCi/L,,REJECT
+ug/l,ug/L,1,ACCEPT
+mg/L,ug/L,1000,ACCEPT
+ug/L,mg/L,0.001,ACCEPT
+,deg C,,REJECT
+,m,,REJECT
+,mg/l,,REJECT
+,MG/L,,REJECT
+,pH units,1,ACCEPT
+,ug/L,,REJECT
