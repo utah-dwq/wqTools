@@ -4,19 +4,19 @@
 \alias{convertUnits}
 \title{Convert data to target units}
 \usage{
-convertUnits(x, input_unit, target_unit = "target_unit", value_var,
+convertUnits(x, input_units, target_units = "target_unit", value_var,
   conv_val_col = "converted_value")
 }
 \arguments{
 \item{x}{Input dataset.}
 
-\item{input_unit}{Column name of x with units to convert from.}
+\item{value_var}{Column name of x containing result values (in quotes).}
 
-\item{target_unit}{Column name of x with units to convert to.}
+\item{conv_val_col}{Name of new values column for converted values (in quotes).}
 
-\item{value_var}{Column name of x containing result values.}
+\item{input_unit}{Column name of x with units to convert from (in quotes).}
 
-\item{conv_val_col}{Name of new values column for converted values.}
+\item{target_unit}{Column name of x with units to convert to (in quotes).}
 }
 \description{
 This converts flat data to target units as defined in the dataset. It creates three new columns in your dataset: 1. The converted unit value, 3. the conversion factor used, & 4. a recommended acceptance/rejection based on pairs of input & target units.
@@ -24,13 +24,13 @@ All original columns are retained.
 }
 \examples{
 # Make example data
-value=c(abs(rnorm(5,1, 0.1)), rnorm(5, 1000, 100))
-units=c(rep('mg/l',5), rep('ug/L', 5))
-target_unit=rep('mg/L', 10)
-data=data.frame(value,units,target_unit)
+value=c(abs(rnorm(5,1, 0.1)), rnorm(5, 1000, 100), rnorm(5, 20, 1))
+raw_units=c(rep('mg/l',5), rep('ug/L', 5), rep('deg C',5))
+preferred_units=c(rep('mg/L', 10), rep('deg C',5))
+data=data.frame(value,raw_units,preferred_units)
 data
 
 # Unit conversion
-conv_data=convertUnits(data, input_unit='units', target_unit='target_unit', value_var='value', conv_val_col='converted_value')
+conv_data=convertUnits(data, input_units='raw_units', target_units='preferred_units', value_var='value', conv_val_col='converted_value')
 conv_data
 }
