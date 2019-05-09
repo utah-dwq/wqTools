@@ -19,9 +19,9 @@ downloadWQP(outfile_path = getwd(), retrieve = c("narrowresult",
 
 \item{...}{Other arguments to be passed to readWQP when generating a query URL.}
 
-\item{StartDate}{Query start date. "mm/dd/yyyy" format.}
+\item{start_date}{Query start date. "mm/dd/yyyy" format.}
 
-\item{EndDate}{Query end date. "mm/dd/yyyy" format.}
+\item{end_date}{Query end date. "mm/dd/yyyy" format.}
 
 \item{zip}{Logical. If FALSE (default) files downloaded as zip folders are not automatically unzipped. If TRUE, the function will unzip all downloaded zip files. Only used if zip==TRUE.}
 }

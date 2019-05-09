@@ -2,8 +2,8 @@
 #'
 #' Download data from EPA's Water Quality Portal (WQP) as .csv files to outfile_path folder.
 #' @param outfile_path Path for file outputs. Defaults to current working directory.
-#' @param StartDate Query start date. "mm/dd/yyyy" format.
-#' @param EndDate Query end date. "mm/dd/yyyy" format.
+#' @param start_date Query start date. "mm/dd/yyyy" format.
+#' @param end_date Query end date. "mm/dd/yyyy" format.
 #' @param retrieve Vector of data type names to retrieve from WQP. One or more of: "result","narrowresult","activity","sites","detquantlim". Defaults to query narrowresult, activity, sites, and detquantlim.
 #' @param zip Logical. If FALSE (default) files are downloaded straight as csv. If TRUE, files are downloaded as zipped folders (helps prevent server time-outs, recommend for large downloads).
 #' @param zip Logical. If FALSE (default) files downloaded as zip folders are not automatically unzipped. If TRUE, the function will unzip all downloaded zip files. Only used if zip==TRUE.
