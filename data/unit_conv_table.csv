@@ -34,3 +34,4 @@ ug/L,mg/L,0.001,ACCEPT
 ,pH units,1,ACCEPT
 ,ug/L,,REJECT
 MG/L,ug/L,1000,ACCEPT
+ug/L,MG/L,0.001,ACCEPT
