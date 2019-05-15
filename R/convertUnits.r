@@ -26,8 +26,8 @@ convertUnits=function(x, input_units, target_units='target_unit', value_var, con
 	if(! input_units %in% names(x)){stop('input_units name not in x')}
 	if(! target_units %in% names(x)){stop('target_units name not in x')}
 	
-	get(data("unit_conv_table", envir = environment()))
-	
+	unit_conv_table=wqTools::unit_conv_table
+
 	names(unit_conv_table)[names(unit_conv_table)=='target_unit'] = paste(target_units)
 	names(unit_conv_table)[names(unit_conv_table)=='input_unit'] = paste(input_units)
 	x=merge(x, unit_conv_table, all.x=T)
