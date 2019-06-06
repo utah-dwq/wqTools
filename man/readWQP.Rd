@@ -5,10 +5,12 @@
 \title{Read EPA Water Quality Portal Data}
 \usage{
 readWQP(type = "result", ..., print = FALSE, coerce_num = FALSE,
-  url_only = FALSE)
+  url_only = FALSE, auid = NULL, au_geom = TRUE)
 }
 \arguments{
 \item{type}{Data type to read. One of "result", "narrowresult", "sites", "activity", or "detquantlim".}
+
+\item{...}{additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.}
 
 \item{print}{Logical. Print summary table of sites & characteristics (only for result or narrowresult types).}
 
@@ -16,11 +18,13 @@ readWQP(type = "result", ..., print = FALSE, coerce_num = FALSE,
 
 \item{url_only}{Logical. If FALSE (default) read and return data. If TRUE, return just the query url.}
 
+\item{auid}{Optional. A vector of Utah DWQ assessment unit identifiers for which to query data. Note that the siteid argument is ignored if auid is specified.}
+
+\item{au_geom}{If auid is specified, should data be subset to the assessment unit polygon geometries? If TRUE (default) data are subset by assessment unit polygon geometries. If FALSE, the bounding box of the assessment units specified in auid is used to query data (sites outside the assessment unit polygons may be returned). Ignored if auid is NULL.}
+
 \item{start_date}{Query start date in "mm/dd/yyyy" format.}
 
 \item{end_date}{Query end date in "mm/dd/yyyy" format.}
-
-\item{#'}{@param ... additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.}
 }
 \value{
 A data frame of WQP data
@@ -47,6 +51,19 @@ tds_sw=readWQP(type="result",
 			  characteristicName="Total dissolved solids",
 			  start_date="01/01/2016", end_date="12/31/2018",
 			  print=F)
+
+# Read data by assessment unit identifiers
+utah_lake_nr=readWQP(type="narrowresult",
+		auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02'),
+		start_date="01/01/2016", end_date="12/31/2018",
+		siteType=c("Lake, Reservoir, Impoundment","Stream"),
+		print=F)
+utah_lake_sites=readWQP(type="sites",
+		auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02'),
+		start_date="01/01/2016", end_date="12/31/2018",
+		siteType=c("Lake, Reservoir, Impoundment","Stream"),
+		print=F)
+buildMap(sites=utah_lake_sites)
 
 # Read DWQ's sites
 sites=readWQP(type="sites", statecode="US:49", organization="UTAHDWQ_WQX", siteType=c("Lake, Reservoir, Impoundment","Stream"))

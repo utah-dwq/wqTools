@@ -8,9 +8,11 @@
 #' @param start_date Query start date in "mm/dd/yyyy" format.
 #' @param end_date Query end date in "mm/dd/yyyy" format.
 #' @param coerce_num Logical. If TRUE the ResultMeasureValue column in result and narrowresult type reads is coerced to numeric values. This will generate NAs in the ResultMeasureValue column for non-numeric values. Defaults to FALSE.
-#' @param #' @param ... additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.
+#' @param ... additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.
 #' @param print Logical. Print summary table of sites & characteristics (only for result or narrowresult types).
 #' @param url_only Logical. If FALSE (default) read and return data. If TRUE, return just the query url.
+#' @param auid Optional. A vector of Utah DWQ assessment unit identifiers for which to query data. Note that the siteid argument is ignored if auid is specified.
+#' @param au_geom If auid is specified, should data be subset to the assessment unit polygon geometries? If TRUE (default) data are subset by assessment unit polygon geometries. If FALSE, the bounding box of the assessment units specified in auid is used to query data (sites outside the assessment unit polygons may be returned). Ignored if auid is NULL.
 #' @return A data frame of WQP data
 #' @examples
 #' # Read some data from Mantua Reservoir (2016-2018)
@@ -29,26 +31,75 @@
 #' 			  start_date="01/01/2016", end_date="12/31/2018",
 #' 			  print=F)
 #' 
+#' # Read data by assessment unit identifiers
+#' utah_lake_nr=readWQP(type="narrowresult",
+#' 		auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02'),
+#' 		start_date="01/01/2016", end_date="12/31/2018",
+#' 		siteType=c("Lake, Reservoir, Impoundment","Stream"),
+#' 		print=F)
+#' utah_lake_sites=readWQP(type="sites",
+#' 		auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02'),
+#' 		start_date="01/01/2016", end_date="12/31/2018",
+#' 		siteType=c("Lake, Reservoir, Impoundment","Stream"),
+#' 		print=F)
+#' buildMap(sites=utah_lake_sites)
+#'
 #' # Read DWQ's sites
 #' sites=readWQP(type="sites", statecode="US:49", organization="UTAHDWQ_WQX", siteType=c("Lake, Reservoir, Impoundment","Stream"))
 #' plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
 
 #' @export
-readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE, url_only=FALSE){
+readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE, url_only=FALSE, auid=NULL, au_geom=TRUE){
 args=list(...)
 
-#type="sites"
-##statecode="US:49"
-##characteristicName=c("Total dissolved solids","Arsenic","Cadmium")
+##type="sites"
+#type='narrowresult'
+###statecode="US:49"
+#characteristicName=c("Total dissolved solids","Arsenic","Cadmium")
 #siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470")
 #start_date="01/01/2018"
 #end_date="12/31/2018"
-#args=list(siteid=siteid, start_date=start_date, end_date=end_date)
+#auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02')
+#siteType=c("Lake, Reservoir, Impoundment","Stream", "Spring")
+#args=list(start_date=start_date, end_date=end_date, siteid=siteid, characteristicName=characteristicName, siteType=siteType)
+##args=list(start_date=start_date, end_date=end_date, siteid=siteid)
+#au_geom=TRUE
 
 pastecollapse=function(x){
 	return(paste0(names(x), "=", x, collapse="&"))
 }
 
+# Query by AU ID
+if(!is.null(auid)){
+	if(any(names(args)=='siteid')){
+		args=args[!names(args) %in% 'siteid']
+	}
+	au_poly=wqTools::au_poly
+	aus=au_poly[au_poly$ASSESS_ID %in% auid,]
+	bbox=sf::st_bbox(aus)
+	bBox=paste(bbox[1], bbox[2], bbox[3], bbox[4], sep='%2C')
+	args$bBox=bBox
+	if(any(names(args)=='siteType')){
+		siteTypes=args$siteType
+		for(n in 1:length(siteTypes)){
+			name=names(siteTypes)[n]
+			x=unlist(siteTypes[n])
+			names(x)=rep(name,length(x))
+			siteTypes[n]=pastecollapse(x)
+		}
+		siteTypes=paste0('siteType', siteTypes, collapse='&')
+		siteTypes=gsub(" ", "%20", siteTypes)
+		siteTypes=gsub(",", "%2C", siteTypes)
+		sites_url='https://www.waterqualitydata.us/data/Station/search?'
+		sites_url=paste0(sites_url, siteTypes, '&statecode=US:49', '&mimeType=csv&zip=no')
+	}else{
+		sites_url='https://www.waterqualitydata.us/data/Station/search?'
+		sites_url=paste0(sites_url, 'statecode=US:49', '&mimeType=csv&zip=no')
+	}
+	sites_url=paste0(sites_url, '&bBox=',bBox)
+	sites_bbox=read.csv(sites_url)
+}
+	
 if(any(names(args)=="start_date")){
 	args$startDateLo=format(as.Date(args$start_date, format='%m/%d/%Y'), format="%m-%d-%Y")
 	args=args[names(args)!="start_date"]
@@ -116,6 +167,12 @@ if((type=="result" | type=="narrowresult") & class(result$ResultMeasureValue)!="
 	rmv_num=as.numeric(ResultMeasureValue)
 	result$ResultMeasureValue=rmv_num
 	}
+
+if(au_geom){
+	sites_bbox=wqTools::assignAUs(sites_bbox)
+	sites_au=sites_bbox[sites_bbox$ASSESS_ID %in% auid,]
+	result=result[result$MonitoringLocationIdentifier %in% sites_au$MonitoringLocationIdentifier,]
+}
 
 return(result)
 }else{return(path)}
