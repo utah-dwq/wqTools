@@ -32,7 +32,7 @@
 #' #html maps can be saved via htmlwidgets package saveWidget(map1, file="your/path/map1.html")
 
 #' @export
-buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus"), plot_polys=TRUE){
+buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus"), plot_polys=TRUE, ...){
 	
 	if(missing(au_poly)){get(data("au_poly", envir = environment()))}
 	if(missing(bu_poly)){get(data("bu_poly", envir = environment()))}
@@ -44,7 +44,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 	if(missing(fac) & missing(sites)){
 		#Build empty map
 		
-		map=leaflet::leaflet(au_poly)
+		map=leaflet::leaflet(au_poly, ...)
 			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo")
 			map=leaflet::addProviderTiles(map,"Esri.WorldImagery", group = "Satellite")
 			
@@ -134,7 +134,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 		
 		#Build map
 		
-		map=leaflet::leaflet(locs)
+		map=leaflet::leaflet(locs, ...)
 			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo")
 			map=leaflet::addProviderTiles(map,"Esri.WorldImagery", group = "Satellite")
 			
