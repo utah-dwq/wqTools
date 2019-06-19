@@ -5,7 +5,7 @@
 \title{Build a site map of WQP sites or ECHO facilities}
 \usage{
 buildMap(fac, sites, au_poly, bu_poly, ss_poly, search = c("sites",
-  "aus"), plot_polys = TRUE)
+  "aus"), plot_polys = TRUE, ...)
 }
 \arguments{
 \item{fac}{Facility locations queried via readECHO_fac.}
