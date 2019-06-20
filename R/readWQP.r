@@ -71,7 +71,6 @@ pastecollapse=function(x){
 
 # Query by AU ID
 if(!missing(auid)){
-	print(exists('auid'))
 	if(any(names(args)=='siteid')){
 		args=args[!names(args) %in% 'siteid']
 	}
