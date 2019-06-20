@@ -14,6 +14,7 @@
 #' @param auid Optional. A vector of Utah DWQ assessment unit identifiers for which to query data. Note that the siteid argument is ignored if auid is specified.
 #' @param au_geom If auid is specified, should data be subset to the assessment unit polygon geometries? If TRUE (default) data are subset by assessment unit polygon geometries. If FALSE, the bounding box of the assessment units specified in auid is used to query data (sites outside the assessment unit polygons may be returned). Ignored if auid is NULL.
 #' @return A data frame of WQP data
+#' @importFrom data.table fread
 #' @examples
 #' # Read some data from Mantua Reservoir (2016-2018)
 #' nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
@@ -37,11 +38,10 @@
 #' 		start_date="01/01/2016", end_date="12/31/2018",
 #' 		siteType=c("Lake, Reservoir, Impoundment","Stream"),
 #' 		print=F)
-#' utah_lake_sites=readWQP(type="sites",
-#' 		auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02'),
-#' 		start_date="01/01/2016", end_date="12/31/2018",
-#' 		siteType=c("Lake, Reservoir, Impoundment","Stream"),
-#' 		print=F)
+#'  utah_lake_sites=readWQP(type="sites",
+#'  		auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02'),
+#'  		siteType=c("Lake, Reservoir, Impoundment","Stream"),
+#'  		print=F)
 #' buildMap(sites=utah_lake_sites)
 #'
 #' # Read DWQ's sites
@@ -97,7 +97,7 @@ if(!missing(auid)){
 		sites_url=paste0(sites_url, 'statecode=US:49', '&mimeType=csv&zip=no')
 	}
 	sites_url=paste0(sites_url, '&bBox=',bBox)
-	sites_bbox=read.csv(sites_url)
+	sites_bbox=data.table::fread(sites_url)
 }
 	
 if(any(names(args)=="start_date")){
@@ -149,7 +149,10 @@ n=1
 while(!exists('result',inherits=F) & n<=10){
 	n=n+1
 	try({
-		suppressWarnings({result=plyr::ldply(path,.fun=read.csv, na.strings=c(""," ","NA"),.progress="text")})
+		#suppressWarnings({result=plyr::ldply(path,.fun=read.csv, na.strings=c(""," ","NA"),.progress="text")})
+		#suppressWarnings({
+			result=data.table::fread(path, showProgress=TRUE, na.strings=c("","NA"))
+		#})
 	})
 }
 
