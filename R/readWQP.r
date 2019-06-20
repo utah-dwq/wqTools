@@ -70,7 +70,8 @@ pastecollapse=function(x){
 }
 
 # Query by AU ID
-if(!is.null(auid)){
+if(!missing(auid)){
+	print(exists('auid'))
 	if(any(names(args)=='siteid')){
 		args=args[!names(args) %in% 'siteid']
 	}
@@ -168,7 +169,7 @@ if((type=="result" | type=="narrowresult") & class(result$ResultMeasureValue)!="
 	result$ResultMeasureValue=rmv_num
 	}
 
-if(au_geom){
+if(!missing(auid) & au_geom){
 	sites_bbox=wqTools::assignAUs(sites_bbox)
 	sites_au=sites_bbox[sites_bbox$ASSESS_ID %in% auid,]
 	result=result[result$MonitoringLocationIdentifier %in% sites_au$MonitoringLocationIdentifier,]
