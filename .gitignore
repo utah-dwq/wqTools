@@ -2,3 +2,11 @@ inst/doc
 doc
 Meta
 draft
+data/raw_spatial/StreamsNHDHighRes.cpg
+data/raw_spatial/StreamsNHDHighRes.dbf
+data/raw_spatial/StreamsNHDHighRes.prj
+data/raw_spatial/StreamsNHDHighRes.sbn
+data/raw_spatial/StreamsNHDHighRes.sbx
+data/raw_spatial/StreamsNHDHighRes.shp
+data/raw_spatial/StreamsNHDHighRes.shp.xml
+data/raw_spatial/StreamsNHDHighRes.shx
