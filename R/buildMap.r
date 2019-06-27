@@ -34,10 +34,11 @@
 #' @export
 buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus"), plot_polys=TRUE, ...){
 	
-	if(missing(au_poly)){get(data("au_poly", envir = environment()))}
-	if(missing(bu_poly)){get(data("bu_poly", envir = environment()))}
-	if(missing(ss_poly)){get(data("ss_poly", envir = environment()))}
-	get(data("ut_poly", envir = environment()))
+	if(missing(au_poly)){au_poly=wqTools::au_poly}
+	if(missing(bu_poly)){bu_poly=wqTools::bu_poly}
+	if(missing(ss_poly)){ss_poly=wqTools::ss_poly}
+	ut_poly=wqTools::ut_poly
+	wmu_poly=wqTools::wmu_poly
 	au_centroids=suppressWarnings(sf::st_centroid(au_poly))
 	au_centroids=cbind(au_centroids,sf::st_coordinates(au_centroids))
 	
@@ -69,7 +70,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 						"Description: ", bu_poly$R317Descrp,
 						"<br> Uses: ", bu_poly$bu_class)
 					)
-				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$ASSESS_ID,weight=3,color="orange", options = pathOptions(pane = "au_poly"),
+				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$polyID,weight=3,color="orange", options = pathOptions(pane = "au_poly"),
 					popup=paste0(
 						"AU name: ", au_poly$AU_NAME,
 						"<br> AU ID: ", au_poly$ASSESS_ID,
@@ -78,15 +79,19 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 				map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue", options = pathOptions(pane = "underlay_polygons"),
 					popup=paste0("SS std: ", ss_poly$SiteSpecif)
 					)
+				map=addPolygons(map, data=wmu_poly,group="Watershed management units",smoothFactor=4,fillOpacity = 0.1,weight=3,color="red", options = pathOptions(pane = "underlay_polygons"),
+					popup=wmu_poly$Mgmt_Unit
+					)
 				map=addPolygons(map, data=ut_poly,group="UT boundary",smoothFactor=4,fillOpacity = 0.1,weight=3,color="purple", options = pathOptions(pane = "underlay_polygons"))
 				map=leaflet::addLayersControl(map,
 					position ="topleft",
-					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "UT boundary"),
+					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "Watershed management units", "UT boundary"),
 					options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
 				map=hideGroup(map, "Assessment units")
 				map=hideGroup(map, "Site-specific standards")
 				map=hideGroup(map, "Beneficial uses")
 				map=hideGroup(map, "UT boundary")
+				map=hideGroup(map, "Watershed management units")
 
 			}
 			
@@ -184,7 +189,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 						"Description: ", bu_poly$R317Descrp,
 						"<br> Uses: ", bu_poly$bu_class)
 					)
-				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$ASSESS_ID,weight=3,color="orange", options = pathOptions(pane = "au_poly"),
+				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$polyID,weight=3,color="orange", options = pathOptions(pane = "au_poly"),
 					popup=paste0(
 						"AU name: ", au_poly$AU_NAME,
 						"<br> AU ID: ", au_poly$ASSESS_ID,
@@ -194,15 +199,19 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 					popup=paste0("SS std: ", ss_poly$SiteSpecif)
 					)
 				map=addPolygons(map, data=ut_poly,group="UT boundary",smoothFactor=4,fillOpacity = 0.1,weight=3,color="purple", options = pathOptions(pane = "underlay_polygons"))
+				map=addPolygons(map, data=wmu_poly,group="Watershed management units",smoothFactor=4,fillOpacity = 0.1,weight=3,color="red", options = pathOptions(pane = "underlay_polygons"),
+					popup=wmu_poly$Mgmt_Unit
+					)
 				map=leaflet::addLayersControl(map,
 					position ="topleft",
-					baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites","Labels","Assessment units","Beneficial uses", "Site-specific standards", "UT boundary"),
+					baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites","Labels","Assessment units","Beneficial uses", "Site-specific standards", "Watershed management units", "UT boundary"),
 					options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
 				map=hideGroup(map, "Assessment units")
 				map=hideGroup(map, "Site-specific standards")
 				map=hideGroup(map, "Beneficial uses")
 				map=hideGroup(map, "Labels")
 				map=hideGroup(map, "UT boundary")
+				map=hideGroup(map, "Watershed management units")
 			}else{
 				map=leaflet::addLayersControl(map,
 					position ="topleft",
