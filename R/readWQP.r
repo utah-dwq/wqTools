@@ -177,6 +177,7 @@ if(!missing(auid) & au_geom){
 	result=result[result$MonitoringLocationIdentifier %in% sites_au$MonitoringLocationIdentifier,]
 }
 
+names(result)=make.names(names(result))
 return(result)
 }else{return(path)}
 
