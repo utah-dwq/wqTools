@@ -70,7 +70,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 						"Description: ", bu_poly$R317Descrp,
 						"<br> Uses: ", bu_poly$bu_class)
 					)
-				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$polyID,weight=3,color="purple", options = pathOptions(pane = "au_poly"),
+				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$polyID,weight=3,color="orange", options = pathOptions(pane = "au_poly"),
 					popup=paste0(
 						"AU name: ", au_poly$AU_NAME,
 						"<br> AU ID: ", au_poly$ASSESS_ID,
@@ -82,7 +82,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 				map=addPolygons(map, data=wmu_poly,group="Watershed management units",smoothFactor=4,fillOpacity = 0.1,weight=3,color="red", options = pathOptions(pane = "underlay_polygons"),
 					popup=wmu_poly$Mgmt_Unit
 					)
-				map=addPolygons(map, data=ut_poly,group="UT boundary",smoothFactor=4,fillOpacity = 0.1,weight=3,color="orange", options = pathOptions(pane = "underlay_polygons"))
+				map=addPolygons(map, data=ut_poly,group="UT boundary",smoothFactor=4,fillOpacity = 0.1,weight=3,color="purple", options = pathOptions(pane = "underlay_polygons"))
 				map=leaflet::addLayersControl(map,
 					position ="topleft",
 					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "Watershed management units", "UT boundary"),
@@ -189,7 +189,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 						"Description: ", bu_poly$R317Descrp,
 						"<br> Uses: ", bu_poly$bu_class)
 					)
-				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$polyID,weight=3,color="purple", options = pathOptions(pane = "au_poly"),
+				map=addPolygons(map, data=au_poly,group="Assessment units",smoothFactor=4,fillOpacity = 0.1, layerId=au_poly$polyID,weight=3,color="orange", options = pathOptions(pane = "au_poly"),
 					popup=paste0(
 						"AU name: ", au_poly$AU_NAME,
 						"<br> AU ID: ", au_poly$ASSESS_ID,
@@ -198,7 +198,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 				map=addPolygons(map, data=ss_poly,group="Site-specific standards",smoothFactor=4,fillOpacity = 0.1,weight=3,color="blue", options = pathOptions(pane = "underlay_polygons"),
 					popup=paste0("SS std: ", ss_poly$SiteSpecif)
 					)
-				map=addPolygons(map, data=ut_poly,group="UT boundary",smoothFactor=4,fillOpacity = 0.1,weight=3,color="orange", options = pathOptions(pane = "underlay_polygons"))
+				map=addPolygons(map, data=ut_poly,group="UT boundary",smoothFactor=4,fillOpacity = 0.1,weight=3,color="purple", options = pathOptions(pane = "underlay_polygons"))
 				map=addPolygons(map, data=wmu_poly,group="Watershed management units",smoothFactor=4,fillOpacity = 0.1,weight=3,color="red", options = pathOptions(pane = "underlay_polygons"),
 					popup=wmu_poly$Mgmt_Unit
 					)
