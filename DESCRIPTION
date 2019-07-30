@@ -27,3 +27,5 @@ Imports:
 	tidyr
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
+
+

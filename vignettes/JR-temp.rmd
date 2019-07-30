@@ -2,8 +2,12 @@
 title: "Jordan River Water Temperature Analyses"
 author: "Jake Vander Laan"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_document
----
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Put the title of your vignette here}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+  ---
 
 # Introduction
 This vignette demonstrates uses of the wqTools package by conducting an analysis of water temperatures in the Jordan River above and below a publically owned waste water treatment facility.  
