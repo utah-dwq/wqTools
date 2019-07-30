@@ -1,23 +1,7 @@
 ---
 title: "JR-temperature"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{JR-temperature}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output: rmarkdown::html_document
 ---
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
-```{r setup}
-library(wqTools)
-```
-
 
 # Introduction
 This vignette demonstrates uses of the wqTools package by conducting an analysis of water temperatures in the Jordan River above and below a publically owned waste water treatment facility.  
@@ -53,7 +37,8 @@ Future plans include functionality to click-to-download by AU from the map, but 
 # Query water temperature data from WQP
 Provide a vector of AU IDs to readWQP() to query data by AU. Use the characteristicName argument to get just water temperature data. You can use the [EPA WQP web interface](https://www.waterqualitydata.us/portal/) to help build your query by identifying approporaite parameter names etc.
 ```{r, readWQP}
-temp_data=readWQP(type='result', auid=c('UT-L-16020201-004_01', 'UT16020201-008_00', 'UT16020204-007_00', 'UT16020204-006_00', 'UT16020204-005_00', 'UT16020204-004_00'), characteristicName='Temperature, water')
+temp_data=readWQP(type='result', auid=c('UT-L-16020201-004_01', 'UT16020201-008_00', 'UT16020204-007_00', 'UT16020204-006_00', 'UT16020204-005_00', 'UT16020204-004_00'), characteristicName='Temperature, water', 
+							     siteType=c('Lake, Reservoir, Impoundment', 'Stream'))
 ```
 
 Take a look at the activity types available and the organizations they came from to make sure they fit your analytical needs.
@@ -118,6 +103,18 @@ temp_data$ResultMeasureValue=as.numeric(temp_data$ResultMeasureValue)
 temp_data$year=lubridate::year(temp_data$ActivityStartDate)
 boxplot(ResultMeasureValue~year, temp_data, ylab='Temperature, water (deg C)', xlab='')
 boxplot(ResultMeasureValue~droplevels(AU_NAME), temp_data, ylab='Temperature, water (deg C)', xlab='')
+boxplot(ResultMeasureValue~droplevels(MonitoringLocationName), temp_data[temp_data$AU_NAME!='Utah Lake',], ylab='Temperature, water (deg C)', xlab='')
 ```
+
+
+
+
+above
+UTAHDWQ_WQX-4994520, UTAHDWQ_WQX-4994730, UTAHDWQ_WQX-4999520
+
+below
+UTAHDWQ_WQX-4994490, UTAHDWQ_WQX-4994500, UTAHDWQ_WQX-4994370
+
+
 
 
