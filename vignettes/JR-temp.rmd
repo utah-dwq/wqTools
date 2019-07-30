@@ -1,0 +1,113 @@
+---
+title: "Jordan River Water Temperature Analyses"
+author: "Jake Vander Laan"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+---
+
+# Introduction
+This vignette demonstrates uses of the wqTools package by conducting an analysis of water temperatures in the Jordan River above and below a publically owned waste water treatment facility.  
+Processes included in this vignette include querying data from the Water Quality Portal by assessment unit (AU) identifiers, querying facility locations, building a map, and some data analysis.
+
+
+# Install & load wqTools package
+```{r, packages1, eval=F}
+install.packages('devtools')
+install.packages('DT')
+install.packages('knitr')
+install.packages('lubridate')
+install.packages('sf')
+devtools::install_github('utah-dwq/wqTools')
+```
+
+```{r, packages2}
+library(wqTools)
+```
+
+# State-wide AU map
+Build a state-wide AU map and use it to identify the AUs we need to query data from.
+```{r, sw-map}
+buildMap()
+```
+
+AU polygons can be turned on by clicking the map layers control button in the top left corner of the map. Click the checkbox next to 'Assessment units' to turn on the AUs. 
+Zoom into the desired location and click on the AUs to popup the AU IDs and names.  
+The AU IDs we need in this case are: UT-L-16020201-004_01, UT16020201-008_00, & UT16020204-007_00.  
+Future plans include functionality to click-to-download by AU from the map, but for now, we can just grab the AU IDs we need.
+
+
+# Query water temperature data from WQP
+Provide a vector of AU IDs to readWQP() to query data by AU. Use the characteristicName argument to get just water temperature data. You can use the [EPA WQP web interface](https://www.waterqualitydata.us/portal/) to help build your query by identifying approporaite parameter names etc.
+```{r, readWQP}
+temp_data=readWQP(type='result', auid=c('UT-L-16020201-004_01', 'UT16020201-008_00', 'UT16020204-007_00', 'UT16020204-006_00', 'UT16020204-005_00', 'UT16020204-004_00'), characteristicName='Temperature, water')
+```
+
+Take a look at the activity types available and the organizations they came from to make sure they fit your analytical needs.
+```{r}
+knitr::kable(table(temp_data$ActivityTypeCode, temp_data$OrganizationIdentifier))
+```
+
+In this case, subset to just field measured temperatures.  
+
+```{r}
+temp_data=subset(temp_data, ActivityTypeCode=='Field Msr/Obs' | ActivityTypeCode=='Field Msr/Obs-Portable Data Logger')
+```
+
+# Query site locations associated with temperature data
+```{r, query-sites}
+sites=readWQP(type='sites', siteid=unique(temp_data$MonitoringLocationIdentifier))
+```
+
+# Query facility location
+We can use the readECHO_fac() function to query facility locations from EPA ECHO. If you don't know the facility number you're looking for, you can query all facilities for the state and build a map to find the one you want.
+```{r, read-fac1}
+ut_fac=readECHO_fac(p_st="ut", p_act="y")
+buildMap(fac=ut_fac)
+```
+
+For this analysis, we want facility ID UT0025852.
+```{r, read-fac2}
+jbwr_loc=readECHO_fac(p_pid='UT0025852')
+```
+
+# Map the queried site and facility locations
+```{r, samp-map}
+buildMap(sites=sites, fac=jbwr_loc)
+```
+
+# Assign AUs and uses to site locations
+```{r, assign-aus-uses}
+sites=assignUses(sites)
+sites=assignAUs(sites)
+```
+
+# Merge site info to results
+```{r}
+temp_data=merge(temp_data, sites, all.x=T)
+```
+
+# Check on site types & units present, subset to appropriate types
+```{r}
+knitr::kable(table(temp_data$MonitoringLocationTypeName))
+temp_data=subset(temp_data, MonitoringLocationTypeName=='River/Stream' | MonitoringLocationTypeName=='Lake')
+knitr::kable(table(temp_data$ResultMeasure.MeasureUnitCode))
+```
+
+# Export data
+```{r}
+writexl::write_xlsx(list(data=temp_data), path = "C:/Users/jvander/Documents/jr-temp-data.xlsx", format_headers=F, col_names=T)
+```
+
+# Some analyses
+```{r, analyses}
+temp_data$ResultMeasureValue=as.numeric(temp_data$ResultMeasureValue)
+temp_data$year=lubridate::year(temp_data$ActivityStartDate)
+boxplot(ResultMeasureValue~year, temp_data, ylab='Temperature, water (deg C)', xlab='')
+boxplot(ResultMeasureValue~droplevels(AU_NAME), temp_data, ylab='Temperature, water (deg C)', xlab='')
+```
+
+
+
+
+
+
