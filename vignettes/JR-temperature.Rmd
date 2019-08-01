@@ -103,18 +103,42 @@ temp_data$ResultMeasureValue=as.numeric(temp_data$ResultMeasureValue)
 temp_data$year=lubridate::year(temp_data$ActivityStartDate)
 boxplot(ResultMeasureValue~year, temp_data, ylab='Temperature, water (deg C)', xlab='')
 boxplot(ResultMeasureValue~droplevels(AU_NAME), temp_data, ylab='Temperature, water (deg C)', xlab='')
-boxplot(ResultMeasureValue~droplevels(MonitoringLocationName), temp_data[temp_data$AU_NAME!='Utah Lake',], ylab='Temperature, water (deg C)', xlab='')
+```
+
+# Assign data to above/below example
+```{r}
+temp_data$location=NA # making a blank column to hold Above/Below
+temp_data$location[temp_data$MonitoringLocationIdentifier %in% c('UTAHDWQ_WQX-4994520','UTAHDWQ_WQX-4994730','UTAHDWQ_WQX-4999520')] = 'Above' # %in% operator is similar to MLID=='xxx' | MLID=='yyy' | etc....
+temp_data$location[temp_data$MonitoringLocationIdentifier %in% c('UTAHDWQ_WQX-4994490','UTAHDWQ_WQX-4994500','UTAHDWQ_WQX-4994370')] = 'Below' # %in% operator is similar to MLID=='xxx' | MLID=='yyy' | etc....
+boxplot(ResultMeasureValue~location, temp_data, ylab='Temperature, water (deg C)', xlab='')
 ```
 
 
+# Paired boxplot example
+```{r}
+temp_data$month=lubridate::month(temp_data$ActivityStartDate)
+boxplot(ResultMeasureValue~month, temp_data, ylab='Temperature, water (deg C)', xlab='')
+boxplot(ResultMeasureValue~location*month, temp_data, ylab='Temperature, water (deg C)', xlab='', las=2) #las=2 argument rotates labels so we can see them all
+# Note that the order in which the x variables are supplied matters (try swapping to see the difference).
+```
+
+# Other plotting package options
+## ggplot
+```{r}
+library(ggplot2) # install package if not already installed via install.packages('ggplot2') and install.packages('ggthemes')
+library(ggthemes)
+ggplot(data=temp_data[!is.na(temp_data$location),], aes(x=as.factor(month), y=ResultMeasureValue, fill=location)) + geom_boxplot() + labs(fill='Location', x='Month', y='Temperature, water (deg C)') + ggthemes::theme_hc()
+```
 
 
-above
-UTAHDWQ_WQX-4994520, UTAHDWQ_WQX-4994730, UTAHDWQ_WQX-4999520
-
-below
-UTAHDWQ_WQX-4994490, UTAHDWQ_WQX-4994500, UTAHDWQ_WQX-4994370
-
-
-
+## plotly
+```{r}
+library(plotly) # install package if not already installed via install.packages('plotly'). With plotly, we usually use the pipe operator, %>% to add arguments, features, additional traces, etc.
+plot_ly(data=temp_data[!is.na(temp_data$location),], type='box', x=~month, y=~ResultMeasureValue, name=~location) %>%
+		layout(title = "Jordan River Water Temperature, above & below POTW",
+			boxmode = "group",
+			xaxis = list(title = "Month"),
+			yaxis = list(side = 'left', title = 'Temperature, water (deg C)')
+		)
+```
 
