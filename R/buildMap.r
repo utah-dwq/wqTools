@@ -103,7 +103,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 					autoCollapse = TRUE, hideMarkerOnCollapse = TRUE ))
 			}
 			
-			map=leaflet::addMeasure(map, position="topright")
+			map=leaflet::addMeasure(map, position="topright", primaryLengthUnit='meters', secondaryLengthUnit='kilometers')
 
 	}else{
 		if(!missing(sites)){
