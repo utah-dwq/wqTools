@@ -19,7 +19,7 @@
 #' @export
 assignUses=function(x, lat="LatitudeMeasure", long="LongitudeMeasure", flatten=FALSE){
 	
-	data(bu_poly)
+	bu_poly=wqTools::bu_poly
 	poly=sf::st_as_sf(bu_poly)
 	
 	x=sf::st_as_sf(x, coords=c(long,lat), crs=4326, remove=F)

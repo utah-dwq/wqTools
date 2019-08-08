@@ -52,7 +52,7 @@
 readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE, url_only=FALSE, auid=NULL, au_geom=TRUE){
 args=list(...)
 
-##type="sites"
+#type="sites"
 #type='narrowresult'
 ###statecode="US:49"
 #characteristicName=c("Total dissolved solids","Arsenic","Cadmium")
@@ -62,7 +62,7 @@ args=list(...)
 #auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02')
 #siteType=c("Lake, Reservoir, Impoundment","Stream", "Spring")
 #args=list(start_date=start_date, end_date=end_date, siteid=siteid, characteristicName=characteristicName, siteType=siteType)
-##args=list(start_date=start_date, end_date=end_date, siteid=siteid)
+#args=list(auid=auid)
 #au_geom=TRUE
 
 pastecollapse=function(x){
@@ -79,25 +79,7 @@ if(!missing(auid)){
 	bbox=sf::st_bbox(aus)
 	bBox=paste(bbox[1], bbox[2], bbox[3], bbox[4], sep='%2C')
 	args$bBox=bBox
-	if(any(names(args)=='siteType')){
-		siteTypes=args$siteType
-		for(n in 1:length(siteTypes)){
-			name=names(siteTypes)[n]
-			x=unlist(siteTypes[n])
-			names(x)=rep(name,length(x))
-			siteTypes[n]=pastecollapse(x)
-		}
-		siteTypes=paste0('siteType', siteTypes, collapse='&')
-		siteTypes=gsub(" ", "%20", siteTypes)
-		siteTypes=gsub(",", "%2C", siteTypes)
-		sites_url='https://www.waterqualitydata.us/data/Station/search?'
-		sites_url=paste0(sites_url, siteTypes, '&statecode=US:49', '&mimeType=csv&zip=no')
-	}else{
-		sites_url='https://www.waterqualitydata.us/data/Station/search?'
-		sites_url=paste0(sites_url, 'statecode=US:49', '&mimeType=csv&zip=no')
-	}
-	sites_url=paste0(sites_url, '&bBox=',bBox)
-	sites_bbox=data.table::fread(sites_url)
+	args=args[!names(args) %in% 'auid']
 }
 	
 if(any(names(args)=="start_date")){
@@ -149,11 +131,37 @@ n=1
 while(!exists('result',inherits=F) & n<=10){
 	n=n+1
 	try({
-		#suppressWarnings({result=plyr::ldply(path,.fun=read.csv, na.strings=c(""," ","NA"),.progress="text")})
-		#suppressWarnings({
-			result=data.table::fread(path, showProgress=TRUE, na.strings=c("","NA"))
-		#})
+			result=data.table::fread(path, na.strings=c("","NA"))
 	})
+}
+
+if(!missing(auid) & au_geom){
+	if(type!='sites'){
+		if(any(names(args)=='siteType')){
+			siteTypes=args$siteType
+			for(n in 1:length(siteTypes)){
+				name=names(siteTypes)[n]
+				x=unlist(siteTypes[n])
+				names(x)=rep(name,length(x))
+				siteTypes[n]=pastecollapse(x)
+			}
+			siteTypes=paste0('siteType', siteTypes, collapse='&')
+			siteTypes=gsub(" ", "%20", siteTypes)
+			siteTypes=gsub(",", "%2C", siteTypes)
+			sites_url='https://www.waterqualitydata.us/data/Station/search?'
+			sites_url=paste0(sites_url, siteTypes, '&statecode=US:49', '&mimeType=csv&zip=no')
+		}else{
+			sites_url='https://www.waterqualitydata.us/data/Station/search?'
+			sites_url=paste0(sites_url, 'statecode=US:49', '&mimeType=csv&zip=no')
+		}
+		sites_url=paste0(sites_url, '&bBox=',bBox)
+		sites_bbox=data.table::fread(sites_url)
+	}else{
+		sites_bbox=result
+	}
+	sites_bbox=wqTools::assignAUs(sites_bbox)
+	sites_au=sites_bbox[sites_bbox$ASSESS_ID %in% auid,]
+	result=result[result$MonitoringLocationIdentifier %in% sites_au$MonitoringLocationIdentifier,]
 }
 
 if(print & exists('result',inherits=F) & (type=="result" | type=="narrowresult")){
@@ -171,13 +179,8 @@ if((type=="result" | type=="narrowresult") & class(result$ResultMeasureValue)!="
 	result$ResultMeasureValue=rmv_num
 	}
 
-if(!missing(auid) & au_geom){
-	sites_bbox=wqTools::assignAUs(sites_bbox)
-	sites_au=sites_bbox[sites_bbox$ASSESS_ID %in% auid,]
-	result=result[result$MonitoringLocationIdentifier %in% sites_au$MonitoringLocationIdentifier,]
-}
-
 names(result)=make.names(names(result))
+
 return(result)
 }else{return(path)}
 

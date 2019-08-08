@@ -15,7 +15,7 @@
 #' @export
 assignAUs=function(x, lat="LatitudeMeasure", long="LongitudeMeasure"){
 	
-	data(au_poly)
+	au_poly=wqTools::au_poly
 	poly=sf::st_as_sf(au_poly)
 	poly=poly[,c("AU_NAME","ASSESS_ID","AU_DESCRIP","AU_Type")]
 	
