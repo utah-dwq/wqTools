@@ -1,13 +1,16 @@
 #' Assign Utah beneficial use classes to sites
 #'
 #' This function assigns beneficial use classes to water quality portal type site objects (or data with site information attached).
-#' @param x Input dataset. Must include latitude & longitude columns.
+#' @param data Input dataset. Must include latitude & longitude columns.
 #' @param lat Name of latitude column. Default matches WQP objects.
 #' @param long Name of longitude column. Default matches WQP objects.
 #' @param flatten Logical. If FALSE (default), maintain use categorys as single comma separated column. If TRUE, use column and data are flattened by expanded use column.
 #' @importFrom sf st_as_sf
 #' @importFrom sf st_set_crs
 #' @importFrom sf st_intersection
+#' @importFrom sf st_difference
+#' @importFrom lwgeom st_make_valid
+#' @importFrom sf st_geometry
 #' @importFrom reshape2 colsplit
 #' @importFrom reshape2 melt
 #' @examples 
@@ -17,16 +20,26 @@
 #' sites_uses_flat=assignUses(sites, flatten=TRUE)
 
 #' @export
-assignUses=function(x, lat="LatitudeMeasure", long="LongitudeMeasure", flatten=FALSE){
+assignUses=function(data, lat="LatitudeMeasure", long="LongitudeMeasure", flatten=FALSE){
+	
+	intpoly <- function(polygon, sites_object, sites){
+		isect=suppressMessages({suppressWarnings({sf::st_intersection(sites, sf::st_difference(lwgeom::st_make_valid(polygon)))})})
+		sf::st_geometry(isect)=NULL
+		check=dim(sites_object)[1]
+		sites_object=merge(sites_object,isect,all.x=TRUE)
+		if(dim(sites_object)[1]!=check){
+		stop("Spatial join and merge causing duplicated values.")
+		}
+		return(sites_object)
+	}
 	
 	bu_poly=wqTools::bu_poly
-	poly=sf::st_as_sf(bu_poly)
 	
+	x=data
 	x=sf::st_as_sf(x, coords=c(long,lat), crs=4326, remove=F)
-	x=sf::st_set_crs(x, sf::st_crs(poly))	
+	x=sf::st_set_crs(x, sf::st_crs(bu_poly))	
 	
-	isect=suppressMessages({suppressWarnings({sf::st_intersection(x, poly)})})
-	sf::st_geometry(isect)=NULL
+	isect=intpoly(bu_poly, data, x)
 	
 	if(flatten){
 		#Expand comma separated uses (bu_class)
@@ -43,7 +56,7 @@ assignUses=function(x, lat="LatitudeMeasure", long="LongitudeMeasure", flatten=F
 		#Merge flat uses back to data by bu_class
 		result=merge(isect,uses_flat,all=T)
 		}else{
-			result=isect
+			result=merge(data, isect, all.x=T)
 			names(result)[names(result)=="bu_class"]="BeneficialUse"
 			}
 			

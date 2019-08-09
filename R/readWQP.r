@@ -131,7 +131,7 @@ n=1
 while(!exists('result',inherits=F) & n<=10){
 	n=n+1
 	try({
-			result=data.table::fread(path, na.strings=c("","NA"))
+			result=as.data.frame(data.table::fread(path, na.strings=c("","NA")))
 	})
 }
 
@@ -155,7 +155,7 @@ if(!missing(auid) & au_geom){
 			sites_url=paste0(sites_url, 'statecode=US:49', '&mimeType=csv&zip=no')
 		}
 		sites_url=paste0(sites_url, '&bBox=',bBox)
-		sites_bbox=data.table::fread(sites_url)
+		sites_bbox=as.data.frame(data.table::fread(sites_url))
 	}else{
 		sites_bbox=result
 	}

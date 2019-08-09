@@ -1,7 +1,7 @@
 #' Assign Utah assessment units to sites
 #'
 #' This function assigns assessment units to water quality portal type site objects (or data with site information attached). This can be done before or after assigning beneficial uses.
-#' @param x Input dataset. Must include latitude & longitude columns.
+#' @param data Input dataset. Must include latitude & longitude columns.
 #' @param lat Name of latitude column. Default matches WQP objects.
 #' @param long Name of longitude column. Default matches WQP objects.
 #' @importFrom sf st_as_sf
@@ -13,17 +13,15 @@
 #' sites_AUs=assignUses(sites)
 #' @return Returns the input data frame with assessment unit information appended.
 #' @export
-assignAUs=function(x, lat="LatitudeMeasure", long="LongitudeMeasure"){
-	
+assignAUs=function(data, lat="LatitudeMeasure", long="LongitudeMeasure"){
 	au_poly=wqTools::au_poly
 	poly=sf::st_as_sf(au_poly)
 	poly=poly[,c("AU_NAME","ASSESS_ID","AU_DESCRIP","AU_Type")]
-	
+	x=data
 	x=sf::st_as_sf(x, coords=c(long,lat), crs=4326, remove=F)
 	x=sf::st_set_crs(x, sf::st_crs(poly))	
-	
 	isect=suppressMessages({suppressWarnings({sf::st_intersection(x, poly)})})
 	sf::st_geometry(isect)=NULL
-	
-	return(isect)
+	result=merge(data, isect, all.x=T)
+	return(result)
 }
