@@ -15,27 +15,32 @@
 #' plot(TSIchl~ChlA,tsi)
 
 #' @export
-calcTSI=function(x,in_format="wide",chl_ugL="chla",TP_mgL="TP",SD_m="SD"){
+calcTSI=function(x,in_format="flat",chl_ugL="Chlorophyll a",TP_mgL="Phosphate-phosphorus",SD_m="Depth, Secchi disk depth", value_var='ResultMeasureValue', param_var='CharacteristicName'){
+#x=trophic_data
+#x=within(x, {
+#	IR_Value[IR_Value == 0] = 0.001
+#})
+#any(x[,'IR_Value'] == 0, na.rm=T)
+#chl_ugL="Chlorophyll a"
+#TP_mgL="Phosphate-phosphorus"
+#SD_m="Depth, Secchi disk depth"
+#value_var='IR_Value'
+#param_var='CharacteristicName'
+
 #default input units: chla (ug/L), TP (mg/L), SD (m)
 	if(in_format=="wide"){
 		TSIchl=9.81*log(x[,chl_ugL])+30.6
 		TSItp=14.2*log(x[,TP_mgL]*1000)+4.15
 		TSIsd=60-14.41*log(x[,SD_m])
-		tsi=cbind(TSIchl,TSItp,TSIsd)
+		tsi=cbind(x, TSIchl, TSItp, TSIsd)
 	}
 	if(in_format=="flat"){
-	stop("Only wide data inputs are currently supported.")
-	#tsi=vector()
-	#	for(n in 1:dim(x)[1]){
-	#		val_n=x[n,val_column]
-	#		type_n=x[n,type_column]
-	#		if(type_n==chl){TSI_n=9.81*log(val_n)+30.6}
-	#		if(type_n==TP){TSI_n=14.2*log(val_n*1000)+4.15}
-	#		if(type_n==SD){TSI_n=60-14.41*log(val_n)}
-	#		tsi=append(tsi,TSI_n)
-	#	}
+		x$TSI=NA
+		x$TSI[x[,param_var] == chl_ugL] = 9.81*log(x[x[,param_var]==chl_ugL,value_var])+30.6
+		x$TSI[x[,param_var] == TP_mgL] =14.2*log(x[x[,param_var]==TP_mgL,value_var]*1000)+4.15
+		x$TSI[x[,param_var] == SD_m] = 60-14.41*log(x[x[,param_var]==SD_m,value_var])
+		tsi=x
 	}
-	x_tsi=cbind(x,tsi)
-	return(x_tsi)
+	return(tsi)
 }
 
