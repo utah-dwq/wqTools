@@ -147,7 +147,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 			map=addMapPane(map,"au_poly", zIndex = 415)
 			map=addMapPane(map,"markers", zIndex = 420)
 
-			map=leaflet::addCircleMarkers(map, lat=locs$LatitudeMeasure, lng=locs$LongitudeMeasure, group="Sites", 
+			map=leaflet::addCircleMarkers(map, lat=jitter(locs$LatitudeMeasure), lng=jitter(locs$LongitudeMeasure), group="Sites", 
 				color = pal(locs$locationType), opacity=0.8, layerId=locs$locationID, options = pathOptions(pane = "markers"),
 				popup = paste0(
 					"Location ID: ", locs$locationID,
