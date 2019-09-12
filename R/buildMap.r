@@ -247,6 +247,9 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 			}
 			
 			map=leaflet::addMeasure(map, position="topright")
+			
+			map=leaflet::fitBounds(map, min(locs$LongitudeMeasure)*0.999, min(locs$LatitudeMeasure)*0.999, max(locs$LongitudeMeasure)*1.001, max(locs$LatitudeMeasure)*1.001)
+			
 	}
 	
 return(map)
