@@ -1,0 +1,75 @@
+# Mantua Lake trophic indicators
+
+library(wqTools)
+library(plotly)
+
+ml_sites=readWQP(type='sites', auid='UT-L-16010204-033_00')
+ml_phos=readWQP(type='result', auid='UT-L-16010204-033_00', CharacteristicName='Phosphate-phosphorus')
+ml_sites=subset(ml_sites, MonitoringLocationIdentifier %in% ml_phos$MonitoringLocationIdentifier)
+
+buildMap(sites=ml_sites)
+
+with(ml_phos, {table(DetectionQuantitationLimitMeasure.MeasureValue, ResultDetectionConditionText)})
+with(ml_phos, {table(ResultSampleFractionText)})
+with(ml_phos, {table(ResultMeasure.MeasureUnitCode)})
+ml_phos=within(ml_phos, {
+	ResultMeasureValue=ifelse(is.na(ResultMeasureValue) & ResultDetectionConditionText=='Not Detected' & !is.na(DetectionQuantitationLimitMeasure.MeasureValue), DetectionQuantitationLimitMeasure.MeasureValue, ResultMeasureValue)
+	ResultMeasureValue[ResultMeasureValue>15]=NA
+})
+
+
+plot(ResultMeasureValue~as.Date(ActivityStartDate), ml_phos)
+
+plot_ly(data=ml_phos) %>%
+	add_markers(x=~as.Date(ActivityStartDate), y=~ResultMeasureValue, color=~ResultSampleFractionText, mode='markers') %>%
+	layout(title = "Mantua Reservoir Phosphorus Concentrations",
+		xaxis = list(title = "Date"),
+		yaxis = list(side = 'left', type = "log", title = 'Phosphorus (mg/L)')
+	) %>% 
+	config(displaylogo = FALSE,
+		modeBarButtonsToRemove = c(
+			'sendDataToCloud',
+			'hoverClosestCartesian',
+			'hoverCompareCartesian',
+			'lasso2d',
+			'select2d'
+		)
+	)
+
+
+plot_ly(ml_phos, x=~MonitoringLocationIdentifier) %>% 
+	add_trace(type='box', y=~ResultMeasureValue, color=~ResultSampleFractionText) %>% 
+	layout(title = "Mantua Reservoir Phosphorus Concentrations",
+		boxmode = "group",
+		xaxis = list(title = ""),
+		yaxis = list(side = 'left', type = "log", title = 'Phosphorus (mg/L)')
+	) %>% 
+	config(displaylogo = FALSE,
+		modeBarButtonsToRemove = c(
+			'sendDataToCloud',
+			'hoverClosestCartesian',
+			'hoverCompareCartesian',
+			'lasso2d',
+			'select2d'
+		)
+	)
+
+
+ml_phos$year=lubridate::year(as.Date(ml_phos$ActivityStartDate))
+
+plot_ly(ml_phos, x=~year) %>% 
+	add_trace(type='box', y=~ResultMeasureValue, color=~ResultSampleFractionText) %>% 
+	layout(title = "Mantua Reservoir Phosphorus Concentrations",
+		boxmode = "group",
+		xaxis = list(title = "Year"),
+		yaxis = list(side = 'left', type = "log", title = 'Phosphorus (mg/L)')
+	) %>% 
+	config(displaylogo = FALSE,
+		modeBarButtonsToRemove = c(
+			'sendDataToCloud',
+			'hoverClosestCartesian',
+			'hoverCompareCartesian',
+			'lasso2d',
+			'select2d'
+		)
+	)

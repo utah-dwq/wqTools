@@ -1,0 +1,54 @@
+# Reading effluent data from EPA ECHO
+wqTools includes two functions to read data from EPA echo. readECHO_fac is used to read facility locations and related metadata. readECHO_ec is used 
+to read facility effluent chart data (i.e. water quality sample data). Note that this is just data reported by facilities to ECHO per permit requirements. 
+Individual facilities may sample more frequently or for additional parameters.
+
+```{r}
+library(wqTools)
+library(leaflet)
+library(plotly)
+```
+
+## Read facility locations
+### State-wide facilities
+```{r}
+ut_fac=readECHO_fac(p_st="ut", p_act="y")
+```
+
+### By selected permit IDs
+```{r}
+gsl_potws=readECHO_fac(p_pid=c("UT0021725","UT0021628","UT0021636","UT0020974","UT0021741","UT0021911","UT0021326","UT0020931","UT0020311","UT0020303","UT0024392","UT0024384"))
+buildMap(fac=gsl_potws)
+```
+
+## Read facility discharge data
+All arguments to readECHO_ec are optional except p_id. At least one p_id must be specified, but readECHO_ec is designed to query data from multiple permit IDs at once. You can also use the [ECHO web services query builder](https://echo.epa.gov/tools/web-services/effluent-charts#/Effluent%20Charts/get_eff_rest_services_download_effluent_chart) 
+to read EC data manually, but this is limited to one permit ID at a time.  
+Also note that if start_date and end_date are not specified, the service will return the last three years of data. However, older data is available for many facilities.
+
+gsl_ec=readECHO_ec(p_id=c("UT0021725","UT0021628","UT0021636","UT0020974","UT0021741","UT0021911","UT0021326","UT0020931","UT0020311","UT0020303","UT0024392","UT0024384"),
+				   start_date="01/01/2000", end_date="09/01/2019", parameter_code=c("50050"))
+
+table(gsl_ec$statistical_base_short_desc)
+
+knitr::kable(with(gsl_ec, {table(npdes_id, statistical_base_short_desc)}))
+
+knitr::kable(with(gsl_ec, {table(npdes_id, standard_unit_desc)}))
+
+gsl_ec$date=as.Date(gsl_ec$monitoring_period_end_date, format='%m/%d/%Y')
+gsl_ec$yday=as.POSIXlt(gsl_ec$date)$yday
+
+UT0021725=subset(gsl_ec, npdes_id=='UT0021725')
+plot_ly(data=UT0021725, type='scatter') %>%
+	add_markers(x=~as.Date(date), mode='markers', y=~dmr_value_standard_units, color=~statistical_base_short_desc)
+
+plot_ly(data=UT0021725, type='scatter') %>%
+	add_markers(x=~yday, mode='markers', y=~dmr_value_standard_units, color=~statistical_base_short_desc)
+
+
+
+
+
+
+
+
