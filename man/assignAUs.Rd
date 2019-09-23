@@ -4,10 +4,10 @@
 \alias{assignAUs}
 \title{Assign Utah assessment units to sites}
 \usage{
-assignAUs(x, lat = "LatitudeMeasure", long = "LongitudeMeasure")
+assignAUs(data, lat = "LatitudeMeasure", long = "LongitudeMeasure")
 }
 \arguments{
-\item{x}{Input dataset. Must include latitude & longitude columns.}
+\item{data}{Input dataset. Must include latitude & longitude columns.}
 
 \item{lat}{Name of latitude column. Default matches WQP objects.}
 

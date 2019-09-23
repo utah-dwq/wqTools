@@ -4,11 +4,11 @@
 \alias{assignUses}
 \title{Assign Utah beneficial use classes to sites}
 \usage{
-assignUses(x, lat = "LatitudeMeasure", long = "LongitudeMeasure",
+assignUses(data, lat = "LatitudeMeasure", long = "LongitudeMeasure",
   flatten = FALSE)
 }
 \arguments{
-\item{x}{Input dataset. Must include latitude & longitude columns.}
+\item{data}{Input dataset. Must include latitude & longitude columns.}
 
 \item{lat}{Name of latitude column. Default matches WQP objects.}
 

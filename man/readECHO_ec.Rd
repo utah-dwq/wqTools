@@ -4,12 +4,15 @@
 \alias{readECHO_ec}
 \title{Read effluent chart data from EPA ECHO webservices}
 \usage{
-readECHO_ec(..., print = TRUE)
+readECHO_ec(..., print = TRUE,
+  stringsAsFactors = default.stringsAsFactors())
 }
 \arguments{
 \item{...}{additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/effluent-charts#!/Effluent_Charts/get_eff_rest_services_download_effluent_chart optional arguments for effluent chart data reads. Note that arguments for output are ignored.}
 
 \item{print}{Logical. If TRUE (default), print summary table of facilities & parameters returned.}
+
+\item{stringsAsFactors}{Logical. Passed to read.csv. See ?read.csv for more information.}
 
 \item{p_id}{Permitted facility ID. Either a single text value (in quotes) or a vector of text values.}
 
