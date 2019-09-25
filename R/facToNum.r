@@ -6,7 +6,10 @@
 #' @export
 facToNum=function(x){
 	if(class(x)=="factor"){result=as.numeric(levels(x))[x]
-	}else{result=x}
+	}else{
+		if(class(x)=='character'){result=as.numeric(x)
+		}else{result=x}
+	}
 	return(result)
 	}
 
