@@ -38,7 +38,9 @@ convertUnits=function(x, input_units, target_units='target_unit', value_var, con
 	conv_x$conversion_flag[is.na(conv_x$conversion_factor) & conv_x[,input_units]==conv_x[,target_units]] = "ACCEPT"
 	conv_x$conversion_factor[is.na(conv_x$conversion_factor) & conv_x[,input_units]==conv_x[,target_units]] = 1
 	conv_x$conv_val_col = conv_x[,value_var] * conv_x[,'conversion_factor']
-	
+	if(any(is.na(conv_x$conv_val_col))){
+		warning('Unable to convert one or more unit combinations. These values are expressed as NA.')
+	}
 	
 	
 	names(conv_x)[names(conv_x)=='conv_val_col'] = conv_val_col
