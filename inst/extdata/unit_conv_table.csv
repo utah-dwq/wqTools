@@ -3,14 +3,14 @@ input_unit,target_unit,conversion_factor,conversion_flag
 cfm,ft3/sec,0.01666667,ACCEPT
 cfs,ft3/sec,1,ACCEPT
 cfu/100ml,(NO.)/100 ML,,REJECT
-cm3/sec,ft3/sec,3.53147E-05,ACCEPT
+cm3/sec,ft3/sec,3.53E-05,ACCEPT
 deg C,C,1,ACCEPT
 deg F,C,1,ACCEPT
 FNU,NTU,,REJECT
 ft,m,0.3048,ACCEPT
 ft3/s,ft3/sec,1,ACCEPT
 ft3/sec,ft3/sec,1,ACCEPT
-gal/day,ft3/sec,1.5472E-06,ACCEPT
+gal/day,ft3/sec,1.55E-06,ACCEPT
 gal/min,ft3/sec,0.00222801,ACCEPT
 m,m,1,ACCEPT
 m3/sec,ft3/sec,35.3147,ACCEPT
@@ -52,3 +52,5 @@ ug/l,ug/L,1,ACCEPT
 cfu/100ml,(No.)/100 ml,1,ACCEPT
 deg C,deg C,1,ACCEPT
 ,deg C,,REJECT
+UG/L,MG/L,0.001,ACCEPT
+MG/L,UG/L,1000,ACCEPT

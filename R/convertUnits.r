@@ -22,11 +22,11 @@
 
 #' @export
 convertUnits=function(x, input_units, target_units='target_unit', value_var, conv_val_col='converted_value'){
-	
+		
 	if(! input_units %in% names(x)){stop('input_units name not in x')}
 	if(! target_units %in% names(x)){stop('target_units name not in x')}
 	
-	unit_conv_table=wqTools::unit_conv_table
+	unit_conv_table=read.csv(system.file("extdata", "unit_conv_table.csv", package = "wqTools"))
 
 	names(unit_conv_table)[names(unit_conv_table)=='target_unit'] = paste(target_units)
 	names(unit_conv_table)[names(unit_conv_table)=='input_unit'] = paste(input_units)
