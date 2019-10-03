@@ -32,7 +32,7 @@
 #' #html maps can be saved via htmlwidgets package saveWidget(map1, file="your/path/map1.html")
 
 #' @export
-buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus"), plot_polys=TRUE, ...){
+buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus"), plot_polys=TRUE, dragging=T, ...){
 	
 	if(missing(au_poly)){au_poly=wqTools::au_poly}
 	if(missing(bu_poly)){bu_poly=wqTools::bu_poly}
@@ -45,7 +45,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 	if(missing(fac) & missing(sites)){
 		#Build empty map
 		
-		map=leaflet::leaflet(options = leafletOptions(preferCanvas = TRUE), ...)
+		map=leaflet::leaflet(options = leafletOptions(preferCanvas = TRUE, dragging=dragging), ...)
 			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo", options = providerTileOptions(updateWhenZooming = FALSE,updateWhenIdle = TRUE))
 			map=leaflet::addProviderTiles(map,"Esri.WorldImagery", group = "Satellite", options = providerTileOptions(updateWhenZooming = FALSE,updateWhenIdle = TRUE))
 			
@@ -139,7 +139,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 		
 		#Build map
 		
-		map=leaflet::leaflet(options = leafletOptions(preferCanvas = TRUE), ...)
+		map=leaflet::leaflet(options = leafletOptions(preferCanvas = TRUE, dragging=dragging), ...)
 			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo", options = providerTileOptions(updateWhenZooming = FALSE,updateWhenIdle = TRUE))
 			map=leaflet::addProviderTiles(map,"Esri.WorldImagery", group = "Satellite", options = providerTileOptions(updateWhenZooming = FALSE,updateWhenIdle = TRUE))
 			
