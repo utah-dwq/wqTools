@@ -24,7 +24,8 @@ Imports:
 	rLakeAnalyzer,
 	reshape2,
 	sf,
-	tidyr
+	tidyr,
+	lwgeom
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 
