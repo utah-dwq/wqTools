@@ -9,6 +9,6 @@
 ut_poly
 }
 \description{
-Polygon showing unofficial boundaries of the State of Utah, excluding tribal jurisdictions
+Polygon showing unofficial boundaries of the State of Utah, excluding tribal jurisdictions. This is an unofficial representation used to screen sites for the integrated report only.
 }
 \keyword{datasets}
