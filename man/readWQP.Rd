@@ -5,7 +5,8 @@
 \title{Read EPA Water Quality Portal Data}
 \usage{
 readWQP(type = "result", ..., print = FALSE, coerce_num = FALSE,
-  url_only = FALSE, auid = NULL, au_geom = TRUE)
+  url_only = FALSE, auid = NULL, huc12 = NULL, huc8 = NULL,
+  clip_geom = TRUE)
 }
 \arguments{
 \item{type}{Data type to read. One of "result", "narrowresult", "sites", "activity", or "detquantlim".}
@@ -18,9 +19,13 @@ readWQP(type = "result", ..., print = FALSE, coerce_num = FALSE,
 
 \item{url_only}{Logical. If FALSE (default) read and return data. If TRUE, return just the query url.}
 
-\item{auid}{Optional. A vector of Utah DWQ assessment unit identifiers for which to query data. Note that the siteid argument is ignored if auid is specified.}
+\item{auid}{Optional. A vector of Utah DWQ assessment unit identifiers for which to query data. Note that siteid, huc8, and huc12 arguments are ignored if auid is specified.}
 
-\item{au_geom}{If auid is specified, should data be subset to the assessment unit polygon geometries? If TRUE (default) data are subset by assessment unit polygon geometries. If FALSE, the bounding box of the assessment units specified in auid is used to query data (sites outside the assessment unit polygons may be returned). Ignored if auid is NULL.}
+\item{huc12}{Optional. A vector of huc12 digit codes for which to query data. Note that siteid & huc8 arguments are ignored if huc12 is specified.}
+
+\item{huc8}{Optional. A vector of huc8 digit codes for which to query data. Note that the siteid argument is ignored if huc8 is specified.}
+
+\item{clip_geom}{If auid, huc12, or huc8 is specified, should data be subset to the polygon geometries? If TRUE (default) data are subset to polygon geometries. If FALSE, the bounding box of the selected polygins is used to query data (sites outside the polygons may be returned). Ignored if auid, huc8, and huc12 are all NULL.}
 
 \item{start_date}{Query start date in "mm/dd/yyyy" format.}
 
@@ -63,6 +68,13 @@ utah_lake_nr=readWQP(type="narrowresult",
  		siteType=c("Lake, Reservoir, Impoundment","Stream"),
  		print=F)
 buildMap(sites=utah_lake_sites)
+
+# Read sites by HUC 12
+huc12_sites=readWQP(type="sites",
+ 	huc12=c('160202010900'),
+ 	siteType=c("Lake, Reservoir, Impoundment","Stream"),
+ 	print=F)
+buildMap(sites=huc12_sites)
 
 # Read DWQ's sites
 sites=readWQP(type="sites", statecode="US:49", organization="UTAHDWQ_WQX", siteType=c("Lake, Reservoir, Impoundment","Stream"))

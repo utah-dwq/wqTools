@@ -11,8 +11,10 @@
 #' @param ... additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.
 #' @param print Logical. Print summary table of sites & characteristics (only for result or narrowresult types).
 #' @param url_only Logical. If FALSE (default) read and return data. If TRUE, return just the query url.
-#' @param auid Optional. A vector of Utah DWQ assessment unit identifiers for which to query data. Note that the siteid argument is ignored if auid is specified.
-#' @param au_geom If auid is specified, should data be subset to the assessment unit polygon geometries? If TRUE (default) data are subset by assessment unit polygon geometries. If FALSE, the bounding box of the assessment units specified in auid is used to query data (sites outside the assessment unit polygons may be returned). Ignored if auid is NULL.
+#' @param auid Optional. A vector of Utah DWQ assessment unit identifiers for which to query data. Note that siteid, huc8, and huc12 arguments are ignored if auid is specified.
+#' @param huc12 Optional. A vector of huc12 digit codes for which to query data. Note that siteid & huc8 arguments are ignored if huc12 is specified.
+#' @param huc8 Optional. A vector of huc8 digit codes for which to query data. Note that the siteid argument is ignored if huc8 is specified.
+#' @param clip_geom If auid, huc12, or huc8 is specified, should data be subset to the polygon geometries? If TRUE (default) data are subset to polygon geometries. If FALSE, the bounding box of the selected polygins is used to query data (sites outside the polygons may be returned). Ignored if auid, huc8, and huc12 are all NULL.
 #' @return A data frame of WQP data
 #' @importFrom data.table fread
 #' @examples
@@ -44,15 +46,23 @@
 #'  		print=F)
 #' buildMap(sites=utah_lake_sites)
 #'
+#' # Read sites by HUC 12
+#' huc12_sites=readWQP(type="sites",
+#'  	huc12=c('160202010900'),
+#'  	siteType=c("Lake, Reservoir, Impoundment","Stream"),
+#'  	print=F)
+#' buildMap(sites=huc12_sites)
+#' 
 #' # Read DWQ's sites
 #' sites=readWQP(type="sites", statecode="US:49", organization="UTAHDWQ_WQX", siteType=c("Lake, Reservoir, Impoundment","Stream"))
 #' plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
 
 #' @export
-readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE, url_only=FALSE, auid=NULL, au_geom=TRUE){
+readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE, url_only=FALSE, auid=NULL, huc12=NULL, huc8=NULL, clip_geom=TRUE){
 args=list(...)
 
 #type="sites"
+#huc12='160202010900'
 #type='narrowresult'
 ###statecode="US:49"
 #characteristicName=c("Total dissolved solids","Arsenic","Cadmium")
@@ -62,7 +72,7 @@ args=list(...)
 #auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02')
 #siteType=c("Lake, Reservoir, Impoundment","Stream", "Spring")
 #args=list(start_date=start_date, end_date=end_date, siteid=siteid, characteristicName=characteristicName, siteType=siteType)
-#args=list(auid=auid)
+#args=list(huc12=huc12)
 #au_geom=TRUE
 
 pastecollapse=function(x){
@@ -74,14 +84,54 @@ if(!missing(auid)){
 	if(any(names(args)=='siteid')){
 		args=args[!names(args) %in% 'siteid']
 	}
+	if(any(names(args)=='huc8')){
+		args=args[!names(args) %in% 'huc8']
+	}
+	if(any(names(args)=='huc12')){
+		args=args[!names(args) %in% 'huc12']
+	}
 	au_poly=wqTools::au_poly
 	aus=au_poly[au_poly$ASSESS_ID %in% auid,]
 	bbox=sf::st_bbox(aus)
 	bBox=paste(bbox[1], bbox[2], bbox[3], bbox[4], sep='%2C')
 	args$bBox=bBox
 	args=args[!names(args) %in% 'auid']
+	geom_type='auid'
 }
-	
+
+# Query by huc12
+if(!missing(huc12)){
+	if(any(names(args)=='siteid')){
+		args=args[!names(args) %in% 'siteid']
+	}
+	if(any(names(args)=='huc8')){
+		args=args[!names(args) %in% 'huc8']
+	}
+	#huc12_poly=wqTools::huc12_poly
+	hucs=huc12_poly[huc12_poly$HUC12 %in% huc12,]
+	bbox=sf::st_bbox(hucs)
+	bBox=paste(bbox[1], bbox[2], bbox[3], bbox[4], sep='%2C')
+	args$bBox=bBox
+	args=args[!names(args) %in% 'huc12']
+	geom_type='huc12'
+}
+
+# Query by huc8
+if(!missing(huc8)){
+	if(any(names(args)=='siteid')){
+		args=args[!names(args) %in% 'siteid']
+	}
+	#huc8_poly=wqTools::huc8_poly
+	hucs=huc8_poly[huc8_poly$HUC8 %in% huc8,]
+	bbox=sf::st_bbox(hucs)
+	bBox=paste(bbox[1], bbox[2], bbox[3], bbox[4], sep='%2C')
+	args$bBox=bBox
+	args=args[!names(args) %in% 'huc8']
+	geom_type='huc8'
+}
+
+if(!exists('geom_type')){geom_type='none'}
+
 if(any(names(args)=="start_date")){
 	args$startDateLo=format(as.Date(args$start_date, format='%m/%d/%Y'), format="%m-%d-%Y")
 	args=args[names(args)!="start_date"]
@@ -135,7 +185,7 @@ while(!exists('result',inherits=F) & n<=10){
 	})
 }
 
-if(!missing(auid) & au_geom){
+if(geom_type=='auid' & clip_geom){
 	if(type!='sites'){
 		if(any(names(args)=='siteType')){
 			siteTypes=args$siteType
@@ -163,6 +213,65 @@ if(!missing(auid) & au_geom){
 	sites_au=sites_bbox[sites_bbox$ASSESS_ID %in% auid,]
 	result=result[result$MonitoringLocationIdentifier %in% sites_au$MonitoringLocationIdentifier,]
 }
+
+if(geom_type=='huc12' & clip_geom){
+	if(type!='sites'){
+		if(any(names(args)=='siteType')){
+			siteTypes=args$siteType
+			for(n in 1:length(siteTypes)){
+				name=names(siteTypes)[n]
+				x=unlist(siteTypes[n])
+				names(x)=rep(name,length(x))
+				siteTypes[n]=pastecollapse(x)
+			}
+			siteTypes=paste0('siteType', siteTypes, collapse='&')
+			siteTypes=gsub(" ", "%20", siteTypes)
+			siteTypes=gsub(",", "%2C", siteTypes)
+			sites_url='https://www.waterqualitydata.us/data/Station/search?'
+			sites_url=paste0(sites_url, siteTypes, '&statecode=US:49', '&mimeType=csv&zip=no')
+		}else{
+			sites_url='https://www.waterqualitydata.us/data/Station/search?'
+			sites_url=paste0(sites_url, 'statecode=US:49', '&mimeType=csv&zip=no')
+		}
+		sites_url=paste0(sites_url, '&bBox=',bBox)
+		sites_bbox=as.data.frame(data.table::fread(sites_url))
+	}else{
+		sites_bbox=result
+	}
+	sites_bbox=wqTools::assignHUCs(sites_bbox)
+	sites_huc12=sites_bbox[sites_bbox$HUC12 %in% huc12,]
+	result=result[result$MonitoringLocationIdentifier %in% sites_huc12$MonitoringLocationIdentifier,]
+}
+
+if(geom_type=='huc8' & clip_geom){
+	if(type!='sites'){
+		if(any(names(args)=='siteType')){
+			siteTypes=args$siteType
+			for(n in 1:length(siteTypes)){
+				name=names(siteTypes)[n]
+				x=unlist(siteTypes[n])
+				names(x)=rep(name,length(x))
+				siteTypes[n]=pastecollapse(x)
+			}
+			siteTypes=paste0('siteType', siteTypes, collapse='&')
+			siteTypes=gsub(" ", "%20", siteTypes)
+			siteTypes=gsub(",", "%2C", siteTypes)
+			sites_url='https://www.waterqualitydata.us/data/Station/search?'
+			sites_url=paste0(sites_url, siteTypes, '&statecode=US:49', '&mimeType=csv&zip=no')
+		}else{
+			sites_url='https://www.waterqualitydata.us/data/Station/search?'
+			sites_url=paste0(sites_url, 'statecode=US:49', '&mimeType=csv&zip=no')
+		}
+		sites_url=paste0(sites_url, '&bBox=',bBox)
+		sites_bbox=as.data.frame(data.table::fread(sites_url))
+	}else{
+		sites_bbox=result
+	}
+	sites_bbox=wqTools::assignHUCs(sites_bbox)
+	sites_huc8=sites_bbox[sites_bbox$HUC8 %in% huc8,]
+	result=result[result$MonitoringLocationIdentifier %in% sites_huc8$MonitoringLocationIdentifier,]
+}
+
 
 if(print & exists('result',inherits=F) & (type=="result" | type=="narrowresult")){
 	print("Queried sites and parameters:")
