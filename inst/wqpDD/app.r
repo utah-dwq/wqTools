@@ -63,7 +63,7 @@ ui <-fluidPage(
 				fluidRow(
 					## map
 					conditionalPanel(condition="input.spatial_sel_type=='Assessment unit' & input.sel_type=='Map'",
-						column(5, shinycssloaders::withSpinner(leafletOutput('au_map'),size=2, color="#0080b7"))
+						column(8, shinycssloaders::withSpinner(leafletOutput('au_map', height='500px', width="100%"),size=2, color="#0080b7"))
 					),
 					# list
 					conditionalPanel(condition="input.spatial_sel_type=='Assessment unit' & input.sel_type=='List'",
@@ -74,7 +74,7 @@ ui <-fluidPage(
 				fluidRow(
 					## map
 					conditionalPanel(condition="input.spatial_sel_type=='HUC 12' & input.sel_type=='Map'",
-						column(5, shinycssloaders::withSpinner(leafletOutput('huc_map'),size=2, color="#0080b7"))
+						column(8, shinycssloaders::withSpinner(leafletOutput('huc_map', height='500px', width="100%"),size=2, color="#0080b7"))
 					),
 					# list
 					conditionalPanel(condition="input.spatial_sel_type=='HUC 12' & input.sel_type=='List'",
@@ -112,16 +112,18 @@ ui <-fluidPage(
 				)
 			),
 			bsCollapsePanel(list(icon('table'),"Data table"), value=3,
-				downloadButton('exp_dt', label = "Download data", icon='download', style='color: #fff; background-color: #337ab7; border-color: #2e6da4%'),
-				br(),
 				div(DT::DTOutput("datatable"), style = list("font-size:65%"))
 			),
 			bsCollapsePanel(list(icon('chart-bar'),"Analyze data"), value=4,
 				figuresModUI('figures')
 			),
 			bsCollapsePanel(list(icon('file-export'),"Write report"), value=5,
-				hidden(downloadButton("report", "Generate report")),
-				hidden(textAreaInput('report_notes', 'User notes for report:', width = "800px", height="200px", resize='vertical'))
+				hidden(textAreaInput('report_notes', 'User notes for report:', width = "800px", height="200px", resize='vertical')),
+				br(),
+				fluidRow(
+					hidden(downloadButton("report", "Generate report", icon='download', style='color: #fff; background-color: #337ab7; border-color: #2e6da4%')),
+					downloadButton('exp_dt', label = "Download data", icon='download', style='color: #fff; background-color: #337ab7; border-color: #2e6da4%')
+				)
 			)
 		)
 	)
@@ -141,7 +143,7 @@ wqp_data$ResultMeasureValue=facToNum(wqp_data$ResultMeasureValue)
 
 if(file.exists(paste0(data_path,"/new_wqpDD.txt"))){
 	showModal(modalDialog(easyClose=F, title="Looks like you're new here...", 
-		  "This app has been pre-loaded with a working dataset of water quality samples from lake and stream location types dating back to the year 2010. To expand, update, or refine the data included in this application, click on the 
+		  "This app has been pre-loaded with a working dataset of water quality samples from lake and stream location types in Utah dating back to the year 2010. To expand, update, or refine the data included in this application, click on the 
 		  'Download data' box, adjust the query parameters, and download a new data set. This will generate an '.RData' object in your wqTools package library path for the application to call. 
 		  Data can be further filtered for analyses in the 'Data processing' box."))
 	file.remove(paste0(data_path,"/new_wqpDD.txt"))
@@ -432,11 +434,11 @@ figures=callModule(module=figuresMod, id='figures', sel_data)
 
 observe({
 	if(is.null(figures$multi_site_ts())){
-		hide("report")
-		hide("report_notes")
+		shinyjs::hide("report")
+		shinyjs::hide("report_notes")
 	}else{
-		show("report")
-		show("report_notes")
+		shinyjs::show("report")
+		shinyjs::show("report_notes")
 	}
 })
 

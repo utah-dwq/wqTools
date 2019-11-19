@@ -172,8 +172,8 @@ figuresMod <- function(input, output, session, sel_data){
 		req(reactive_objects$param1, input$sel_units1, reactive_objects$au_vis)				
 		#if(all(!is.na(reactive_objects$param1$plot_value))){
 			multi_site_ts=plot_ly(source="a") %>%
-				add_trace(data=reactive_objects$param1, type = 'scatter', mode = 'lines+markers', x=~as.Date(ActivityStartDate), y=~plot_value, color = ~droplevels(MonitoringLocationIdentifier), marker = list(size=10), visible=T) %>%
-				add_trace(data=reactive_objects$param1, type = 'scatter', mode = 'markers',x = ~as.Date(ActivityStartDate), y=~plot_value, color = ~droplevels(ASSESS_ID), marker = list(size=10), visible=F)
+				add_trace(data=reactive_objects$param1, type = 'scatter', mode = 'lines+markers', x=~as.Date(ActivityStartDate), y=~plot_value, color = ~droplevels(MonitoringLocationIdentifier), marker = list(size=10), visible=T, text=~MonitoringLocationIdentifier) %>%
+				add_trace(data=reactive_objects$param1, type = 'scatter', mode = 'markers',x = ~as.Date(ActivityStartDate), y=~plot_value, color = ~droplevels(ASSESS_ID), marker = list(size=10), visible=F, text=~ASSESS_ID)
 			multi_site_ts=layout(multi_site_ts,
 							title = reactive_objects$title,
 							xaxis = list(title = "Date"),
@@ -210,14 +210,14 @@ figuresMod <- function(input, output, session, sel_data){
 			add_trace(type = 'box', y = ~plot_value, color = ~droplevels(ASSESS_ID), visible=F) %>%
 			layout(
 				title = reactive_objects$title,
-				xaxis = list(title = "MLID"),
+				xaxis = list(title = "Monitoring location ID"),
 				xaxis2 = list(overlaying = "x", zeroline=F, showticklabels = FALSE, showgrid = FALSE),
 				yaxis = list(title = reactive_objects$ylab),
 				updatemenus = list(
 					list(
 						buttons = list(
 							list(method = "update", label='Group by site', 
-								args = list(list(visible = reactive_objects$mlid_vis))
+								args = list(list(visible = reactive_objects$mlid_vis), list(xaxis = list(title = 'Monitoring location ID')))
 							),
 							list(method = "update", label='Group by AU', 
 								args = list(list(visible = reactive_objects$au_vis), list(xaxis = list(title = 'Assessment unit ID')))
@@ -241,18 +241,18 @@ figuresMod <- function(input, output, session, sel_data){
     
 	
 	# Concentration map		
-	conc_map = wqTools::buildMap(plot_polys=TRUE, search="")
+	conc_map = wqTools::buildMap(plot_polys=T, search="")
 	conc_map=conc_map%>%clearGroup('Sites') %>% clearControls()
 	conc_map = leaflet::addLayersControl(conc_map,
 		position ="topleft",
-		baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites", "Assessment units","Beneficial uses", "Site-specific standards"),
+		baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites"),
 		options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=TRUE))
 	conc_map=addMapPane(conc_map,"site_markers", zIndex = 450)
 	conc_map=hideGroup(conc_map, "Assessment units")
 	conc_map=hideGroup(conc_map, "Site-specific standards")
 	conc_map=hideGroup(conc_map, "Beneficial uses")
 	conc_map=removeMeasure(conc_map)
-	
+    
 	output$conc_map <- leaflet::renderLeaflet({
 		isolate({
 			if(!is.null(reactive_objects$param1) & dim(reactive_objects$param1)[1]>0){
@@ -281,12 +281,53 @@ figuresMod <- function(input, output, session, sel_data){
 				addLegendCustom(colors = c("blue", "blue", "blue"), labels = leg_labs, sizes = leg_sizes, title=reactive_objects$ylab)
 			}
 		})
+
 		conc_map
-	})		
-	    
+	})
+		
+    conc_map_output=reactive({
+		conc_map_output = wqTools::buildMap(plot_polys=FALSE, search="")
+		conc_map_output=conc_map_output%>%clearGroup('Sites') %>% clearControls()
+		conc_map_output = leaflet::addLayersControl(conc_map_output,
+			position ="topleft",
+			baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites"),
+			options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=TRUE))
+		conc_map_output=addMapPane(conc_map_output,"site_markers", zIndex = 450)
+		conc_map_output=hideGroup(conc_map_output, "Assessment units")
+		conc_map_output=hideGroup(conc_map_output, "Site-specific standards")
+		conc_map_output=hideGroup(conc_map_output, "Beneficial uses")
+		conc_map_output=removeMeasure(conc_map_output)
+			if(!is.null(reactive_objects$param1) & dim(reactive_objects$param1)[1]>0){
+				sites=reactive_objects$param1
+				sites=sites[!is.na(sites$plot_value),]
+				count=aggregate(plot_value~MonitoringLocationIdentifier+LatitudeMeasure+LongitudeMeasure+target_unit, sites, FUN='length')
+				names(count)[names(count)=='plot_value'] = 'count'
+				sites=aggregate(plot_value~MonitoringLocationIdentifier+MonitoringLocationName+LatitudeMeasure+LongitudeMeasure+target_unit, sites, FUN='mean', na.rm=TRUE)
+				sites=merge(sites,count,all.x=T)
+				sites$radius=scales::rescale(sites$plot_value, c(5,35))
+				min_lat=min(sites$LatitudeMeasure)*0.999
+				min_lng=min(sites$LongitudeMeasure)*0.999
+				max_lat=max(sites$LatitudeMeasure)*1.001
+				max_lng=max(sites$LongitudeMeasure)*1.001
+				leg_labs=c(signif(quantile(sites$plot_value, 0.10),3), signif(median(sites$plot_value),3), signif(quantile(sites$plot_value, 0.90),3))
+				leg_sizes=c(quantile(sites$radius, 0.10), median(sites$radius), quantile(sites$radius, 0.90))*2
+				conc_map_output = conc_map_output %>% flyToBounds(min_lng,min_lat,max_lng,max_lat) %>%	
+					addCircleMarkers(data = sites, lat=~LatitudeMeasure, lng=~LongitudeMeasure, group="Sites", layerId=~MonitoringLocationIdentifier, color='blue', stroke=F, fillOpacity=0.5,
+						radius = ~radius, options = pathOptions(pane = "site_markers"),
+						popup = paste0(
+							"MLID: ", sites$MonitoringLocationIdentifier,
+							"<br> ML name: ", sites$MonitoringLocationName,
+							"<br> Average Parameter Value: ", sites$plot_value,
+							"<br> Sample Count: ", sites$count)
+					) %>%
+				addLegendCustom(colors = c("blue", "blue", "blue"), labels = leg_labs, sizes = leg_sizes, title=reactive_objects$ylab)
+			}
+		conc_map_output
+	})
+	
 	# Map proxy
-	#conc_proxy = leaflet::leafletProxy("conc_map")
-    
+	conc_proxy = leaflet::leafletProxy("conc_map")
+   
 	# Custom leaflet legend (re-size circles)
     addLegendCustom <- function(map, colors, labels, sizes, opacity = 0.5, title = NULL){
 		colorAdditions <- paste0(colors, "; width:", sizes, "px; height:", sizes, "px")
@@ -297,17 +338,15 @@ figuresMod <- function(input, output, session, sel_data){
     
 	# Update concentration map via proxy on param1 change
 	observeEvent(reactive_objects$param1, {
-	#observe({
-		#req(input$tabs=='Multiple sites' & input$compare_plottype=='Concentration map')
 		#req(reactive_objects$param1, reactive_objects$ylab)
-		leaflet::leafletProxy("conc_map")%>%clearGroup('Sites') %>% clearControls()
+		conc_proxy%>%clearGroup('Sites') %>% clearControls()
 		if(exists('sites')){rm(sites)}
-		if(dim(reactive_objects$param1)[1]>0 & any(!is.na(reactive_objects$param1$ResultMeasureValue))){
+		if(any(!is.na(reactive_objects$param1$plot_value))){
 			sites=reactive_objects$param1
 			sites=sites[!is.na(sites$plot_value),]
 			count=aggregate(plot_value~MonitoringLocationIdentifier+LatitudeMeasure+LongitudeMeasure+target_unit, sites, FUN='length')
 			names(count)[names(count)=='plot_value'] = 'count'
-			sites=aggregate(plot_value~MonitoringLocationIdentifier+MonitoringLocationName+LatitudeMeasure+LongitudeMeasure+target_unit, sites, FUN='mean', na.rm=TRUE)
+			sites=aggregate(plot_value~MonitoringLocationIdentifier+MonitoringLocationName+LatitudeMeasure+LongitudeMeasure+target_unit, sites, FUN='mean')
 			sites=merge(sites,count,all.x=T)
 			sites$radius=scales::rescale(sites$plot_value, c(5,35))
 			min_lat=min(sites$LatitudeMeasure)*0.999
@@ -316,7 +355,7 @@ figuresMod <- function(input, output, session, sel_data){
 			max_lng=max(sites$LongitudeMeasure)*1.001
 			leg_labs=c(signif(quantile(sites$plot_value, 0.10),3), signif(median(sites$plot_value),3), signif(quantile(sites$plot_value, 0.90),3))
 			leg_sizes=c(quantile(sites$radius, 0.10), median(sites$radius), quantile(sites$radius, 0.90))*2
-			leaflet::leafletProxy("conc_map") %>% flyToBounds(min_lng,min_lat,max_lng,max_lat) %>%	
+			conc_proxy %>% flyToBounds(min_lng,min_lat,max_lng,max_lat) %>%	
 				addCircleMarkers(data = sites, lat=~LatitudeMeasure, lng=~LongitudeMeasure, group="Sites", layerId=~MonitoringLocationIdentifier, color='blue', stroke=F, fillOpacity=0.5,
 					radius = ~radius, options = pathOptions(pane = "site_markers"),
 					popup = paste0(
@@ -373,7 +412,7 @@ figuresMod <- function(input, output, session, sel_data){
 			}),
 		multi_site_ts=multi_site_ts,
 		multi_site_bp=multi_site_bp,
-		conc_map=reactive({output$conc_map})
+		conc_map=conc_map_output
 	))
 	
 }
