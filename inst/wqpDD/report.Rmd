@@ -1,0 +1,88 @@
+---
+title: "WQP Data Dashboard Report"
+output: html_document
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+params:
+  spatial_sel_type: NA
+  sel_polys: NA
+  date_range: NA
+  fill_nd: NA
+  filters: NA
+  multi_site_ts: NA
+  multi_site_bp: NA
+  conc_map: NA
+  report_notes: NA
+---
+
+
+<style type="text/css">
+.main-container {
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+```{r, echo=F}
+options(warn=-1)
+tags$style(type = "text/css", "html, body {width:100%;height:100%}",
+	".leaflet .legend i{
+	border-radius: 50%;
+	width: 10px;
+	height: 10px;
+	margin-top: 4px;
+	}"
+)
+```
+
+
+# Data selections
+Data inlcuded in these analyses were selected from:  
+`r (params$spatial_sel_type)`(s):  `r params$sel_polys`  
+  
+These include data from `r params$date_range[1]` to `r params$date_range[2]`.  
+
+<br>
+
+# Data processing
+### Non-detect procedure
+Non-detect values in these figures are plotted as `r tolower(params$fill_nd)`.
+
+### Filters applied
+The following additional filters were applied to the data prior to generating plots:
+```{r, echo=F}
+params$filters
+```
+
+<br>
+
+# Figures
+### Multi-site time series
+```{r, fig.width=12, echo=F}
+params$multi_site_ts
+```
+
+### Multi-site boxplot
+```{r, fig.width=12, echo=F}
+params$multi_site_bp
+```
+
+### Concentration map
+```{r, fig.width=9, fig.height=5, echo=F}
+params$conc_map
+```
+
+<br>
+
+# User notes and comments:
+
+`r as.character(params$report_notes)`
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
