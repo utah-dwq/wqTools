@@ -5,6 +5,7 @@
 
 # Packages
 library(shiny)
+library(shinyjs)
 library(shinyBS)
 library(wqTools)
 library(leaflet)
@@ -25,7 +26,8 @@ aus=unique(as.character(wqTools::au_poly$ASSESS_ID))
 huc12s=unique(as.character(wqTools::huc12_poly$HUC12))
 
 ui <-fluidPage(
-
+	useShinyjs(),
+	
 	# Header
 	headerPanel(
 		title=tags$a(href='https://deq.utah.gov/division-water-quality/',tags$img(src='deq_dwq_logo_draft.png', height = 125, width = 100*2.85*1.75), target="_blank"),
@@ -118,7 +120,8 @@ ui <-fluidPage(
 				figuresModUI('figures')
 			),
 			bsCollapsePanel(list(icon('file-export'),"Write report"), value=5,
-				helpText('Report writing capabilities in concept stage.')
+				hidden(downloadButton("report", "Generate report")),
+				hidden(textAreaInput('report_notes', 'User notes for report:', width = "800px", height="200px", resize='vertical'))
 			)
 		)
 	)
@@ -283,21 +286,25 @@ observe({
 	if(input$spatial_sel_type== 'Assessment unit' & input$sel_type == 'Map'){
 		req(reactive_objects$sel_aus_map)
 		auid=as.vector(reactive_objects$sel_aus_map)
+		reactive_objects$sel_polys=auid
 		reactive_objects$spatial_sel_data=subset(wqp_data, ASSESS_ID %in% auid)
 	}
 	if(input$spatial_sel_type== 'Assessment unit' & input$sel_type == 'List'){
 		req(reactive_objects$sel_aus_mi)
 		auid=as.vector(reactive_objects$sel_aus_mi)
+		reactive_objects$sel_polys=auid
 		reactive_objects$spatial_sel_data=subset(wqp_data, ASSESS_ID %in% auid)
 	}
 	if(input$spatial_sel_type== 'HUC 12' & input$sel_type == 'Map'){
 		req(reactive_objects$sel_hucs_map)
 		hucs=as.vector(reactive_objects$sel_hucs_map)
+		reactive_objects$sel_polys=hucs
 		reactive_objects$spatial_sel_data=subset(wqp_data, HUC12 %in% hucs)
 	}
 	if(input$spatial_sel_type== 'HUC 12' & input$sel_type == 'List'){
 		req(reactive_objects$sel_hucs_mi)
 		auid=as.vector(reactive_objects$sel_hucs_mi)
+		reactive_objects$sel_polys=hucs
 		reactive_objects$spatial_sel_data=subset(wqp_data, HUC12 %in% hucs)
 	}
 })
@@ -384,6 +391,7 @@ observe({
 		ResultMeasureValue=ifelse(ResultDetectionConditionText=='Present Above Quantification Limit' & is.na(ResultMeasureValue), DetectionQuantitationLimitMeasure.MeasureValue, ResultMeasureValue)
 	})
 	reactive_objects$data_sub=data_sub
+	reactive_objects$date_range=c(min(data_sub$ActivityStartDate), max(data_sub$ActivityStartDate))
 })
 
 ### Combine parameters
@@ -402,8 +410,8 @@ observe({
 output$datatable=DT::renderDT({
 	req(reactive_objects$data_sub)
 	DT::datatable(data.frame(reactive_objects$data_sub),
-		selection='none', rownames=FALSE,
-		options = list(scrollY = '600px', paging = TRUE, scrollX=TRUE)
+		selection='none', rownames=FALSE, extensions = 'Buttons',
+		options = list(scrollY = '600px', paging = TRUE, scrollX=TRUE, buttons = c('excel', "csv"))
 	)
 })
 
@@ -417,12 +425,57 @@ output$exp_dt <- downloadHandler(
 		path = file, format_headers=F, col_names=T)}
 )
 
-
-
 ## Analyses
 sel_data=reactive(reactive_objects$data_sub)
 
 figures=callModule(module=figuresMod, id='figures', sel_data)
+
+observe({
+	if(is.null(figures$multi_site_ts())){
+		hide("report")
+		hide("report_notes")
+	}else{
+		show("report")
+		show("report_notes")
+	}
+})
+
+# Generate report
+output$report <- downloadHandler(
+  # For PDF output, change this to "report.pdf"
+  filename = "report.html",
+  content = function(file) {
+    # Copy the report file to a temporary directory before processing it, in
+    # case we don't have write permissions to the current working dir (which
+    # can happen when deployed).
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("report.Rmd", tempReport, overwrite = TRUE)
+
+    # Set up parameters to pass to Rmd document
+    params <- list(
+		spatial_sel_type=input$spatial_sel_type,
+		sel_polys=reactive_objects$sel_polys,
+		date_range=reactive_objects$date_range,
+		fill_nd=input$fill_nd,
+		filters=input$filter_picker,
+		multi_site_ts=figures$multi_site_ts(),
+		multi_site_bp=figures$multi_site_bp(),
+		conc_map=figures$conc_map(),
+		report_notes=input$report_notes
+	)
+
+    # Knit the document, passing in the `params` list, and eval it in a
+    # child of the global environment (this isolates the code in the document
+    # from the code in this app).
+    rmarkdown::render(tempReport, output_file = file,
+      params = params,
+      envir = new.env(parent = globalenv())
+    )
+  }
+)
+
+
+
 
 }
 
