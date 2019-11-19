@@ -9,8 +9,6 @@
 #' @param au_poly Optional. Polygon file to be mapped as assessment units. Useful for mapping a subset of specific assessment units. If missing, the default state wide AU polygon is used.
 #' @param bu_poly Optional. Polygon file to be mapped as beneficial uses. Useful for mapping a subset of beneficial uses. If missing, the default state wide uses polygon is used.
 #' @param ss_poly Optional. Polygon file to be mapped as site specific standards. Useful for mapping a subset of ss polygons. If missing, the default state wide ss polygon is used.
-#' @param huc8_poly Optional. Polygon file to be mapped as huc8 polygons. Useful for mapping a subset of polygons. If missing, the default state wide huc 8 polygon is used.
-#' @param huc12_poly Optional. Polygon file to be mapped as huc12 polygons. Useful for mapping a subset of polygons. If missing, the default state wide huc 12 polygon is used.
 #' @param search Vector of objects to be made searchable. One or both of "sites" and "aus". Defaults to c("sites","aus"). Any other inputs are ignored.
 #' @import leaflet
 #' @importFrom leaflet.extras addSearchFeatures
@@ -34,13 +32,13 @@
 #' #html maps can be saved via htmlwidgets package saveWidget(map1, file="your/path/map1.html")
 
 #' @export
-buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, huc12_poly, huc8_poly, search=c("sites","aus"), plot_polys=TRUE, dragging=T, ...){
+buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus"), plot_polys=TRUE, dragging=T, ...){
 	
 	if(missing(au_poly)){au_poly=wqTools::au_poly}
 	if(missing(bu_poly)){bu_poly=wqTools::bu_poly}
 	if(missing(ss_poly)){ss_poly=wqTools::ss_poly}
-	if(missing(huc12_poly)){huc12_poly=wqTools::huc12_poly}
-	if(missing(huc8_poly)){huc8_poly=wqTools::huc8_poly}
+	#if(missing(huc12_poly)){huc12_poly=wqTools::huc12_poly}
+	#if(missing(huc8_poly)){huc8_poly=wqTools::huc8_poly}
 	ut_poly=wqTools::ut_poly
 	wmu_poly=wqTools::wmu_poly
 	au_centroids=suppressWarnings(sf::st_centroid(au_poly))
@@ -88,19 +86,19 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, huc12_poly, huc8_poly, 
 					popup=wmu_poly$Mgmt_Unit
 					)
 				map=addPolygons(map, data=ut_poly,group="UT boundary",smoothFactor=2,fillOpacity = 0.1,weight=3,color="purple", options = pathOptions(pane = "underlay_polygons"))
-				map=addPolygons(map, data=huc8_poly,group="HUC 8",smoothFactor=2,fillOpacity = 0.1,weight=3,color="yellow", options = pathOptions(pane = "underlay_polygons"), popup=~HUC8)
-				map=addPolygons(map, data=huc12_poly,group="HUC 12",smoothFactor=2,fillOpacity = 0.1,weight=3,color="pink", options = pathOptions(pane = "huc12_poly"), popup=~HUC12)
+				#map=addPolygons(map, data=huc8_poly,group="HUC 8",smoothFactor=2,fillOpacity = 0.1,weight=3,color="yellow", options = pathOptions(pane = "underlay_polygons"), popup=~HUC8)
+				#map=addPolygons(map, data=huc12_poly,group="HUC 12",smoothFactor=2,fillOpacity = 0.1,weight=3,color="pink", options = pathOptions(pane = "huc12_poly"), popup=~HUC12)
 				map=leaflet::addLayersControl(map,
 					position ="topleft",
-					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "HUC 12", "HUC 8", "Watershed management units", "UT boundary"),
+					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "Watershed management units", "UT boundary"),
 					options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
 				map=hideGroup(map, "Assessment units")
 				map=hideGroup(map, "Site-specific standards")
 				map=hideGroup(map, "Beneficial uses")
 				map=hideGroup(map, "UT boundary")
 				map=hideGroup(map, "Watershed management units")
-				map=hideGroup(map, "HUC 8")
-				map=hideGroup(map, "HUC 12")
+				#map=hideGroup(map, "HUC 8")
+				#map=hideGroup(map, "HUC 12")
 			}
 			
 			if("aus" %in% search){
@@ -211,11 +209,11 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, huc12_poly, huc8_poly, 
 				map=addPolygons(map, data=wmu_poly,group="Watershed management units",smoothFactor=2,fillOpacity = 0.1,weight=3,color="red", options = pathOptions(pane = "underlay_polygons"),
 					popup=wmu_poly$Mgmt_Unit
 					)
-				map=addPolygons(map, data=huc8_poly,group="HUC 8",smoothFactor=2,fillOpacity = 0.1,weight=3,color="yellow", options = pathOptions(pane = "underlay_polygons"))
-				map=addPolygons(map, data=huc12_poly,group="HUC 12",smoothFactor=2,fillOpacity = 0.1,weight=3,color="pink", options = pathOptions(pane = "huc12_poly"))
+				#map=addPolygons(map, data=huc8_poly,group="HUC 8",smoothFactor=2,fillOpacity = 0.1,weight=3,color="yellow", options = pathOptions(pane = "underlay_polygons"))
+				#map=addPolygons(map, data=huc12_poly,group="HUC 12",smoothFactor=2,fillOpacity = 0.1,weight=3,color="pink", options = pathOptions(pane = "huc12_poly"))
 				map=leaflet::addLayersControl(map,
 					position ="topleft",
-					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "HUC 12", "HUC 8", "Watershed management units", "UT boundary"),
+					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "Watershed management units", "UT boundary"),
 					options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
 				map=hideGroup(map, "Assessment units")
 				map=hideGroup(map, "Site-specific standards")
@@ -223,8 +221,8 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, huc12_poly, huc8_poly, 
 				map=hideGroup(map, "Labels")
 				map=hideGroup(map, "UT boundary")
 				map=hideGroup(map, "Watershed management units")
-				map=hideGroup(map, "HUC 8")
-				map=hideGroup(map, "HUC 12")
+				#map=hideGroup(map, "HUC 8")
+				#map=hideGroup(map, "HUC 12")
 			}else{
 				map=leaflet::addLayersControl(map,
 					position ="topleft",
