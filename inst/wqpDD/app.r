@@ -80,14 +80,11 @@ ui <-fluidPage(
 					conditionalPanel(condition="input.spatial_sel_type=='HUC 12' & input.sel_type=='List'",
 						column(3, uiOutput('hucs_multiInput'))
 					)
-				)
-				#fluidRow(
-				#	column(3, shinyWidgets::multiInput('sitetypes', 'Site types:', choices=sitetypes, selected=c('Lake, Reservoir, Impoundment','Stream', 'Spring'))),
-				#	column(3, shinyWidgets::multiInput('orgids', 'Organization IDs:', choices=orgids)),
-				#	column(3, shinyWidgets::multiInput('samplemedia', 'Sample media:', choices=samplemedia, selected='Water')),
-				#	column(3, shinyWidgets::multiInput('characteristicnames', 'Characteristic names:', choices=characteristicnames))
-				#),
-				
+				),
+				br(),
+				fluidRow(
+					actionButton('clear_sel', 'Clear selected', style='color: #fff; background-color: #337ab7; border-color: #2e6da4%', icon=icon('trash-alt'))
+				)				
 			),
 			bsCollapsePanel(list(icon('cogs'),"Data processing"), value=2,
 				bsCollapse(id='data_process_panels', multiple=T, open=c(1,2),
@@ -177,6 +174,7 @@ observeEvent(input$import_data, {
 output$aus_multiInput=renderUI({
 	shinyWidgets::multiInput('aus_multiInput', 'Assessment units:', choices=aus)
 })
+
 
 ## Update selected AUs from AU multiInput
 observeEvent(input$aus_multiInput, ignoreNULL=F, {
@@ -281,6 +279,14 @@ observeEvent(reactive_objects$sel_hucs_map, ignoreNULL = F, ignoreInit=T, {
 			group='highlight', options = pathOptions(pane = "highlight"), color='chartreuse', opacity = 0.75, fillOpacity = 0.4, weight = 5)
 })
 
+
+# Clear selected polygons & multiinputs with clear_sel action button
+observeEvent(input$clear_sel, {
+	shinyjs::reset("aus_multiInput")
+	shinyjs::reset("hucs_multiInput")
+	reactive_objects$sel_aus_map=NULL
+	reactive_objects$sel_hucs_map=NULL
+})
 
 ## Spatial select data
 observe({
