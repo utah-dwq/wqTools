@@ -31,7 +31,7 @@ ui <-fluidPage(
 	# Header
 	headerPanel(
 		title=tags$a(href='https://deq.utah.gov/division-water-quality/',tags$img(src='deq_dwq_logo_draft.png', height = 125, width = 100*2.85*1.75), target="_blank"),
-		tags$head(tags$link(rel = "icon", type = "image/png", href = "dwq_logo_small.png"), windowTitle="Site Review Application")
+		tags$head(tags$link(rel = "icon", type = "image/png", href = "dwq_logo_small.png"), windowTitle="Utah WQ data dashboard")
 	),
 
 	mainPanel(width=11,
