@@ -4,12 +4,20 @@
 \alias{profilePlot}
 \title{Plot an individual lake profile}
 \usage{
-profilePlot(data, parameter = "CharacteristicName",
+profilePlot(
+  data,
+  parameter = "CharacteristicName",
   units = "ResultMeasure.MeasureUnitCode",
-  depth = "Depth, data-logger (ported)", do = "Dissolved oxygen (DO)",
-  temp = "Temperature, water", pH = "pH",
-  value_var = "ResultMeasureValue", line_no = "DataLoggerLine",
-  do_crit, temp_crit, pH_crit)
+  depth = "Depth, data-logger (ported)",
+  do = "Dissolved oxygen (DO)",
+  temp = "Temperature, water",
+  pH = "pH",
+  value_var = "ResultMeasureValue",
+  line_no = "DataLoggerLine",
+  do_crit,
+  temp_crit,
+  pH_crit
+)
 }
 \arguments{
 \item{data}{Lake profile data (long format)}

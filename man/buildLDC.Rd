@@ -4,8 +4,19 @@
 \alias{buildLDC}
 \title{Calculate parameter loading capacity}
 \usage{
-buildLDC(x, flow, date, value, location, parameter, crit, loading_units,
-  mos = 0.1, cf, plot_it = TRUE)
+buildLDC(
+  x,
+  flow,
+  date,
+  value,
+  location,
+  parameter,
+  crit,
+  loading_units,
+  mos = 0.1,
+  cf,
+  plot_it = TRUE
+)
 }
 \arguments{
 \item{x}{A data frame containing columns indicating flow and parameter concentration for given dates (required for plotting: location and parameter name). Note that flow data for which no parameter values exist are still used to construct LDC plot.}

@@ -4,26 +4,29 @@
 \alias{downloadWQP}
 \title{Download water quality, station, and other data from USEPA Water Quality Portal}
 \usage{
-downloadWQP(outfile_path = getwd(), retrieve = c("narrowresult",
-  "activity", "sites", "detquantlim"),
-  siteType = c("Aggregate surface-water-use",
-  "Lake, Reservoir, Impoundment", "Spring", "Stream"),
-  statecode = "US:49", zip = FALSE, unzip = FALSE, ...)
+downloadWQP(
+  outfile_path = getwd(),
+  retrieve = c("narrowresult", "activity", "sites", "detquantlim"),
+  siteType = c("Aggregate surface-water-use", "Lake, Reservoir, Impoundment", "Spring",
+    "Stream"),
+  statecode = "US:49",
+  zip = FALSE,
+  unzip = FALSE,
+  ...
+)
 }
 \arguments{
 \item{outfile_path}{Path for file outputs. Defaults to current working directory.}
 
 \item{retrieve}{Vector of data type names to retrieve from WQP. One or more of: "result","narrowresult","activity","sites","detquantlim". Defaults to query narrowresult, activity, sites, and detquantlim.}
 
-\item{zip}{Logical. If FALSE (default) files are downloaded straight as csv. If TRUE, files are downloaded as zipped folders (helps prevent server time-outs, recommend for large downloads).}
+\item{zip}{Logical. If FALSE (default) files downloaded as zip folders are not automatically unzipped. If TRUE, the function will unzip all downloaded zip files. Only used if zip==TRUE.}
 
 \item{...}{Other arguments to be passed to readWQP when generating a query URL.}
 
 \item{start_date}{Query start date. "mm/dd/yyyy" format.}
 
 \item{end_date}{Query end date. "mm/dd/yyyy" format.}
-
-\item{zip}{Logical. If FALSE (default) files downloaded as zip folders are not automatically unzipped. If TRUE, the function will unzip all downloaded zip files. Only used if zip==TRUE.}
 }
 \value{
 Exports .csv files for all selected data types during selected date period in specified output path.
@@ -33,5 +36,5 @@ Download data from EPA's Water Quality Portal (WQP) as .csv files to outfile_pat
 }
 \examples{
 # Read 2018 download narrow result & sites
-downloadWQP(outfile_path='C:\\\\Your\\\\Folder\\\\Path', start_date="01/01/2018", end_date="12/31/2018", retrieve=c("narrowresult","sites"))
+downloadWQP(outfile_path='C:\\Your\\Folder\\Path', start_date="01/01/2018", end_date="12/31/2018", retrieve=c("narrowresult","sites"))
 }

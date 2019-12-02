@@ -4,10 +4,19 @@
 \alias{profileHeatMap}
 \title{Profile heat map plot}
 \usage{
-profileHeatMap(data, parameter, depth = "Depth_m", param_units,
-  depth_units = "m", date = "ActivityStartDate", show_dates = TRUE,
-  min_date = min(data[, date], na.rm = T), max_date = max(data[, date],
-  na.rm = T), param_lab = "pH", criteria)
+profileHeatMap(
+  data,
+  parameter,
+  depth = "Depth_m",
+  param_units,
+  depth_units = "m",
+  date = "ActivityStartDate",
+  show_dates = TRUE,
+  min_date = min(data[, date], na.rm = T),
+  max_date = max(data[, date], na.rm = T),
+  param_lab = "pH",
+  criteria
+)
 }
 \arguments{
 \item{data}{Lake profile data (wide format)}

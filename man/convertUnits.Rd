@@ -4,8 +4,13 @@
 \alias{convertUnits}
 \title{Convert data to target units}
 \usage{
-convertUnits(x, input_units, target_units = "target_unit", value_var,
-  conv_val_col = "converted_value")
+convertUnits(
+  x,
+  input_units,
+  target_units = "target_unit",
+  value_var,
+  conv_val_col = "converted_value"
+)
 }
 \arguments{
 \item{x}{Input dataset.}

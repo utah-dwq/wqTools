@@ -4,8 +4,17 @@
 \alias{buildMap}
 \title{Build a site map of WQP sites or ECHO facilities}
 \usage{
-buildMap(fac, sites, au_poly, bu_poly, ss_poly, huc12_poly, huc8_poly,
-  search = c("sites", "aus"), plot_polys = TRUE, dragging = T, ...)
+buildMap(
+  fac,
+  sites,
+  au_poly,
+  bu_poly,
+  ss_poly,
+  search = c("sites", "aus"),
+  plot_polys = TRUE,
+  dragging = T,
+  ...
+)
 }
 \arguments{
 \item{fac}{Facility locations queried via readECHO_fac.}
@@ -17,10 +26,6 @@ buildMap(fac, sites, au_poly, bu_poly, ss_poly, huc12_poly, huc8_poly,
 \item{bu_poly}{Optional. Polygon file to be mapped as beneficial uses. Useful for mapping a subset of beneficial uses. If missing, the default state wide uses polygon is used.}
 
 \item{ss_poly}{Optional. Polygon file to be mapped as site specific standards. Useful for mapping a subset of ss polygons. If missing, the default state wide ss polygon is used.}
-
-\item{huc12_poly}{Optional. Polygon file to be mapped as huc12 polygons. Useful for mapping a subset of polygons. If missing, the default state wide huc 12 polygon is used.}
-
-\item{huc8_poly}{Optional. Polygon file to be mapped as huc8 polygons. Useful for mapping a subset of polygons. If missing, the default state wide huc 8 polygon is used.}
 
 \item{search}{Vector of objects to be made searchable. One or both of "sites" and "aus". Defaults to c("sites","aus"). Any other inputs are ignored.}
 }

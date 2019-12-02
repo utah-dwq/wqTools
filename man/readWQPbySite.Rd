@@ -4,13 +4,19 @@
 \alias{readWQPbySite}
 \title{Read WQP data by selecting sites in an interactive map}
 \usage{
-readWQPbySite(sites, map, mode = "click", types = c("sites",
-  "narrowresult", "activity"), merge = T, edit = T,
-  sitetypes = c("Canal Drainage", "Canal Irrigation", "Canal Transport",
-  "Lake", "Lake, Reservoir, Impoundment", "Reservoir", "River/Stream",
-  "River/Stream Intermittent", "River/Stream Perennial", "Seep", "Spring",
-  "Stream", "Stream: Canal", "Stream: Ditch", "Wetland",
-  "Wetland Undifferentiated"), ...)
+readWQPbySite(
+  sites,
+  map,
+  mode = "click",
+  types = c("sites", "narrowresult", "activity"),
+  merge = T,
+  edit = T,
+  sitetypes = c("Canal Drainage", "Canal Irrigation", "Canal Transport", "Lake",
+    "Lake, Reservoir, Impoundment", "Reservoir", "River/Stream",
+    "River/Stream Intermittent", "River/Stream Perennial", "Seep", "Spring", "Stream",
+    "Stream: Canal", "Stream: Ditch", "Wetland", "Wetland Undifferentiated"),
+  ...
+)
 }
 \arguments{
 \item{sites}{Optional. A sites object containing lat/long columns named "LatitudeMeasure" & "LongitudeMeasure". If no sites object is provided, a Utah state-wide query of WQP will be generated for you.}

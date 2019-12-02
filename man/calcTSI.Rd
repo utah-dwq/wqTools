@@ -4,9 +4,15 @@
 \alias{calcTSI}
 \title{Calculate TSI values from input data}
 \usage{
-calcTSI(x, in_format = "flat", chl_ugL = "Chlorophyll a",
-  TP_mgL = "Phosphate-phosphorus", SD_m = "Depth, Secchi disk depth",
-  value_var = "ResultMeasureValue", param_var = "CharacteristicName")
+calcTSI(
+  x,
+  in_format = "flat",
+  chl_ugL = "Chlorophyll a",
+  TP_mgL = "Phosphate-phosphorus",
+  SD_m = "Depth, Secchi disk depth",
+  value_var = "ResultMeasureValue",
+  param_var = "CharacteristicName"
+)
 }
 \arguments{
 \item{x}{Input dataset}

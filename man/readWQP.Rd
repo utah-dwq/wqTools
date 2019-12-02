@@ -4,9 +4,17 @@
 \alias{readWQP}
 \title{Read EPA Water Quality Portal Data}
 \usage{
-readWQP(type = "result", ..., print = FALSE, coerce_num = FALSE,
-  url_only = FALSE, auid = NULL, huc12 = NULL, huc8 = NULL,
-  clip_geom = TRUE)
+readWQP(
+  type = "result",
+  ...,
+  print = FALSE,
+  coerce_num = FALSE,
+  url_only = FALSE,
+  auid = NULL,
+  huc12 = NULL,
+  huc8 = NULL,
+  clip_geom = TRUE
+)
 }
 \arguments{
 \item{type}{Data type to read. One of "result", "narrowresult", "sites", "activity", or "detquantlim".}
