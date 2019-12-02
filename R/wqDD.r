@@ -10,6 +10,6 @@
 
 
 #' @export
-wqpDD=function(){
+wqDD=function(){
 	shiny::runApp(system.file('wqDD', package='wqTools'))
 }
