@@ -24,7 +24,11 @@ Imports:
 	rLakeAnalyzer,
 	reshape2,
 	sf,
+	shiny,
+	shinyjs,
+	shinyBS,
 	tidyr,
+	plotly,
 	lwgeom
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
