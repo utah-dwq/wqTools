@@ -2,6 +2,7 @@
 
 export(assignAUs)
 export(assignHUCs)
+export(assignPolys)
 export(assignUses)
 export(buildLDC)
 export(buildMap)
