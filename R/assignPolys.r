@@ -16,7 +16,7 @@
 assignPolys=function(polygon, columns, data, lat="LatitudeMeasure", long="LongitudeMeasure"){
 	poly = eval(parse(text = paste0("wqTools::",polygon)))
 	poly1=sf::st_as_sf(poly)
-	if(exists("columns")){poly1=poly1[,names(poly)%in%columns]}
+	if(exists("columns")){poly1=poly1[,columns]}
 	x=data
 	x=sf::st_as_sf(x, coords=c(long,lat), crs=4326, remove=F)
 	x=sf::st_set_crs(x, sf::st_crs(poly1))	
