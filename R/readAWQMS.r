@@ -36,13 +36,14 @@
 #' @export
 readAWQMS<-function(type="results", unnest_results=TRUE, ...){
 args=list(...)
-#argument testing
-#type="sites"
+##argument testing
+#type="results"
 #start_date="01/01/2015"
 #end_date="12/31/2018"
+#unnest_results=T
 #MonitoringLocationIdentifiersCsv=c("4900440","4900470")
 #MonitoringLocationType=c('Lake')
-#Characteristic=c("Total dissolved solids", "Phosphate-phosphorus", "Temperature, water", "Dissolved oxygen (DO)")
+#Characteristic=c("Total dissolved solids")
 #args=list(MonitoringLocationIdentifiersCsv=MonitoringLocationIdentifiersCsv, Characteristic=Characteristic, start_date=start_date, end_date=end_date)
 #args=list(MonitoringLocationIdentifiersCsv=MonitoringLocationIdentifiersCsv)
 
@@ -109,7 +110,7 @@ print(paths_all)
 
 result=plyr::ldply(paths_all, .fun=jsonlite::fromJSON, .progress="text")
 if(type=='results' & unnest_results){
-	result=tidyr::unnest(result, Results)
+	result=as.data.frame(tidyr::unnest(result, cols=c('Results','Projects'), names_repair=tidyr_legacy))
 }
 
 if(type=='sites'){
