@@ -62,18 +62,18 @@ readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE, url_only=FA
 args=list(...)
 
 #type="sites"
-#huc12='160202010900'
-#type='narrowresult'
+##huc12='160202010900'
+##type='narrowresult'
 ###statecode="US:49"
-#characteristicName=c("Total dissolved solids","Arsenic","Cadmium")
+##characteristicName=c("Total dissolved solids","Arsenic","Cadmium")
 #siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470")
 #start_date="01/01/2018"
 #end_date="12/31/2018"
-#auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02')
+##auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02')
 #siteType=c("Lake, Reservoir, Impoundment","Stream", "Spring")
-#args=list(start_date=start_date, end_date=end_date, siteid=siteid, characteristicName=characteristicName, siteType=siteType)
-#args=list(huc12=huc12)
-#au_geom=TRUE
+#args=list(start_date=start_date, end_date=end_date, siteid=siteid, siteType=siteType)
+##args=list(huc12=huc12)
+##au_geom=TRUE
 
 pastecollapse=function(x){
 	return(paste0(names(x), "=", x, collapse="&"))
@@ -177,12 +177,11 @@ path=gsub(",", "%2C", path)
 if(url_only==FALSE){
 print(path)
 
-n=1
-while(!exists('result',inherits=F) & n<=10){
-	n=n+1
-	try({
-			result=as.data.frame(data.table::fread(path, na.strings=c("","NA")))
-	})
+for(attempt in 1:10){
+	result=try(as.data.frame(data.table::fread(path, na.strings=c("","NA"))))
+	if(!is(result, "error")) {
+		break
+	}
 }
 
 if(geom_type=='auid' & clip_geom){
