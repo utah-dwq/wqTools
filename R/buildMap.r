@@ -213,7 +213,7 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 				#map=addPolygons(map, data=huc12_poly,group="HUC 12",smoothFactor=2,fillOpacity = 0.1,weight=3,color="pink", options = pathOptions(pane = "huc12_poly"))
 				map=leaflet::addLayersControl(map,
 					position ="topleft",
-					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "Watershed management units", "UT boundary"),
+					baseGroups = c("Topo","Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "Watershed management units", "UT boundary","Sites","Labels"),
 					options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
 				map=hideGroup(map, "Assessment units")
 				map=hideGroup(map, "Site-specific standards")
