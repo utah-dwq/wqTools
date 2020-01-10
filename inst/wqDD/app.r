@@ -93,13 +93,26 @@ ui <-fluidPage(
 							status = "primary", selected='1/2 detection limit')
 					),
 					bsCollapsePanel(list(icon('filter'),"Filter data"), value=2,
-						column(3,
-							uiOutput('filter_col'),
-							uiOutput('filter'),
-							actionButton('add_filter', 'Add filter', style='color: #fff; background-color: #337ab7; border-color: #2e6da4%', icon=icon('plus-circle'))
+						column(7,
+							fluidRow(
+								column(4,
+									uiOutput('filter_col'),
+									uiOutput('filter'),
+									actionButton('add_filter', 'Add filter', style='color: #fff; background-color: #337ab7; border-color: #2e6da4%', icon=icon('plus-circle'))
+								),
+								column(4,
+									uiOutput('filter_picker')
+								)
+							),
+							br(),
+							fluidRow(
+								column(5,
+									uiOutput('visit_count_slider')
+								)
+							)
 						),
-						column(3,
-							uiOutput('filter_picker')
+						column(5,							
+							leafletOutput('sel_sites_map')
 						)
 					)#,
 					#bsCollapsePanel(list(icon('object-group'),"Combine parameters"), value=3,
@@ -137,6 +150,9 @@ data_path=paste0(path.package('wqTools'),'/extdata')
 load(system.file('extdata', "wqpDD_data.Rdata", package='wqTools'))
 wqp_data$ActivityStartDate=as.Date(wqp_data$ActivityStartDate)
 wqp_data$ResultMeasureValue=facToNum(wqp_data$ResultMeasureValue)
+levels(wqp_data$ResultSampleFractionText)=append(levels(wqp_data$ResultSampleFractionText),'Blank')
+wqp_data$ResultSampleFractionText[is.na(wqp_data$ResultSampleFractionText)]='Blank'
+wqp_data$ResultSampleFractionText[wqp_data$ResultSampleFractionText=='']='Blank'
 
 if(file.exists(paste0(data_path,"/new_wqpDD.txt"))){
 	showModal(modalDialog(easyClose=F, title="Looks like you're new here...", 
@@ -402,6 +418,70 @@ observe({
 	reactive_objects$date_range=c(min(data_sub$ActivityStartDate), max(data_sub$ActivityStartDate))
 })
 
+
+
+### Site visit count selection slider
+
+output$visit_count_slider=renderUI({
+	req(reactive_objects$data_sub)
+	visits=unique(reactive_objects$data_sub[,c('MonitoringLocationIdentifier','ActivityStartDate')])
+	visit_counts=aggregate(ActivityStartDate~MonitoringLocationIdentifier, data=visits, FUN='length')
+	reactive_objects$visit_counts=visit_counts
+	sliderInput("visit_count_slider", "Min visit count:", min = 1, max = max(visit_counts$ActivityStartDate), value = 1, step=1)
+})
+
+### Select data by site visit count slider
+observe({
+	req(reactive_objects$visit_counts)
+	sel_counts=subset(reactive_objects$visit_counts, ActivityStartDate>=input$visit_count_slider)
+	reactive_objects$sel_data=subset(reactive_objects$data_sub, MonitoringLocationIdentifier %in% sel_counts$MonitoringLocationIdentifier)
+})
+
+
+### Selected sites map
+session$onFlushed(once = T, function() {
+	output$sel_sites_map=renderLeaflet({
+		wqTools::buildMap(plot_polys=F) %>%
+		leaflet::addLayersControl(
+					position ="topleft",
+					baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites"),
+					options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
+	})
+})
+
+sel_sites_map_proxy=leafletProxy("sel_sites_map")
+
+### Update sites on selected sites map
+observeEvent(reactive_objects$sel_data ,{
+	sel_sites=unique(reactive_objects$sel_data[,c("MonitoringLocationIdentifier","MonitoringLocationName","LatitudeMeasure","LongitudeMeasure")])
+	reactive_objects$sel_sites=sel_sites
+	if(dim(sel_sites)[1]>0){
+		bounds=c(min(sel_sites$LongitudeMeasure)*0.999,min(sel_sites$LatitudeMeasure)*0.999,max(sel_sites$LongitudeMeasure)*1.001,max(sel_sites$LatitudeMeasure)*1.001)
+		reactive_objects$bounds=bounds
+		sel_sites_map_proxy %>% 
+			clearGroup("Sites") %>%
+			addCircleMarkers(data=sel_sites, lat=~LatitudeMeasure, lng=~LongitudeMeasure, 
+				popup=~MonitoringLocationIdentifier, group="Sites", options = pathOptions(pane = "markers")) %>%
+			flyToBounds(bounds[1], bounds[2], bounds[3], bounds[4])
+	}
+})
+
+
+### Selected site map for report output
+sel_sites_map_out=reactive({
+	wqTools::buildMap(plot_polys=F) %>%
+		leaflet::addLayersControl(
+				position ="topleft",
+				baseGroups = c("Topo","Satellite"),overlayGroups = c("Sites"),
+				options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE)) %>%
+		addCircleMarkers(data=reactive_objects$sel_sites, lat=~LatitudeMeasure, lng=~LongitudeMeasure, 
+			popup=~MonitoringLocationIdentifier, group="Sites", options = pathOptions(pane = "markers")) %>%
+		flyToBounds(reactive_objects$bounds[1], reactive_objects$bounds[2], reactive_objects$bounds[3], reactive_objects$bounds[4])	
+})
+
+
+
+
 ### Combine parameters
 #### Combine parameters multi-input
 #output$comb_params_mi=renderUI({
@@ -416,8 +496,8 @@ observe({
 
 ## Data table
 output$datatable=DT::renderDT({
-	req(reactive_objects$data_sub)
-	DT::datatable(data.frame(reactive_objects$data_sub),
+	req(reactive_objects$sel_data)
+	DT::datatable(data.frame(reactive_objects$sel_data),
 		selection='none', rownames=FALSE, extensions = 'Buttons',
 		options = list(scrollY = '600px', paging = TRUE, scrollX=TRUE, buttons = c('excel', "csv"))
 	)
@@ -428,13 +508,13 @@ output$exp_dt <- downloadHandler(
 	filename=paste0('data-export-', Sys.Date(),'.xlsx'),
 	content = function(file) {writexl::write_xlsx(
 		list(
-			'data-export'=reactive_objects$data_sub
+			'data-export'=reactive_objects$sel_data
 		),
 		path = file, format_headers=F, col_names=T)}
 )
 
 ## Analyses
-sel_data=reactive(reactive_objects$data_sub)
+sel_data=reactive(reactive_objects$sel_data)
 
 figures=callModule(module=figuresMod, id='figures', sel_data)
 
@@ -466,6 +546,9 @@ output$report <- downloadHandler(
 		date_range=reactive_objects$date_range,
 		fill_nd=input$fill_nd,
 		filters=input$filter_picker,
+		visit_counts=input$visit_count_slider,
+		count_sel_sites=reactive_objects$sel_sites,
+		site_map=sel_sites_map_out(),
 		multi_site_ts=figures$multi_site_ts(),
 		multi_site_bp=figures$multi_site_bp(),
 		conc_map=figures$conc_map(),

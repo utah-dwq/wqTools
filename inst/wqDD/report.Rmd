@@ -6,6 +6,9 @@ params:
   spatial_sel_type: NA
   sel_polys: NA
   date_range: NA
+  visit_counts: NA
+  count_sel_sites: NA
+  site_map: NA
   fill_nd: NA
   filters: NA
   multi_site_ts: NA
@@ -52,6 +55,20 @@ Non-detect values in these figures are plotted as `r tolower(params$fill_nd)`.
 The following additional filters were applied to the data prior to generating plots:
 ```{r, echo=F}
 params$filters
+```
+
+### Sites included
+Sites with a minumum of `r params$visit_counts` visits were included in analyses.  
+
+```{r, echo=F}
+DT::datatable(params$count_sel_sites,
+	selection='none', rownames=FALSE, extensions = 'Buttons',
+	options = list(scrollY = '600px', paging = TRUE, scrollX=TRUE, buttons = c('excel', "csv"))
+)
+```
+
+```{r, echo=F}
+params$site_map
 ```
 
 <br>

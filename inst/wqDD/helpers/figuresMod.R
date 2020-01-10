@@ -340,7 +340,7 @@ figuresMod <- function(input, output, session, sel_data){
 	observeEvent(reactive_objects$param1, {
 		#req(reactive_objects$param1, reactive_objects$ylab)
 		conc_proxy%>%clearGroup('Sites') %>% clearControls()
-		if(exists('sites')){rm(sites)}
+		if(exists('sites', inherits=FALSE)){rm(sites)}
 		if(any(!is.na(reactive_objects$param1$plot_value))){
 			sites=reactive_objects$param1
 			sites=sites[!is.na(sites$plot_value),]
