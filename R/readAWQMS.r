@@ -12,6 +12,7 @@
 #' @importFrom plyr ldply
 #' @importFrom jsonlite fromJSON
 #' @importFrom tidyr unnest
+#' @importFrom tidyr tidyr_legacy
 #' @examples
 #' # Read a couple of sites
 #' sites=readAWQMS(type='sites', MonitoringLocationIdentifiersCsv=c("4900440","4900470"))
@@ -110,7 +111,7 @@ print(paths_all)
 
 result=plyr::ldply(paths_all, .fun=jsonlite::fromJSON, .progress="text")
 if(type=='results' & unnest_results){
-	result=as.data.frame(tidyr::unnest(result, cols=c('Results','Projects'), names_repair=tidyr_legacy))
+	result=as.data.frame(tidyr::unnest(result, cols=c('Results','Projects'), names_repair=tidyr::tidyr_legacy))
 }
 
 if(type=='sites'){

@@ -36,5 +36,5 @@ Download data from EPA's Water Quality Portal (WQP) as .csv files to outfile_pat
 }
 \examples{
 # Read 2018 download narrow result & sites
-downloadWQP(outfile_path='C:\\\\Your\\\\Folder\\\\Path', start_date="01/01/2018", end_date="12/31/2018", retrieve=c("narrowresult","sites"))
+downloadWQP(outfile_path='C:\\Your\\Folder\\Path', start_date="01/01/2018", end_date="12/31/2018", retrieve=c("narrowresult","sites"))
 }
