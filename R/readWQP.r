@@ -19,12 +19,12 @@
 #' @importFrom data.table fread
 #' @examples
 #' # Read some data from Mantua Reservoir (2016-2018)
-#' nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
+#' nr=readWQP(type="narrowresult", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900460"),
 #' 		  start_date="01/01/2016", end_date="12/31/2018")
 #' 
 #' # Read just Arsenic, Cadmium, and DO, all dates
 #' nr=readWQP(type="narrowresult",
-#' 		  siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"),
+#' 		  siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900460"),
 #' 		  characteristicName=c("Arsenic","Cadmium","Dissolved oxygen (DO)"))
 #' 
 #' # Read all Total dissolved solids statewide (2016-2018) (& note statecode for Utah)
@@ -66,7 +66,7 @@ args=list(...)
 ##type='narrowresult'
 ###statecode="US:49"
 ##characteristicName=c("Total dissolved solids","Arsenic","Cadmium")
-#siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470")
+#siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900460")
 #start_date="01/01/2018"
 #end_date="12/31/2018"
 ##auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02')

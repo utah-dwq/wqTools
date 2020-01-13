@@ -27,7 +27,7 @@ Note that some, but not all, special characters have been accounted for (e.g. sp
 }
 \examples{
 # Read a couple of sites
-sites=readAWQMS(type='sites', MonitoringLocationIdentifiersCsv=c("4900440","4900470"))
+sites=readAWQMS(type='sites', MonitoringLocationIdentifiersCsv=c("4900440","4900460"))
 # Make a map of those sites & assign assessment units & uses
 buildMap(sites=sites)
 sites_aus=assignAUs(sites)
@@ -35,10 +35,10 @@ sites_aus_uses=assignUses(sites_aus)
 sites_aus_uses
 
 # Read all results from those sites (2016-2018)
-results=readAWQMS(type='results', MonitoringLocationIdentifiersCsv=c("4900440","4900470"), start_date="01/01/2016", end_date="12/31/2018")
+results=readAWQMS(type='results', MonitoringLocationIdentifiersCsv=c("4900440","4900460"), start_date="01/01/2016", end_date="12/31/2018")
 
 # Read a subset of those results (just two parameters, 2016-2018)
-results2=readAWQMS(type='results', MonitoringLocationIdentifiersCsv=c("4900440","4900470"), Characteristic=c("Total dissolved solids","Phosphate-phosphorus"), start_date="01/01/2016", end_date="12/31/2018")
+results2=readAWQMS(type='results', MonitoringLocationIdentifiersCsv=c("4900440","4900460"), Characteristic=c("Total dissolved solids","Phosphate-phosphorus"), start_date="01/01/2016", end_date="12/31/2018")
 
 # Read Utah DWQ projects
 projects=readAWQMS(type="projects",OrganizationIdentifiersCsv="UTAHDWQ_WQX")
