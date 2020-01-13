@@ -40,7 +40,7 @@
 #' 		start_date="01/01/2016", end_date="12/31/2018",
 #' 		siteType=c("Lake, Reservoir, Impoundment","Stream"),
 #' 		print=F)
-#'  utah_lake_sites=readWQP(type="sites",
+#' utah_lake_sites=readWQP(type="sites",
 #'  		auid=c('UT-L-16020201-004_01', 'UT-L-16020201-004_02'),
 #'  		siteType=c("Lake, Reservoir, Impoundment","Stream"),
 #'  		print=F)
