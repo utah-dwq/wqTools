@@ -7,7 +7,7 @@
 #' @param end_date Query end date in "mm/dd/yyyy" format.
 #' @param stringsAsFactors Logical. Passed to read.csv. See ?read.csv for more information.
 #' @param print Logical. If TRUE (default), print summary table of facilities & parameters returned.
-#' @param ... additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/effluent-charts#!/Effluent_Charts/get_eff_rest_services_download_effluent_chart optional arguments for effluent chart data reads. Note that arguments for output are ignored.
+#' @param ... additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/effluent-charts#!/Effluent_Charts/get_eff_rest_services_download_effluent_chart optional arguments for effluent chart data reads.
 #' @return A flat data frame of EPA ECHO effluent chart data
 #' @importFrom plyr ldply
 #' @examples
@@ -41,7 +41,6 @@ if(any(names(args)=="end_date")){
 	args$end_date=gsub("/","%2F",args$end_date)
 	}
 
-args$output="CSV"
 
 for(n in 1:(length(args)-1)){
 	if(n==1){args_mrg=merge(args[n],args[(n+1)])
