@@ -7,7 +7,7 @@
 readECHO_ec(..., print = TRUE, stringsAsFactors = default.stringsAsFactors())
 }
 \arguments{
-\item{...}{additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/effluent-charts#!/Effluent_Charts/get_eff_rest_services_download_effluent_chart optional arguments for effluent chart data reads. Note that arguments for output are ignored.}
+\item{...}{additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/effluent-charts#!/Effluent_Charts/get_eff_rest_services_download_effluent_chart optional arguments for effluent chart data reads.}
 
 \item{print}{Logical. If TRUE (default), print summary table of facilities & parameters returned.}
 
