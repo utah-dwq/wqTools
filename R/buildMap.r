@@ -48,8 +48,8 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 		#Build empty map
 		
 		map=leaflet::leaflet(options = leafletOptions(preferCanvas = TRUE, dragging=dragging))
-			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo", options = providerTileOptions(updateWhenZooming = FALSE,updateWhenIdle = TRUE))
 			map=leaflet::addProviderTiles(map,"Esri.WorldImagery", group = "Satellite", options = providerTileOptions(updateWhenZooming = FALSE,updateWhenIdle = TRUE))
+			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo", options = providerTileOptions(updateWhenZooming = FALSE,updateWhenIdle = TRUE))
 			
 			map=addMapPane(map,"underlay_polygons", zIndex = 410)
 			map=addMapPane(map,"huc12_poly", zIndex = 412)
@@ -146,8 +146,8 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 		#Build map
 		
 		map=leaflet::leaflet(options = leafletOptions(preferCanvas = TRUE, dragging=dragging), ...)
-			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo", options = providerTileOptions(updateWhenZooming = FALSE,updateWhenIdle = TRUE))
 			map=leaflet::addProviderTiles(map,"Esri.WorldImagery", group = "Satellite", options = providerTileOptions(updateWhenZooming = FALSE,updateWhenIdle = TRUE))
+			map=leaflet::addProviderTiles(map, "Esri.WorldTopoMap", group = "Topo", options = providerTileOptions(updateWhenZooming = FALSE,updateWhenIdle = TRUE))
 			
 			map=addMapPane(map,"underlay_polygons", zIndex = 410)
 			map=addMapPane(map,"huc12_poly", zIndex = 412)
