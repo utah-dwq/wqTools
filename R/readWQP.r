@@ -133,12 +133,16 @@ if(!missing(huc8)){
 if(!exists('geom_type')){geom_type='none'}
 
 if(any(names(args)=="start_date")){
-	args$startDateLo=format(as.Date(args$start_date, format='%m/%d/%Y'), format="%m-%d-%Y")
+	if(class(args$start_date)!="Date"){
+		args$startDateLo=format(as.Date(args$start_date, format='%m/%d/%Y'), format="%m-%d-%Y")
+	}else{args$startDateLo=args$start_date}
 	args=args[names(args)!="start_date"]
 }
 
 if(any(names(args)=="end_date")){
-	args$startDateHi=format(as.Date(args$end_date, format='%m/%d/%Y'), format="%m-%d-%Y")
+	if(class(args$end_date)!="Date"){
+		args$startDateHi=format(as.Date(args$end_date, format='%m/%d/%Y'), format="%m-%d-%Y")
+	}else{args$startDateHi=args$args$end_date}
 	args=args[names(args)!="end_date"]
 }
 
