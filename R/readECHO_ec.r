@@ -27,7 +27,7 @@
 #' tp_flow=readECHO_ec(p_id=c("UT0025241","UT0021717"), parameter_code=c("50050","00665"))
 
 #' @export
-readECHO_ec<-function(..., print=TRUE, stringsAsFactors = default.stringsAsFactors()){
+readECHO_ec<-function(..., print=TRUE, stringsAsFactors = default.stringsAsFactors(), progress=T){
 args=list(...)
 
 base_path="https://ofmpub.epa.gov/echo/eff_rest_services.download_effluent_chart?"
@@ -51,7 +51,11 @@ pastecollapse=function(x){paste0(names(x), "=", x, collapse="&")}
 arg_paths=apply(args_mrg,1,'pastecollapse')
 paths_all=paste0(base_path,arg_paths)
 
-result=plyr::ldply(paths_all,read.csv, stringsAsFactors=stringsAsFactors, .progress="win")
+if(progress){
+	result=plyr::ldply(paths_all,read.csv, stringsAsFactors=stringsAsFactors, .progress="win")
+}else{
+	result=plyr::ldply(paths_all,read.csv, stringsAsFactors=stringsAsFactors)
+}
 
 if(print){
 	print("Queried facility IDs and parameter counts:")
