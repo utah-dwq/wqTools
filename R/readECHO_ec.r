@@ -27,7 +27,7 @@
 #' tp_flow=readECHO_ec(p_id=c("UT0025241","UT0021717"), parameter_code=c("50050","00665"))
 
 #' @export
-readECHO_ec<-function(..., print=TRUE, stringsAsFactors = default.stringsAsFactors(), progress=T){
+readECHO_ec<-function(..., print=TRUE, stringsAsFactors = default.stringsAsFactors(), progress=TRUE){
 args=list(...)
 
 base_path="https://ofmpub.epa.gov/echo/eff_rest_services.download_effluent_chart?"
