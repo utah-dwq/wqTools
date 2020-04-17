@@ -89,12 +89,6 @@ selectPolys=function(type='au'){
 					group='highlight', options = pathOptions(pane = "highlight"), color='chartreuse', opacity = 0.75, fillOpacity = 0.4, weight = 5)
 		})
 		
-		
-		#observe({
-		#	print(reactive_objects$sel_polys)
-		#})
-		
-		
 		observeEvent(input$done, {
 			stopApp(reactive_objects$sel_polys)
 		})
