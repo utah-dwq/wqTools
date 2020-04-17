@@ -166,7 +166,7 @@ if(file.exists(paste0(data_path,"/new_wqpDD.txt"))){
 observeEvent(input$import_data, {
 	req(input$statecodes, input$sitetypes, input$samplemedia, input$import_date_range)
 	showModal(modalDialog(easyClose=F, title='Downloading data', 'This may take a while.', footer=NULL))
-	statecode=subset(statecodes, desc==input$statecodes)$value
+	statecode=subset(statecodes, desc %in% input$statecodes)$value
 	downloadWQP(outfile_path=data_path, statecode=statecode, sampleMedia=input$samplemedia, siteType=input$sitetypes, 
 		start_date=input$import_date_range[1], end_date=input$import_date_range[2], retrieve='result')
 	downloadWQP(outfile_path=data_path, statecode=statecode, sampleMedia=input$samplemedia, siteType=input$sitetypes, retrieve='sites')

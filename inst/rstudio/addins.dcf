@@ -1,0 +1,4 @@
+Name: Find assessment units
+Description: Interactively find and select assessment units to query or filter data
+Binding: selectPolys
+Interactive: true
