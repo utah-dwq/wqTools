@@ -22,5 +22,5 @@ This function assigns assessment units to water quality portal type site objects
 \examples{
 # Read a couple of sites from Mantua Reservoir
 sites=readWQP(type="sites", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"))
-sites_AUs=assignUses(sites)
+sites_AUs=assignAUs(sites)
 }

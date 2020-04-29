@@ -4,7 +4,9 @@
 \name{bu_poly}
 \alias{bu_poly}
 \title{Utah's beneficial use polygon shapes}
-\format{An sf type polygon shapefile}
+\format{
+An sf type polygon shapefile
+}
 \usage{
 bu_poly
 }

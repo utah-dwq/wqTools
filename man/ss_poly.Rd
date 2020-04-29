@@ -4,7 +4,9 @@
 \name{ss_poly}
 \alias{ss_poly}
 \title{Utah's site-specific standard polygon shapes}
-\format{An sf type polygon shapefile}
+\format{
+An sf type polygon shapefile
+}
 \usage{
 ss_poly
 }

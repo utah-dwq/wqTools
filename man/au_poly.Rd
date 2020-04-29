@@ -4,7 +4,9 @@
 \name{au_poly}
 \alias{au_poly}
 \title{Utah's IR-specific assessment unit polygons}
-\format{An sf type polygon shapefile}
+\format{
+An sf type polygon shapefile
+}
 \usage{
 au_poly
 }

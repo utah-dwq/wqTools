@@ -4,7 +4,9 @@
 \name{wmu_poly}
 \alias{wmu_poly}
 \title{Utah DWQ watershed management unit polygons}
-\format{An sf type polygon shapefile}
+\format{
+An sf type polygon shapefile
+}
 \usage{
 wmu_poly
 }

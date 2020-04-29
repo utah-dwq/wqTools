@@ -4,7 +4,12 @@
 \alias{readECHO_ec}
 \title{Read effluent chart data from EPA ECHO webservices}
 \usage{
-readECHO_ec(..., print = TRUE, stringsAsFactors = default.stringsAsFactors())
+readECHO_ec(
+  ...,
+  print = TRUE,
+  stringsAsFactors = default.stringsAsFactors(),
+  progress = TRUE
+)
 }
 \arguments{
 \item{...}{additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/effluent-charts#!/Effluent_Charts/get_eff_rest_services_download_effluent_chart optional arguments for effluent chart data reads.}

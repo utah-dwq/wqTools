@@ -10,7 +10,7 @@
 #' @examples 
 #' # Read a couple of sites from Mantua Reservoir
 #' sites=readWQP(type="sites", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"))
-#' sites_AUs=assignUses(sites)
+#' sites_AUs=assignAUs(sites)
 #' @return Returns the input data frame with assessment unit information appended.
 #' @export
 assignAUs=function(data, lat="LatitudeMeasure", long="LongitudeMeasure"){

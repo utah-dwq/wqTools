@@ -4,7 +4,9 @@
 \name{ul_trophic}
 \alias{ul_trophic}
 \title{Utah Lake trophic data}
-\format{A data.frame with 729 rows and 15 columns}
+\format{
+A data.frame with 729 rows and 15 columns
+}
 \usage{
 data(ul_trophic)
 }

@@ -4,7 +4,9 @@
 \name{huc12_poly}
 \alias{huc12_poly}
 \title{HUC 12 polygons for the state of Utah}
-\format{An sf type polygon shapefile}
+\format{
+An sf type polygon shapefile
+}
 \usage{
 huc12_poly
 }

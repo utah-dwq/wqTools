@@ -9,7 +9,7 @@
 #' @importFrom sf st_set_crs
 #' @importFrom sf st_intersection
 #' @importFrom sf st_difference
-#' @importFrom lwgeom st_make_valid
+#' @importFrom sf st_make_valid
 #' @importFrom sf st_geometry
 #' @importFrom reshape2 colsplit
 #' @importFrom reshape2 melt
@@ -23,7 +23,7 @@
 assignUses=function(data, lat="LatitudeMeasure", long="LongitudeMeasure", flatten=FALSE){
 	
 	intpoly <- function(polygon, sites_object, sites){
-		isect=suppressMessages({suppressWarnings({sf::st_intersection(sites, sf::st_difference(lwgeom::st_make_valid(polygon)))})})
+		isect=suppressMessages({suppressWarnings({sf::st_intersection(sites, sf::st_difference(sf::st_make_valid(polygon)))})})
 		sf::st_geometry(isect)=NULL
 		check=dim(sites_object)[1]
 		sites_object=merge(sites_object,isect,all.x=TRUE)

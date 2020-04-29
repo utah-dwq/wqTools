@@ -4,7 +4,9 @@
 \name{ut_poly}
 \alias{ut_poly}
 \title{Utah state boundary, excluding tribal jurisdictions (unofficial)}
-\format{An sf type polygon shapefile}
+\format{
+An sf type polygon shapefile
+}
 \usage{
 ut_poly
 }
