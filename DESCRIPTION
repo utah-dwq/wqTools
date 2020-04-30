@@ -30,7 +30,6 @@ Imports:
     shinyBS,
     tidyr,
     plotly,
-    lwgeom,
     miniUI
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
