@@ -4,10 +4,10 @@
 \alias{addMapResetButton}
 \title{Add a map reset button to a Leaflet map object}
 \usage{
-addMapResetButton(map)
+addMapResetButton(leaf)
 }
 \arguments{
-\item{map}{A Leaflet map object}
+\item{leaf}{A Leaflet map object}
 }
 \description{
 Add a map reset button to a Leaflet map object
