@@ -1,4 +1,9 @@
-Name: Find assessment units
-Description: Interactively find and select assessment units to query or filter data
+Name: Select polygons
+Description: Interactively find and select spatial polygons to query or filter data
 Binding: selectPolys
+Interactive: true
+
+Name: Find sites
+Description: Interactively find and select water quality sites
+Binding: findSites
 Interactive: true
