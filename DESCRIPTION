@@ -29,6 +29,7 @@ Imports:
     shiny,
     shinyjs,
     shinyBS,
+	shinycssloaders,
     tidyr,
     plotly,
     miniUI
