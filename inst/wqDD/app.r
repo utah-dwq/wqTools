@@ -168,7 +168,7 @@ observeEvent(input$import_data, {
 	showModal(modalDialog(easyClose=F, title='Downloading data', 'This may take a while.', footer=NULL))
 	statecode=subset(statecodes, desc %in% input$statecodes)$value
 	downloadWQP(outfile_path=data_path, statecode=statecode, sampleMedia=input$samplemedia, siteType=input$sitetypes, 
-		start_date=input$import_date_range[1], end_date=input$import_date_range[2], retrieve='result')
+		start_date=format(as.Date(input$import_date_range[1]), "%m/%d/%Y"), end_date=format(as.Date(input$import_date_range[2]), "%m/%d/%Y"), retrieve='result')
 	downloadWQP(outfile_path=data_path, statecode=statecode, sampleMedia=input$samplemedia, siteType=input$sitetypes, retrieve='sites')
 	result=read.csv(paste0(data_path,"/result-", Sys.Date(), ".csv"))
 	showModal(modalDialog(easyClose=F, title='Processing data', 'This may take a while.', footer=NULL))
