@@ -15,7 +15,7 @@
 #' plot(TSIchl~ChlA,tsi)
 
 #' @export
-calcTSI=function(x,in_format="flat",chl_ugL="Chlorophyll a",TP_mgL="Phosphate-phosphorus",SD_m="Depth, Secchi disk depth", value_var='ResultMeasureValue', param_var='CharacteristicName'){
+calcTSI=function(x,in_format="wide",chl_ugL="Chlorophyll a",TP_mgL="Phosphate-phosphorus",SD_m="Depth, Secchi disk depth", value_var='ResultMeasureValue', param_var='CharacteristicName'){
 #x=trophic_data
 #x=within(x, {
 #	IR_Value[IR_Value == 0] = 0.001
