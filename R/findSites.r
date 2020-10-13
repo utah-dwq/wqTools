@@ -75,7 +75,7 @@ findSites=function(){
 			shinybusy::show_modal_spinner(spin = "double-bounce", color = "#112446", text = "Querying...", session = shiny::getDefaultReactiveDomain())	
 			map_box=input$map_bounds
 			
-			## Jitter coords if duplicated ##
+			## Add feature - jitter coords if duplicated ##
 			
 			if("Monitoring locations" %in%  input$data_types){
 				bbox=paste(map_box[4], map_box[3], map_box[2], map_box[1], sep='%2C')
@@ -96,7 +96,15 @@ findSites=function(){
 			}
 			if("USGS gauges" %in%  input$data_types){
 				reactive_objects$gauges=NULL
-				try(reactive_objects$gauges <- dataRetrieval::readNWISdata(bBox=c(round(map_box[[4]],7), round(map_box[[3]],7), round(map_box[[2]],7), round(map_box[[1]],7)), service="site", siteType="ST", hasDataTypeCd="iv"))
+				try(reactive_objects$gauges <- 
+				
+				
+				dataRetrieval::readNWISdata(bBox=c(round(map_box[[4]],7), round(map_box[[3]],7), round(map_box[[2]],7), round(map_box[[1]],7)), service="site", siteTypeCd="ST", hasDataTypeCd="iv"))
+				
+				
+				
+				
+				
 			}
 			if("Permits" %in% input$data_types){
 				permits_coords=wasteloadR::permits_coords
