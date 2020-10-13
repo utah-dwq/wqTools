@@ -96,15 +96,7 @@ findSites=function(){
 			}
 			if("USGS gauges" %in%  input$data_types){
 				reactive_objects$gauges=NULL
-				try(reactive_objects$gauges <- 
-				
-				
-				dataRetrieval::readNWISdata(bBox=c(round(map_box[[4]],7), round(map_box[[3]],7), round(map_box[[2]],7), round(map_box[[1]],7)), service="site", siteTypeCd="ST", hasDataTypeCd="iv"))
-				
-				
-				
-				
-				
+				try(reactive_objects$gauges <- dataRetrieval::readNWISdata(bBox=c(round(map_box[[4]],7), round(map_box[[3]],7), round(map_box[[2]],7), round(map_box[[1]],7)), service="site", siteTypeCd="ST", hasDataTypeCd="iv"))
 			}
 			if("Permits" %in% input$data_types){
 				permits_coords=wasteloadR::permits_coords
