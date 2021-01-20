@@ -150,6 +150,7 @@ data_path=paste0(path.package('wqTools'),'/extdata')
 load(system.file('extdata', "wqpDD_data.Rdata", package='wqTools'))
 wqp_data$ActivityStartDate=as.Date(wqp_data$ActivityStartDate)
 wqp_data$ResultMeasureValue=facToNum(wqp_data$ResultMeasureValue)
+wqp_data$DetectionQuantitationLimitMeasure.MeasureValue=facToNum(wqp_data$DetectionQuantitationLimitMeasure.MeasureValue)
 levels(wqp_data$ResultSampleFractionText)=append(levels(wqp_data$ResultSampleFractionText),'Blank')
 wqp_data$ResultSampleFractionText[is.na(wqp_data$ResultSampleFractionText)]='Blank'
 wqp_data$ResultSampleFractionText[wqp_data$ResultSampleFractionText=='']='Blank'
@@ -399,7 +400,7 @@ output$filter_picker=renderUI({
 
 ### Filter data
 observe({
-	req(reactive_objects$spatial_sel_data)
+	req(reactive_objects$spatial_sel_data, input$fill_nd)
 	data_sub=reactive_objects$spatial_sel_data
 	if(!is.null(input$filter_picker)){
 		for(n in 1:length(input$filter_picker)){
