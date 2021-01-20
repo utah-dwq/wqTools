@@ -172,8 +172,8 @@ figuresMod <- function(input, output, session, sel_data){
 		req(reactive_objects$param1, input$sel_units1, reactive_objects$au_vis)				
 		#if(all(!is.na(reactive_objects$param1$plot_value))){
 			multi_site_ts=plot_ly(source="a") %>%
-				add_trace(data=reactive_objects$param1, type = 'scatter', mode = 'lines+markers', x=~as.Date(ActivityStartDate), y=~plot_value, color = ~droplevels(MonitoringLocationIdentifier), marker = list(size=10), visible=T, text=~MonitoringLocationIdentifier) %>%
-				add_trace(data=reactive_objects$param1, type = 'scatter', mode = 'markers',x = ~as.Date(ActivityStartDate), y=~plot_value, color = ~droplevels(ASSESS_ID), marker = list(size=10), visible=F, text=~ASSESS_ID)
+				add_trace(data=reactive_objects$param1, type = 'scatter', mode = 'lines+markers', x=~as.Date(ActivityStartDate), y=~plot_value, color = ~MonitoringLocationIdentifier, marker = list(size=10), visible=T, text=~MonitoringLocationIdentifier) %>%
+				add_trace(data=reactive_objects$param1, type = 'scatter', mode = 'markers',x = ~as.Date(ActivityStartDate), y=~plot_value, color = ~ASSESS_ID, marker = list(size=10), visible=F, text=~ASSESS_ID)
 			multi_site_ts=layout(multi_site_ts,
 							title = reactive_objects$title,
 							xaxis = list(title = "Date"),
@@ -206,8 +206,8 @@ figuresMod <- function(input, output, session, sel_data){
 	# Multi site boxplot
 	multi_site_bp=reactive({
 		req(reactive_objects$param1, input$sel_units1, reactive_objects$au_vis, reactive_objects$title, reactive_objects$ylab, reactive_objects$mlid_vis, reactive_objects$au_vis)
-		plot_ly(data=reactive_objects$param1, type = 'box', y = ~plot_value, color = ~droplevels(MonitoringLocationIdentifier), visible=T) %>%
-			add_trace(type = 'box', y = ~plot_value, color = ~droplevels(ASSESS_ID), visible=F) %>%
+		plot_ly(data=reactive_objects$param1, type = 'box', y = ~plot_value, color = ~MonitoringLocationIdentifier, visible=T) %>%
+			add_trace(type = 'box', y = ~plot_value, color = ~ASSESS_ID, visible=F) %>%
 			layout(
 				title = reactive_objects$title,
 				xaxis = list(title = "Monitoring location ID"),
