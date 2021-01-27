@@ -99,7 +99,7 @@ findSites=function(){
 				try(reactive_objects$gauges <- dataRetrieval::readNWISdata(bBox=c(round(map_box[[4]],7), round(map_box[[3]],7), round(map_box[[2]],7), round(map_box[[1]],7)), service="site", siteTypeCd="ST", hasDataTypeCd="iv"))
 			}
 			if("Permits" %in% input$data_types){
-				permits_coords=wasteloadR::permits_coords
+				permits_coords=wqTools::permits_coords
 				reactive_objects$permits=subset(permits_coords, LongitudeMeasure>=map_box[[4]] & LatitudeMeasure>=map_box[[3]] & LongitudeMeasure<=map_box[[2]] & LatitudeMeasure<=map_box[[1]])				
 			}
 			shinybusy::remove_modal_spinner()
