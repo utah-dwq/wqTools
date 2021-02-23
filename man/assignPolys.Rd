@@ -28,5 +28,5 @@ ss_poly, ut_poly, or wmu_poly}
 Returns the input data frame with assessment unit information appended.
 }
 \description{
-This function assigns assessment units to water quality portal type site objects (or data with site information attached). This can be done before or after assigning beneficial uses.
+This function assigns spatial polygon data to water quality portal type site objects (or data with site information attached).
 }

@@ -1,6 +1,6 @@
 #' Assign spatial polygons to sites
 #'
-#' This function assigns assessment units to water quality portal type site objects (or data with site information attached). This can be done before or after assigning beneficial uses.
+#' This function assigns spatial polygon data to water quality portal type site objects (or data with site information attached).
 #' @param polygon Input polygon used to assign information to sites. Must be an sf type polygon shapefile. User may choose from au_poly, bu_poly, huc8_12_poly, huc8_poly, huc12_poly,
 #' ss_poly, ut_poly, or wmu_poly
 #' @param columns Vector of columns user wishes to retain from polygon object. If columns object is not specified, function will retain all polygon columns. 
@@ -25,3 +25,5 @@ assignPolys=function(polygon, columns, data, lat="LatitudeMeasure", long="Longit
 	result=merge(data, isect, all.x=T)
 	return(result)
 }
+
+

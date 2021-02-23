@@ -6,7 +6,7 @@
 \usage{
 calcTSI(
   x,
-  in_format = "flat",
+  in_format = "wide",
   chl_ugL = "Chlorophyll a",
   TP_mgL = "Phosphate-phosphorus",
   SD_m = "Depth, Secchi disk depth",

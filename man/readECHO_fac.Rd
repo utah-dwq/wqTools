@@ -4,10 +4,12 @@
 \alias{readECHO_fac}
 \title{Read facility information from EPA ECHO webservices}
 \usage{
-readECHO_fac(...)
+readECHO_fac(..., df = FALSE)
 }
 \arguments{
 \item{...}{Additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/facility-search-water#!/Facility_Information/get_cwa_rest_services_get_facility_info for optional arguments for facilities. Note that arguments for output are ignored.}
+
+\item{df}{Logical. If TRUE, extract geometry coordinates from list format and return as columns in data frame.}
 }
 \value{
 A data frame of EPA ECHO facility information
