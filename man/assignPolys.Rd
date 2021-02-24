@@ -5,24 +5,23 @@
 \title{Assign spatial polygons to sites}
 \usage{
 assignPolys(
-  polygon,
-  columns,
   data,
+  polygon,
   lat = "LatitudeMeasure",
-  long = "LongitudeMeasure"
+  long = "LongitudeMeasure",
+  columns
 )
 }
 \arguments{
-\item{polygon}{Input polygon used to assign information to sites. Must be an sf type polygon shapefile. User may choose from au_poly, bu_poly, huc8_12_poly, huc8_poly, huc12_poly,
-ss_poly, ut_poly, or wmu_poly}
-
-\item{columns}{Vector of columns user wishes to retain from polygon object. If columns object is not specified, function will retain all polygon columns.}
-
 \item{data}{Input dataset. Must include latitude & longitude columns.}
+
+\item{polygon}{Polygon to assign information to sites. Must be an sf type polygon shapefile.}
 
 \item{lat}{Name of latitude column. Default matches WQP objects.}
 
 \item{long}{Name of longitude column. Default matches WQP objects.}
+
+\item{columns}{Vector of columns to retain from polygon object. If columns not specified, function will retain all columns.}
 }
 \value{
 Returns the input data frame with assessment unit information appended.
