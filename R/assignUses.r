@@ -12,7 +12,7 @@
 #' @importFrom reshape2 colsplit
 #' @importFrom reshape2 melt
 #' @examples 
-#' # Read a couple of sites (Mantua Reservoir and a tributary
+#' # Read a couple of sites (Mantua Reservoir and a tributary)
 #' sites=readWQP(type="sites", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"))
 #' sites_uses=assignUses(sites)
 #' sites_uses_flat=assignUses(sites, flatten=TRUE)

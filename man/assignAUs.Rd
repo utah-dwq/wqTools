@@ -20,7 +20,7 @@ Returns the input data frame with assessment unit information appended.
 This function assigns assessment units to water quality portal type site objects (or data with site information attached). This can be done before or after assigning beneficial uses.
 }
 \examples{
-# Read a couple of sites from Mantua Reservoir
+# Read a couple of sites (Mantua Reservoir and a tributary)
 sites=readWQP(type="sites", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"))
 sites_AUs=assignAUs(sites)
 }

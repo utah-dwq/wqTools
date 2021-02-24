@@ -8,7 +8,7 @@
 #' @importFrom sf st_set_crs
 #' @importFrom sf st_join
 #' @examples 
-#' # Read a couple of sites from Mantua Reservoir
+#' # Read a couple of sites (Mantua Reservoir and a tributary)
 #' sites=readWQP(type="sites", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"))
 #' sites_AUs=assignAUs(sites)
 #' @return Returns the input data frame with assessment unit information appended.
