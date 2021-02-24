@@ -22,7 +22,6 @@ assignUses=function(data, lat="LatitudeMeasure", long="LongitudeMeasure", flatte
 	bu_poly=wqTools::bu_poly
 	x=data
 	x=sf::st_as_sf(x, coords=c(long,lat), crs=4326, remove=F)
-	x=sf::st_set_crs(x, sf::st_crs(bu_poly))	
 	
 	isect=suppressMessages({suppressWarnings({sf::st_join(x, bu_poly, left=TRUE)})})
 	sf::st_geometry(isect)=NULL

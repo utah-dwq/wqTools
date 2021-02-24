@@ -15,7 +15,7 @@ assignPolys(
 \arguments{
 \item{data}{Input dataset. Must include latitude & longitude columns.}
 
-\item{polygon}{Polygon to assign information to sites. Must be an sf type polygon shapefile.}
+\item{polygon}{Polygon to assign information to sites. Must be an sf type polygon shapefile, WGS84 projection recommended.}
 
 \item{lat}{Name of latitude column. Default matches WQP objects.}
 
@@ -28,4 +28,10 @@ Returns the input data frame with assessment unit information appended.
 }
 \description{
 This function assigns spatial polygon data to water quality portal type site objects (or data with site information attached).
+}
+\examples{
+# Read a couple of sites (Mantua Reservoir and a tributary)
+sites=readWQP(type="sites", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"))
+sites_AUs=assignPolys(sites, wqTools::au_poly)
+sites_BUs=assignPolys(sites, wqTools::bu_poly)
 }
