@@ -6,7 +6,7 @@
 #' @param long Name of longitude column. Default matches WQP objects.
 #' @importFrom sf st_as_sf
 #' @importFrom sf st_set_crs
-#' @importFrom sf st_intersection
+#' @importFrom sf st_join
 #' @examples 
 #' # Read a couple of sites from Mantua Reservoir
 #' sites=readWQP(type="sites", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"))
@@ -14,14 +14,12 @@
 #' @return Returns the input data frame with assessment unit information appended.
 #' @export
 assignAUs=function(data, lat="LatitudeMeasure", long="LongitudeMeasure"){
-	au_poly=wqTools::au_poly
-	poly=sf::st_as_sf(au_poly)
+	poly=wqTools::au_poly
 	poly=poly[,c("AU_NAME","ASSESS_ID","AU_DESCRIP","AU_Type")]
 	x=data
 	x=sf::st_as_sf(x, coords=c(long,lat), crs=4326, remove=F)
 	x=sf::st_set_crs(x, sf::st_crs(poly))	
-	isect=suppressMessages({suppressWarnings({sf::st_intersection(x, poly)})})
+	isect=suppressMessages({suppressWarnings({sf::st_join(x, poly, left=TRUE)})})
 	sf::st_geometry(isect)=NULL
-	result=merge(data, isect, all.x=T)
-	return(result)
+	return(isect)
 }

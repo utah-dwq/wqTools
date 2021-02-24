@@ -24,7 +24,7 @@ assignUses(
 This function assigns beneficial use classes to water quality portal type site objects (or data with site information attached).
 }
 \examples{
-# Read a couple of sites from Mantua Reservoir
+# Read a couple of sites (Mantua Reservoir and a tributary
 sites=readWQP(type="sites", siteid=c("UTAHDWQ_WQX-4900440","UTAHDWQ_WQX-4900470"))
 sites_uses=assignUses(sites)
 sites_uses_flat=assignUses(sites, flatten=TRUE)

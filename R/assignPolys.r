@@ -9,21 +9,19 @@
 #' @param long Name of longitude column. Default matches WQP objects.
 #' @importFrom sf st_as_sf
 #' @importFrom sf st_set_crs
-#' @importFrom sf st_intersection
+#' @importFrom sf st_join
 
 #' @return Returns the input data frame with assessment unit information appended.
 #' @export
 assignPolys=function(polygon, columns, data, lat="LatitudeMeasure", long="LongitudeMeasure"){
 	poly = eval(parse(text = paste0("wqTools::",polygon)))
-	poly1=sf::st_as_sf(poly)
-	if(exists("columns")){poly1=poly1[,columns]}
+	if(exists("columns")){poly=poly[,columns]}
 	x=data
 	x=sf::st_as_sf(x, coords=c(long,lat), crs=4326, remove=F)
-	x=sf::st_set_crs(x, sf::st_crs(poly1))	
-	isect=suppressMessages({suppressWarnings({sf::st_intersection(x, poly1)})})
+	x=sf::st_set_crs(x, sf::st_crs(poly))	
+	isect=suppressMessages({suppressWarnings({sf::st_join(x, poly, left=TRUE)})})
 	sf::st_geometry(isect)=NULL
-	result=merge(data, isect, all.x=T)
-	return(result)
+	return(isect)
 }
 
 
