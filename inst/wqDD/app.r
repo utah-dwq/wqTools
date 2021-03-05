@@ -131,8 +131,8 @@ ui <-fluidPage(
 				hidden(textAreaInput('report_notes', 'User notes for report:', width = "800px", height="200px", resize='vertical')),
 				br(),
 				fluidRow(
-					hidden(downloadButton("report", "Generate report", icon='download', style='color: #fff; background-color: #337ab7; border-color: #2e6da4%')),
-					downloadButton('exp_dt', label = "Download data", icon='download', style='color: #fff; background-color: #337ab7; border-color: #2e6da4%')
+					hidden(downloadButton("report", "Generate report", icon=icon('download'), style='color: #fff; background-color: #337ab7; border-color: #2e6da4%')),
+					downloadButton('exp_dt', label = "Download data", icon=icon('download'), style='color: #fff; background-color: #337ab7; border-color: #2e6da4%')
 				)
 			)
 		)
