@@ -17,7 +17,7 @@ readWQP(
 )
 }
 \arguments{
-\item{type}{Data type to read. One of "result", "narrowresult", "sites", "activity", or "detquantlim".}
+\item{type}{Data type to read. One of "result", "narrowresult", "sites", "activity", "detquantlim", or "project".}
 
 \item{...}{additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.}
 

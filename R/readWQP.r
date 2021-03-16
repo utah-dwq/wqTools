@@ -4,7 +4,7 @@
 #' All arguments except type are optional, but at least one should be provided to limit download size and prevent errors connecting to WQP.
 #' Note that some, but not all, special characters in characteristic names have been accounted for. If in doubt, use the WQP web interface to determine the appropriate sytax for odd characteristic names.
 #' This function coerces non-numeric values in ResultMeasureValue column (for result & narrowresult type queries). This may generate NA values with a warning for special characters.
-#' @param type Data type to read. One of "result", "narrowresult", "sites", "activity", or "detquantlim".
+#' @param type Data type to read. One of "result", "narrowresult", "sites", "activity", "detquantlim", or "project".
 #' @param start_date Query start date in "mm/dd/yyyy" format.
 #' @param end_date Query end date in "mm/dd/yyyy" format.
 #' @param coerce_num Logical. If TRUE the ResultMeasureValue column in result and narrowresult type reads is coerced to numeric values. This will generate NAs in the ResultMeasureValue column for non-numeric values. Defaults to FALSE.
@@ -154,6 +154,7 @@ args$zip="no"
 if(type=="result" | type=="narrowresult"){base_path="https://www.waterqualitydata.us/data/Result/search?"}
 if(type=="narrowresult"){args$dataProfile="narrowResult"}
 if(type=="sites"){base_path="https://www.waterqualitydata.us/data/Station/search?"}
+if(type=="project"){base_path="https://www.waterqualitydata.us/data/Project/search?"}
 if(type=="activity"){
 	base_path="https://www.waterqualitydata.us/data/Activity/search?"
 	args$dataProfile="activityAll"
