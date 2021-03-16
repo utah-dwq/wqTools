@@ -31,20 +31,20 @@ baseMap=function(layers_control=TRUE){
 	addPolygons(data=wqTools::wmu_poly,group="Watershed management units",fillOpacity = 0.1,weight=3,color="red", options = pathOptions(pane = "underlay_polygons"),
 		popup=wqTools::wmu_poly$Mgmt_Unit
 	) %>%
+	addPolygons(data=wqTools::hnnc_poly,group="Headwater NNC",fillOpacity = 0.4,weight=3,color="pink", options = pathOptions(pane = "underlay_polygons")) %>%
 	addPolygons(data=wqTools::ut_poly,group="UT boundary",fillOpacity = 0.1,weight=3,color="purple", options = pathOptions(pane = "underlay_polygons")) %>%
 	hideGroup("Assessment units") %>%
 	hideGroup("Site-specific standards") %>%
 	hideGroup("Beneficial uses") %>%
+	hideGroup("Headwater NNC") %>%
 	hideGroup("UT boundary") %>%
 	hideGroup("Watershed management units")
 	
 	if(layers_control){
 		map=leaflet::addLayersControl(map,
 			position ="topleft",
-			baseGroups = c("World topo","USGS topo", "Hydrography", "Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "Watershed management units", "UT boundary"),
+			baseGroups = c("World topo","USGS topo", "Hydrography", "Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards", "Headwater NNC", "Watershed management units", "UT boundary"),
 			options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
 	}	
 	return(map)
 }
-
-
