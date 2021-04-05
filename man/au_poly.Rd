@@ -11,6 +11,6 @@ An sf type polygon shapefile
 au_poly
 }
 \description{
-Polygons containing assessment unit designations.
+Polygons containing assessment unit designations for the current IR cycle.
 }
 \keyword{datasets}
