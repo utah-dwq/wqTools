@@ -21,10 +21,14 @@
 #' UT_actions=readAttains(type="actions", stateCode="UT")
 #' 
 #' #Read Utah assessments
-#' UT_assessments=readAttains(type="assessments", state="UT", reportingCycle=2016)
+#' UT_assessments=readAttains(type="assessments", state="UT", reportingCycle=2020)
 
 #' @export
 readAttains=function(type="assessments", stateCode=NULL, ...){
+
+stateCode="UT"
+type="assessments"
+args=list(reportingCycle=2020)
 
 if(missing(stateCode) & type!="domains"){
 	stop("Required argument, stateCode, missing without default.")
@@ -42,17 +46,12 @@ args=list(...)
 
 if(type=="assessments"){
 	args$state=stateCode
-}else{args$stateCode=stateCode}
-
-if(type=="assessments" & any(names(args)==("stateCode"))){
-	args$state=args$stateCode
 	args=args[names(args)!="stateCode"]
-	}
+}else{args$stateCode=stateCode}
 
 if(type=="assessments" & !any(names(args)==("reportingCycle"))){
 	stop("reportingCycle must be specified for type='assessments' reads.")
 }
-
 
 base_path=paste0(path, type, "?")
 args_path=pastecollapse(args)
@@ -66,7 +65,20 @@ if(type=="assessments"){
 	parameters=data.frame(parameters[,c("assessmentUnitIdentifier","agencyCode","parameterStatusName","parameterName","associatedUseName","parameterAttainmentCode","trendCode","pollutantIndicator","cycleFirstListed","cycleLastAssessed")])
 	associated_actions=tidyr::unnest(query_result[["assessments"]][[1]], cols=parameters) %>% tidyr::unnest(cols=associatedActions)
 	associated_actions=data.frame(associated_actions[,c("assessmentUnitIdentifier","parameterName","associatedActionIdentifier")])
-	result=list(assessments=assessments, parameters=parameters, associated_actions=associated_actions)
+	params_actions=merge(parameters, associated_actions, all=T)
+	impairments=params_actions[is.na(params_actions$associatedActionIdentifier),]
+	impairments=within(impairments, {use_param=paste(associatedUseName, parameterName)})
+	impairments_wide=tidyr::pivot_wider(impairments, id_cols=c("assessmentUnitIdentifier"), names_from="use_param", values_from="use_param")
+	impairments_wide$impairments=tidyr::unite(impairments_wide[,2:dim(impairments_wide)[2]], "impairments", sep="; ", na.rm=T)$impairments
+	impairments_wide=as.data.frame(impairments_wide[,c("assessmentUnitIdentifier","impairments")])
+	tmdls=associated_actions 
+	tmdls$tmdl=paste0(tmdls$parameterName, "(", tmdls$associatedActionIdentifier, ")")
+	tmdls_wide=tidyr::pivot_wider(tmdls, id_cols=c("assessmentUnitIdentifier"), names_from="tmdl", values_from="tmdl")
+	tmdls_wide$tmdls=tidyr::unite(tmdls_wide[,2:dim(tmdls_wide)[2]], "tmdls", sep="; ", na.rm=T)$tmdls
+	tmdls_wide=as.data.frame(tmdls_wide[,c("assessmentUnitIdentifier","tmdls")])
+	assessments_wide=merge(assessments, impairments_wide, all.x=T)
+	assessments_wide=merge(assessments_wide, tmdls_wide, all.x=T)
+	result=list(assessments=assessments, parameters=parameters, associated_actions=associated_actions, assessments_wide=assessments_wide)
 }
 
 if(type=="actions"){
