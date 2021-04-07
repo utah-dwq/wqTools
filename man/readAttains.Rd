@@ -30,5 +30,5 @@ UT_AUs=readAttains(type="assessmentUnits", stateCode="UT")
 UT_actions=readAttains(type="actions", stateCode="UT")
 
 #Read Utah assessments
-UT_assessments=readAttains(type="assessments", state="UT", reportingCycle=2016)
+UT_assessments=readAttains(type="assessments", state="UT", reportingCycle=2020)
 }
