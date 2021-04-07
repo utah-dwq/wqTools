@@ -1,11 +1,10 @@
 #' Read data from EPA's ATTAINS database
 #'
-#' This function pulls information from EPA ATTAINS database based on submitted arguments via ATTAINS web service. Any ATTAINS web service compatible argument can be submitted to this funciton. Depending on type, at least one argument may be required. See https://link-to-be-obtained.gov for a list of required and compatible arguments.
+#' This function pulls information from EPA ATTAINS database based on submitted arguments via ATTAINS web service. Any ATTAINS web service compatible argument can be submitted to this funciton. Depending on type, at least one argument may be required. See https://www.epa.gov/waterdata/how-access-and-use-attains-web-services for a list of required and compatible arguments.
 #' The function is essentially an ATTAINS specific wrapper for jsonlite::fromJSON. It generates the appropriate web path to connect to ATTAINS web service and converts JSON to R object.
 #'
 #' @param type ATTAINS data type to read. One of: "assessmentUnits", "assessments", or "actions".
 #' @param stateCode Two letter state code
-#' @param reportingCycle Four digit year of interest. Must be specified for type == "assessments" (NOTE: EPA working on update that will return the most recent cycle).
 #' @param ... Additional arguments to be passed to ATTAINS web service path.
 
 #' @importFrom jsonlite fromJSON
@@ -26,10 +25,6 @@
 #' @export
 readAttains=function(type="assessments", stateCode=NULL, ...){
 
-stateCode="UT"
-type="assessments"
-args=list(reportingCycle=2020)
-
 if(missing(stateCode) & type!="domains"){
 	stop("Required argument, stateCode, missing without default.")
 }
@@ -49,8 +44,9 @@ if(type=="assessments"){
 	args=args[names(args)!="stateCode"]
 }else{args$stateCode=stateCode}
 
+# Warn if reportingCycle not specified
 if(type=="assessments" & !any(names(args)==("reportingCycle"))){
-	stop("reportingCycle must be specified for type='assessments' reads.")
+	warning("reportingCycle not specified by user. Returning most recent available assessment. Note: these may results may be draft.")
 }
 
 base_path=paste0(path, type, "?")
@@ -94,5 +90,3 @@ if(type=="assessmentUnits"){
 return(result)
 
 }
-
-
