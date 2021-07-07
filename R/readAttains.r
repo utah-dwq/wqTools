@@ -68,7 +68,7 @@ if(type=="assessments"){
 	impairments_wide$impairments=tidyr::unite(impairments_wide[,2:dim(impairments_wide)[2]], "impairments", sep="; ", na.rm=T)$impairments
 	impairments_wide=as.data.frame(impairments_wide[,c("assessmentUnitIdentifier","impairments")])
 	tmdls=associated_actions 
-	tmdls$tmdl=paste0(tmdls$parameterName, "(", tmdls$associatedActionIdentifier, ")")
+	tmdls$tmdl=paste0(tmdls$parameterName, " (", tmdls$associatedActionIdentifier, ")")
 	tmdls_wide=tidyr::pivot_wider(tmdls, id_cols=c("assessmentUnitIdentifier"), names_from="tmdl", values_from="tmdl")
 	tmdls_wide$tmdls=tidyr::unite(tmdls_wide[,2:dim(tmdls_wide)[2]], "tmdls", sep="; ", na.rm=T)$tmdls
 	tmdls_wide=as.data.frame(tmdls_wide[,c("assessmentUnitIdentifier","tmdls")])
