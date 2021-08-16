@@ -7,7 +7,7 @@
 #' @param end_date Query end date in "mm/dd/yyyy" format.
 #' @param stringsAsFactors Logical. Passed to read.csv. See ?read.csv for more information.
 #' @param print Logical. If TRUE (default), print summary table of facilities & parameters returned.
-#' @param ... additional arguments to be passed to ECHO query path. See https://echo.epa.gov/tools/web-services/effluent-charts#!/Effluent_Charts/get_eff_rest_services_download_effluent_chart optional arguments for effluent chart data reads.
+#' @param ... additional arguments to be passed to ECHO query path. See c optional arguments for effluent chart data reads.
 #' @return A flat data frame of EPA ECHO effluent chart data
 #' @importFrom plyr ldply
 #' @examples
@@ -30,7 +30,7 @@
 readECHO_ec<-function(..., print=TRUE, stringsAsFactors = default.stringsAsFactors(), progress=TRUE){
 args=list(...)
 
-base_path="https://ofmpub.epa.gov/echo/eff_rest_services.download_effluent_chart?"
+base_path="https://echodata.epa.gov/echo/eff_rest_services.download_effluent_chart?"
 
 if(!any(names(args)=="p_id")){stop("Error: at least one p_id must be provided")}
 
