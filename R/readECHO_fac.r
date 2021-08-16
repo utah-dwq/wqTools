@@ -21,7 +21,7 @@ args=list(...)
 pastecollapse=function(x){paste0(x, collapse="%2C%20")}
 args=plyr::llply(args,pastecollapse)
 
-path="https://ofmpub.epa.gov/echo/cwa_rest_services.get_facility_info?"
+path="https://echodata.epa.gov/echo/cwa_rest_services.get_facility_info?"
 args$output="JSON"
 
 arg_path=paste0(names(args),"=",args,collapse="&")
@@ -30,7 +30,7 @@ print(path)
 
 #print("Querying facility information...")
 fac_query=jsonlite::fromJSON(path)
-geoJSON_path=paste0("https://ofmpub.epa.gov/echo/cwa_rest_services.get_geojson?output=GEOJSON&qid=",fac_query$Results$QueryID)
+geoJSON_path=paste0("https://echodata.epa.gov/echo/cwa_rest_services.get_geojson?output=GEOJSON&qid=",fac_query$Results$QueryID)
 print("Querying facility geometries...")
 fac_geoJSON=jsonlite::fromJSON(geoJSON_path)
 result=fac_geoJSON$features
