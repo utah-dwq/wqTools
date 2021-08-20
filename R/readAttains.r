@@ -64,6 +64,7 @@ if(type=="assessments"){
 	params_actions=merge(parameters, associated_actions, all=T)
 	impaired_auids=subset(assessments, epaIRCategory==5)$assessmentUnitIdentifier
 	impairments=params_actions[is.na(params_actions$associatedActionIdentifier) & params_actions$assessmentUnitIdentifier %in% impaired_auids,]
+	impairments=subset(impairments, impairments$parameterStatusName=="Cause") # EH added:this list contains parameters meeting criteria (delisted) and legacy observed effects (bugs)
 	impairments=within(impairments, {use_param=paste(associatedUseName, parameterName)})
 	impairments_wide=tidyr::pivot_wider(impairments, id_cols=c("assessmentUnitIdentifier"), names_from="use_param", values_from="use_param")
 	impairments_wide$impairments=tidyr::unite(impairments_wide[,2:dim(impairments_wide)[2]], "impairments", sep="; ", na.rm=T)$impairments
