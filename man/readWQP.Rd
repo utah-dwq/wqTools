@@ -10,8 +10,7 @@ readWQP(
   print = FALSE,
   coerce_num = FALSE,
   url_only = FALSE,
-  auid = NULL,
-  clip_geom = TRUE
+  auid = NULL
 )
 }
 \arguments{
@@ -26,8 +25,6 @@ readWQP(
 \item{url_only}{Logical. If FALSE (default) read and return data. If TRUE, return just the query url.}
 
 \item{auid}{Optional. A vector of Utah DWQ assessment unit identifiers for which to query data. Note that siteid is ignored if auid is specified.}
-
-\item{clip_geom}{If auid is specified, should data be subset to the polygon geometries? If TRUE (default) data are subset to polygon geometries. If FALSE, the bounding box of the selected polygins is used to query data (sites outside the polygons may be returned). Ignored if auid is all NULL.}
 
 \item{start_date}{Query start date in "mm/dd/yyyy" format.}
 
