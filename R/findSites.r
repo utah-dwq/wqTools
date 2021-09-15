@@ -91,19 +91,20 @@ findSites=function(){
 					act=wqTools::readWQP(type='activity', within=radius, lat=center_lat, long=center_lon, bBox=bbox, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
 				})
 				
-				if(map_box$east>map_box$west & map_box$north>map_box$south){sites=subset(sites, LongitudeMeasure>=map_box[[4]] & LatitudeMeasure>=map_box[[3]] & LongitudeMeasure<=map_box[[2]] & LatitudeMeasure<=map_box[[1]])}
-				print(head(sites))
-				print(dim(sites))
-				act=subset(act, MonitoringLocationIdentifier %in% sites$MonitoringLocationIdentifier)
-				#if(dim(sites)[1]>0){
-					visits=unique(act[,c("MonitoringLocationIdentifier","ActivityStartDate")])
-					visit_counts=aggregate(ActivityStartDate~MonitoringLocationIdentifier, visits, FUN='length')
-					names(visit_counts)[names(visit_counts)=='ActivityStartDate']="count"
-					sites_counts=merge(sites, visit_counts)
-					reactive_objects$wqp_sites=sites_counts
-				#}else{
-				#	reactive_objects$wqp_sites=sites
-				#}
+
+				if(dim(sites)[1]>0){
+					if(map_box$east>map_box$west & map_box$north>map_box$south){sites=subset(sites, LongitudeMeasure>=map_box[[4]] & LatitudeMeasure>=map_box[[3]] & LongitudeMeasure<=map_box[[2]] & LatitudeMeasure<=map_box[[1]])}
+				}
+				if(dim(sites)[1]>0){
+						act=subset(act, MonitoringLocationIdentifier %in% sites$MonitoringLocationIdentifier)
+						if(dim(act)[1]>0){
+							visits=unique(act[,c("MonitoringLocationIdentifier","ActivityStartDate")])
+							visit_counts=aggregate(ActivityStartDate~MonitoringLocationIdentifier, visits, FUN='length')
+							names(visit_counts)[names(visit_counts)=='ActivityStartDate']="count"
+							sites_counts=merge(sites, visit_counts)
+							reactive_objects$wqp_sites=sites_counts
+						}
+				}
 			}
 			if("USGS gauges" %in%  input$data_types){
 				reactive_objects$gauges=NULL
