@@ -88,7 +88,7 @@ findSites=function(){
 
 				suppressMessages({
 					sites=wqTools::readWQP(type='sites', within=radius, lat=center_lat, long=center_lon, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
-					act=wqTools::readWQP(type='activity', within=radius, lat=center_lat, long=center_lon, bBox=bbox, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
+					act=wqTools::readWQP(type='activity', within=radius, lat=center_lat, long=center_lon, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
 				})
 				
 
