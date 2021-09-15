@@ -46,7 +46,7 @@ findSites=function(){
 				))
 			),
 			column(7,
-					shinycssloaders::withSpinner(leaflet::leafletOutput("map", height='600px', width="100%"),size=2, color="#0080b7")
+					shinycssloaders::withSpinner(leaflet::leafletOutput("map", height='700px', width='700px'),size=2, color="#0080b7")
 			)
 		)
 	)
@@ -57,7 +57,8 @@ findSites=function(){
 	
 		output$map=renderLeaflet({			
 				wqTools::baseMap() %>% wqTools::addMapResetButton() %>% addMapPane("highlight", zIndex = 418) %>% 
-					leaflet::addLegend("topright", colors=c("purple","orange","blue"), labels=c("Monitoring location", "Permit", "USGS gauge"))
+					leaflet::addLegend("topright", colors=c("purple","orange","blue"), labels=c("Monitoring location", "Permit", "USGS gauge")) %>%
+					leaflet::addMeasure(primaryLengthUnit="miles")
 					#leaflet.extras::addDrawToolbar(
 					#	polylineOptions = F,
 					#	polygonOptions = F,
@@ -73,16 +74,26 @@ findSites=function(){
 		observeEvent(input$query_sites, {
 			req(input$map_bounds)
 			shinybusy::show_modal_spinner(spin = "double-bounce", color = "#112446", text = "Querying...", session = shiny::getDefaultReactiveDomain())	
+			leafletProxy("map") %>% clearGroup("sites")
 			map_box=input$map_bounds
 			
 			## Add feature - jitter coords if duplicated ##
 			
 			if("Monitoring locations" %in%  input$data_types){
-				bbox=paste(map_box[4], map_box[3], map_box[2], map_box[1], sep='%2C')
+				bbox=paste(map_box[4], map_box[3], map_box[2], map_box[1], sep='%2C')				
+				ab=(map_box$north-map_box$south)*69/2
+				radius=sqrt(ab^2*2)*1.1
+				center_lat=input$map_center$lat
+				center_lon=input$map_center$lng
+
 				suppressMessages({
-					sites=wqTools::readWQP(type='sites', bBox=bbox, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
-					act=wqTools::readWQP(type='activity', bBox=bbox, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
+					sites=wqTools::readWQP(type='sites', within=radius, lat=center_lat, long=center_lon, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
+					act=wqTools::readWQP(type='activity', within=radius, lat=center_lat, long=center_lon, bBox=bbox, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
 				})
+				
+				if(map_box$east>map_box$west & map_box$north>map_box$south){sites=subset(sites, LongitudeMeasure>=map_box[[4]] & LatitudeMeasure>=map_box[[3]] & LongitudeMeasure<=map_box[[2]] & LatitudeMeasure<=map_box[[1]])}
+				print(head(sites))
+				print(dim(sites))
 				act=subset(act, MonitoringLocationIdentifier %in% sites$MonitoringLocationIdentifier)
 				#if(dim(sites)[1]>0){
 					visits=unique(act[,c("MonitoringLocationIdentifier","ActivityStartDate")])
@@ -274,5 +285,5 @@ findSites=function(){
 
 }
 
-#findSites()
+findSites()
 
