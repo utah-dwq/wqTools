@@ -285,5 +285,3 @@ findSites=function(){
 
 }
 
-findSites()
-
