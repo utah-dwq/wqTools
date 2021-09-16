@@ -62,20 +62,30 @@ if(type=="assessments"){
 	associated_actions=tidyr::unnest(query_result[["assessments"]][[1]], cols=parameters) %>% tidyr::unnest(cols=associatedActions)
 	associated_actions=data.frame(associated_actions[,c("assessmentUnitIdentifier","parameterName","associatedActionIdentifier")])
 	params_actions=merge(parameters, associated_actions, all=T)
-	impaired_auids=subset(assessments, epaIRCategory==5)$assessmentUnitIdentifier
-	impairments=params_actions[is.na(params_actions$associatedActionIdentifier) & params_actions$assessmentUnitIdentifier %in% impaired_auids,]
-	impairments=subset(impairments, impairments$parameterStatusName=="Cause") # EH added:this list contains parameters meeting criteria (delisted) and legacy observed effects (bugs)
-	impairments=within(impairments, {use_param=paste(associatedUseName, parameterName)})
-	impairments_wide=tidyr::pivot_wider(impairments, id_cols=c("assessmentUnitIdentifier"), names_from="use_param", values_from="use_param")
-	impairments_wide$impairments=tidyr::unite(impairments_wide[,2:dim(impairments_wide)[2]], "impairments", sep="; ", na.rm=T)$impairments
-	impairments_wide=as.data.frame(impairments_wide[,c("assessmentUnitIdentifier","impairments")])
-	tmdls=associated_actions 
-	tmdls$tmdl=paste0(tmdls$parameterName, " (", tmdls$associatedActionIdentifier, ")")
-	tmdls_wide=tidyr::pivot_wider(tmdls, id_cols=c("assessmentUnitIdentifier"), names_from="tmdl", values_from="tmdl")
-	tmdls_wide$tmdls=tidyr::unite(tmdls_wide[,2:dim(tmdls_wide)[2]], "tmdls", sep="; ", na.rm=T)$tmdls
-	tmdls_wide=as.data.frame(tmdls_wide[,c("assessmentUnitIdentifier","tmdls")])
-	assessments_wide=merge(assessments, impairments_wide, all.x=T)
-	assessments_wide=merge(assessments_wide, tmdls_wide, all.x=T)
+	params_actions_uses=within(params_actions, {use_param=paste0(associatedUseName,": ", parameterName)})
+	d303 = subset(params_actions_uses, params_actions_uses$parameterStatusName=="Cause"&is.na(params_actions_uses$associatedActionIdentifier))
+	d303_wide = d303%>%tidyr::pivot_wider(id_cols=c("assessmentUnitIdentifier"), names_from="use_param", values_from="use_param")
+	d303_wide = as.data.frame(d303_wide%>%unite(col = "303D_NOT_MEETING",2:dim(d303_wide)[2],sep="; ", na.rm=T))
+	tmdls_nm = subset(params_actions_uses, params_actions_uses$parameterStatusName=="Cause"&!is.na(params_actions_uses$associatedActionIdentifier))
+	tmdls_nm = unique(tmdls_nm[,c("assessmentUnitIdentifier","use_param")])
+	tmdls_nm_wide = tmdls_nm%>%tidyr::pivot_wider(id_cols=c("assessmentUnitIdentifier"), names_from="use_param", values_from="use_param")
+	tmdls_nm_wide = as.data.frame(tmdls_nm_wide%>%unite(col = "APPRVD_TMDL_NOT_MEETING",2:dim(tmdls_nm_wide)[2],sep="; ", na.rm=T))
+	tmdls_m = subset(params_actions_uses, params_actions_uses$parameterStatusName=="Meeting Criteria"&!is.na(params_actions_uses$associatedActionIdentifier))
+	tmdls_m = unique(tmdls_m[,c("assessmentUnitIdentifier","use_param")])
+	tmdls_m_wide = tmdls_m%>%tidyr::pivot_wider(id_cols=c("assessmentUnitIdentifier"), names_from="use_param", values_from="use_param")
+	tmdls_m_wide = as.data.frame(tmdls_m_wide%>%unite(col = "APPRVD_TMDL_MEETING_CRIT",2:dim(tmdls_m_wide)[2],sep="; ", na.rm=T))
+	assessments_wide=merge(assessments, d303_wide, all.x=T)
+	assessments_wide=merge(assessments_wide, tmdls_nm_wide, all.x=T)
+	assessments_wide=merge(assessments_wide, tmdls_m_wide, all.x=T)
+	assessments_wide=within(assessments_wide,{
+	  DWQ_Status = NA
+	  DWQ_Status[epaIRCategory=="1"] = "Fully Supporting"
+	  DWQ_Status[epaIRCategory=="2"] = "No Evidence of Impairment"
+	  DWQ_Status[epaIRCategory=="3"] = "Insufficient Data"
+	  DWQ_Status[epaIRCategory=="4A"] = "Approved TMDL"
+	  DWQ_Status[epaIRCategory=="5"&!is.na(APPRVD_TMDL_NOT_MEETING)] = "Not Supporting but has approved TMDL for some parameters"
+	  DWQ_Status[epaIRCategory=="5"&is.na(APPRVD_TMDL_NOT_MEETING)] = "Not Supporting"
+	})
 	result=list(assessments=assessments, parameters=parameters, associated_actions=associated_actions, assessments_wide=assessments_wide)
 }
 
