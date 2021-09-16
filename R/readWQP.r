@@ -12,7 +12,6 @@
 #' @param print Logical. Print summary table of sites & characteristics (only for result or narrowresult types).
 #' @param url_only Logical. If FALSE (default) read and return data. If TRUE, return just the query url.
 #' @param auid Optional. A vector of Utah DWQ assessment unit identifiers for which to query data. Note that siteid is ignored if auid is specified.
-#' @param clip_geom If auid is specified, should data be subset to the polygon geometries? If TRUE (default) data are subset to polygon geometries. If FALSE, the bounding box of the selected polygins is used to query data (sites outside the polygons may be returned). Ignored if auid is all NULL.
 #' @return A data frame of WQP data
 #' @importFrom data.table fread
 #' @examples
@@ -50,7 +49,7 @@
 #' plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
 
 #' @export
-readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE, url_only=FALSE, auid=NULL, clip_geom=TRUE){
+readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE, url_only=FALSE, auid=NULL){
 args=list(...)
 
 pastecollapse=function(x){
@@ -64,9 +63,18 @@ if(!missing(auid)){
 	}
 	au_poly=wqTools::au_poly
 	aus=au_poly[au_poly$ASSESS_ID %in% auid,]
+	aus_dis=sf::st_union(aus)
+	aus_center=sf::st_centroid(aus_dis)
 	bbox=sf::st_bbox(aus)
-	bBox=paste(bbox[1], bbox[2], bbox[3], bbox[4], sep='%2C')
-	args$bBox=bBox
+	#bBox=paste(bbox[1], bbox[2], bbox[3], bbox[4], sep='%2C')
+	#args$bBox=bBox
+	ab=as.vector((bbox$ymax-bbox$ymin)*69/2)
+	radius=sqrt(ab^2*2)*1.1
+	center_lat=aus_center[[1]][2]
+	center_lon=aus_center[[1]][1]
+	args$lat=center_lat
+	args$long=center_lon
+	args$within=radius
 	args=args[!names(args) %in% 'auid']
 	geom_type='auid'
 }
@@ -130,7 +138,7 @@ for(attempt in 1:10){
 	}
 }
 
-if(geom_type=='auid' & clip_geom){
+if(geom_type=='auid'){
 	if(type!='sites'){
 		if(any(names(args)=='siteType')){
 			siteTypes=args$siteType
@@ -149,7 +157,7 @@ if(geom_type=='auid' & clip_geom){
 			sites_url='https://www.waterqualitydata.us/data/Station/search?'
 			sites_url=paste0(sites_url, 'statecode=US:49', '&mimeType=csv&zip=no')
 		}
-		sites_url=paste0(sites_url, '&bBox=',bBox)
+		sites_url=paste0(sites_url, '&lat=',center_lat,  '&long=',center_lon,  '&within=',radius)
 		sites_bbox=as.data.frame(data.table::fread(sites_url))
 	}else{
 		sites_bbox=result
