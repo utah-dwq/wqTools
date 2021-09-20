@@ -12,7 +12,7 @@ readECHO_ec(
 )
 }
 \arguments{
-\item{...}{additional arguments to be passed to ECHO query path. See c optional arguments for effluent chart data reads.}
+\item{...}{additional arguments to be passed to ECHO query path. See optional arguments for effluent chart data reads.}
 
 \item{print}{Logical. If TRUE (default), print summary table of facilities & parameters returned.}
 

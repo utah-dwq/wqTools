@@ -7,7 +7,7 @@
 #' @param end_date Query end date in "mm/dd/yyyy" format.
 #' @param stringsAsFactors Logical. Passed to read.csv. See ?read.csv for more information.
 #' @param print Logical. If TRUE (default), print summary table of facilities & parameters returned.
-#' @param ... additional arguments to be passed to ECHO query path. See c optional arguments for effluent chart data reads.
+#' @param ... additional arguments to be passed to ECHO query path. See optional arguments for effluent chart data reads.
 #' @return A flat data frame of EPA ECHO effluent chart data
 #' @importFrom plyr ldply
 #' @examples
@@ -50,6 +50,8 @@ for(n in 1:(length(args)-1)){
 pastecollapse=function(x){paste0(names(x), "=", x, collapse="&")}
 arg_paths=apply(args_mrg,1,'pastecollapse')
 paths_all=paste0(base_path,arg_paths)
+
+print(paths_all)
 
 if(progress){
 	result=plyr::ldply(paths_all,read.csv, stringsAsFactors=stringsAsFactors, .progress="win")
