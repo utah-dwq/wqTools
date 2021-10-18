@@ -57,9 +57,9 @@ query_result=jsonlite::fromJSON(query_path, flatten=T)$items
 if(type=="assessments"){
 	assessments=query_result[["assessments"]][[1]]
 	assessments=assessments[,c("assessmentUnitIdentifier","agencyCode","trophicStatusCode","rationaleText","epaIRCategory","overallStatus","cycleLastAssessedText","yearLastMonitoredText")]  %>% dplyr::rename(cycleLastAssessed=cycleLastAssessedText, yearLastMonitored=yearLastMonitoredText)
-	parameters=tidyr::unnest(query_result[["assessments"]][[1]], cols=parameters) %>% tidyr::unnest(cols=associatedUses) %>% dplyr::rename(cycleFirstListed=impairedWatersInformation.listingInformation.cycleFirstListedText, cycleLastAssessed=cycleLastAssessedText)
-	parameters=data.frame(parameters[,c("assessmentUnitIdentifier","agencyCode","parameterStatusName","parameterName","associatedUseName","parameterAttainmentCode","trendCode","pollutantIndicator","cycleFirstListed","cycleLastAssessed")])
-	associated_actions=tidyr::unnest(query_result[["assessments"]][[1]], cols=parameters) %>% tidyr::unnest(cols=associatedActions)
+	parameters_orig=tidyr::unnest(query_result[["assessments"]][[1]], cols=parameters) %>% tidyr::unnest(cols=associatedUses) %>% dplyr::rename(cycleFirstListed=impairedWatersInformation.listingInformation.cycleFirstListedText, cycleLastAssessed=cycleLastAssessedText)
+	parameters=data.frame(parameters_orig[,c("assessmentUnitIdentifier","agencyCode","parameterStatusName","parameterName","associatedUseName","parameterAttainmentCode","trendCode","pollutantIndicator","cycleFirstListed","cycleLastAssessed")])
+	associated_actions=tidyr::unnest(subset(parameters_orig, lengths(parameters_orig$associatedActions)>0), cols = associatedActions)
 	associated_actions=data.frame(associated_actions[,c("assessmentUnitIdentifier","parameterName","associatedActionIdentifier")])
 	params_actions=merge(parameters, associated_actions, all=T)
 	params_actions_uses=within(params_actions, {use_param=paste0(associatedUseName,": ", parameterName)})
