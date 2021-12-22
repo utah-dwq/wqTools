@@ -1,0 +1,27 @@
+param,type,formula
+Cadmium,acute CF,1.136672 - ln(hardness)(0.041838)
+Cadmium,acute criterion,(1.136672 - ln(hardness)(0.041838)) * e(0.9789*ln(hardness)-3.866)
+Cadmium,chronic CF,1.101672 - ln(hardness) (0.041838)
+Cadmium,chronic criterion,(1.101672 - ln(hardness) (0.041838)) * e(0.7977*ln(hardness)-3.909)
+Copper,acute CF,0.96
+Copper,acute criterion,(0.96) * e(0.9422*(ln(hardness))- 1.700)
+Copper,chronic CF,0.96
+Copper,chronic criterion,(0.96) * e(0.8545*(ln(hardness)) -1.702)
+Chromium (Trivalent),acute CF,0.316
+Chromium (Trivalent),acute criterion,(0.316) *  e(0.8190*(ln(hardness)) +3.7256)
+Chromium (Trivalent),chronic CF,0.86
+Chromium (Trivalent),chronic criterion,(0.86) * e(0.8190*(ln(hardness)) + 0.6848)
+Lead,acute CF,1.46203 - ln(hardness)(0.145712)
+Lead,acute criterion,(1.46203 - ln(hardness)(0.145712)) * e(1.273*(ln(hardness))-1.460)
+Lead,chronic CF,1.46203 - ln(hardness)(0.145712)
+Lead,chronic criterion,(1.46203 - ln(hardness)(0.145712)) * e(1.273*(ln(hardness))-4.705)
+Nickel,acute CF,0.998
+Nickel,acute criterion,(0.998) * e(0.8460*(ln(hardness)) +2.255)
+Nickel,chronic CF,0.997
+Nickel,chronic criterion,(0.997) * e(0.8460*(ln(hardness))+0.0584)
+Zinc,acute CF,0.978
+Zinc,acute criterion,(0.978) * e(0.8473*(ln(hardness)) +0.884)
+Zinc,chronic CF,0.986
+Zinc,chronic criterion,(0.986) * e(0.8473*(ln(hardness))+0.884)
+Silver,acute CF,0.85
+Silver,acute criterion,(0.85) * e(1.72*(ln(hardness))- 6.59)
