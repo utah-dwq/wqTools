@@ -81,14 +81,10 @@ findSites=function(){
 			
 			if("Monitoring locations" %in%  input$data_types){
 				bbox=paste(map_box[4], map_box[3], map_box[2], map_box[1], sep='%2C')				
-				ab=(map_box$north-map_box$south)*69/2
-				radius=sqrt(ab^2*2)*1.1
-				center_lat=input$map_center$lat
-				center_lon=input$map_center$lng
 
 				suppressMessages({
-					sites=wqTools::readWQP(type='sites', within=radius, lat=center_lat, long=center_lon, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
-					act=wqTools::readWQP(type='activity', within=radius, lat=center_lat, long=center_lon, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
+					sites=wqTools::readWQP(type='sites', bBox=bbox, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
+					act=wqTools::readWQP(type='activity', bBox=bbox, siteType=c("Lake, Reservoir, Impoundment","Stream","Spring","Facility"))
 				})
 				
 
