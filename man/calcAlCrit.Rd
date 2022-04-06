@@ -35,10 +35,10 @@ final object, all, as on line 71 of the original calculator. This could be store
 }
 \examples{
 # Build some test data
-pH=seq(6.5, 8.4, 0.1)
-Hardness_mgL=seq(25, 500, 25)
-DOC_mgL=seq(0.1, 2, 0.1)
-sampID=paste0(rep('samp', 20), seq(1,20,1))
+pH=sample(seq(6.3, 8.4, 0.1))
+Hardness_mgL=sample(seq(25, 550, 25))
+DOC_mgL=sample(seq(0.1, 2.2, 0.1))
+sampID=paste0(rep('samp', 22), seq(1,22,1))
 test_data=data.frame(sampID, pH, Hardness_mgL, DOC_mgL)
 head(test_data)
 # Apply function to test_data
