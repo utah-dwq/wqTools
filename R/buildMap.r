@@ -121,10 +121,11 @@ buildMap=function(fac, sites, au_poly, bu_poly, ss_poly, search=c("sites","aus")
 		if(!missing(fac)){
 			fac_coords=do.call(rbind.data.frame,fac$geometry$coordinates)
 			names(fac_coords)=c("dec_long","dec_lat")
-			fac_coords=data.frame(fac$properties[,c("SourceID","CWPName","CWPFacilityTypeIndicator")], (fac_coords))
+			fac_coords=data.frame(fac$properties[,c("SourceID","CWPName")], (fac_coords))
 			names(fac_coords)[names(fac_coords)=="SourceID"]="locationID"
 			names(fac_coords)[names(fac_coords)=="CWPName"]="locationName"
-			names(fac_coords)[names(fac_coords)=="CWPFacilityTypeIndicator"]="locationType"
+			fac_coords$locationType="Permit"
+			#names(fac_coords)[names(fac_coords)=="CWPFacilityTypeIndicator"]="locationType"
 			names(fac_coords)[names(fac_coords)=="dec_long"]="LongitudeMeasure"
 			names(fac_coords)[names(fac_coords)=="dec_lat"]="LatitudeMeasure"
 		}
