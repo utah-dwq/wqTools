@@ -23,4 +23,6 @@ Water Rights https://www.waterrights.utah.gov/cgi-bin/dvrtview.exe?STATION_ID=90
 \examples{
 ul_elev=readULgageheight()
 head(ul_elev)
+cap_curve_lidar=readULgageheight(cap_curve_only=T)
+head(cap_curve_lidar)
 }

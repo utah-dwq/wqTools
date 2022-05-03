@@ -13,6 +13,8 @@
 #' @examples
 #' ul_elev=readULgageheight()
 #' head(ul_elev)
+#' cap_curve_lidar=readULgageheight(cap_curve_only=T)
+#' head(cap_curve_lidar)
 #' @export
 readULgageheight=function(cap_curve="lidar", cap_curve_only=FALSE){
 	# Capacity curves
