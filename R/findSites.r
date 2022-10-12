@@ -17,17 +17,17 @@ findSites=function(){
 		miniContentPanel(
 			column(5,
 				bsCollapse(open=c(1,2), multiple=T,
-				bsCollapsePanel(list(icon('plus-circle'),"Query sites"), value=1, 
+				bsCollapsePanel(list(icon('circle-plus'),"Query sites"), value=1, 
 					fluidRow(
-						column(4, actionButton("zoom", "Zoom to coordinates", style='color: #fff; background-color: #337ab7; margin-top: 24px; border-color: #2e6da4%', icon=icon('search-plus'))),
+						column(4, actionButton("zoom", "Zoom to coordinates", style='color: #fff; background-color: #337ab7; margin-top: 24px; border-color: #2e6da4%', icon=icon('magnifying-glass-plus'))),
 						column(4, numericInput("lat", "Latitude", 40.8)),
 						column(4, numericInput("lon", "Longitude", -111.8))
 					),
 					shinyWidgets::checkboxGroupButtons("data_types", label="Search for:", choices=c("Permits", "Monitoring locations", "USGS gauges"), 
 						selected=c("Permits", "Monitoring locations", "USGS gauges"), status="primary", checkIcon = list(yes = icon("ok", lib = "glyphicon"))),
-					actionButton('query_sites', 'Query sites in view area', style='color: #fff; background-color: #337ab7; border-color: #2e6da4%', icon=icon('cloud-download-alt'))
+					actionButton('query_sites', 'Query sites in view area', style='color: #fff; background-color: #337ab7; border-color: #2e6da4%', icon=icon('cloud-arrow-down'))
 				),
-				bsCollapsePanel(list(icon('plus-circle'),"WQP site options"), value=2, 
+				bsCollapsePanel(list(icon('circle-plus'),"WQP site options"), value=2, 
 					fluidRow(
 						column(6, uiOutput('orgs')),
 						column(6, uiOutput('site_types'))
@@ -36,7 +36,7 @@ findSites=function(){
 						column(6, uiOutput('visit_count_slider'))
 					)
 				),
-				bsCollapsePanel(list(icon('plus-circle'),"Select and export"), value=3, 
+				bsCollapsePanel(list(icon('circle-plus'),"Select and export"), value=3, 
 					uiOutput('sel_sites_multiInput'),
 					fluidRow(
 						column(2, uiOutput('sel_all')),
