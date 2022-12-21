@@ -15,10 +15,10 @@
 #' @importFrom data.table rbindlist
 #' @examples 
 #' # Build some test data
-#' pH=seq(6.5, 8.4, 0.1)
-#' Hardness_mgL=seq(25, 500, 25)
-#' DOC_mgL=seq(0.1, 2, 0.1)
-#' sampID=paste0(rep('samp', 20), seq(1,20,1))
+#' pH=sample(seq(6.3, 8.4, 0.1))
+#' Hardness_mgL=sample(seq(25, 550, 25))
+#' DOC_mgL=sample(seq(0.1, 2.2, 0.1))
+#' sampID=paste0(rep('samp', 22), seq(1,22,1))
 #' test_data=data.frame(sampID, pH, Hardness_mgL, DOC_mgL)
 #' head(test_data)
 #' # Apply function to test_data
@@ -474,12 +474,14 @@ calcAlCrit <- function(x, pH='pH', hardness='Hardness_mgL', DOC='DOC_mgL', inc_r
 
   ## Check inputs against bounds, apply caps if necessary
   data=within(data, {
-  	Flag=ifelse(pH <= 10.5 &
-                pH >= 5 &
+  	Flag=ifelse(pH <= 8.2 &
+                pH >= 6 &
                 hardness <= 430 &
+				hardness > 0 &
+				DOC > 0 &
                 DOC <= 12,
                 NA,
-                "Outside MLR model bounds. Caps applied.")
+                "One or more factors outside MLR model inputs.")
 	pH[pH>10.5]=10.5
 	pH[pH<5]=5
 	hardness[hardness>430]=430
@@ -570,6 +572,7 @@ calcAlCrit <- function(x, pH='pH', hardness='Hardness_mgL', DOC='DOC_mgL', inc_r
   
   criteria=rename(criteria, pH_calc=pH, hardness_calc=hardness, DOC_calc=DOC)
   
-  result=data.frame(x, criteria)
+  result=data.frame(x, data$Flag, criteria)
+  result=rename(result, Flag=data.Flag)
   return(result)
 }

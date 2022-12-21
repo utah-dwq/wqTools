@@ -5,7 +5,7 @@
 #' @param parameter_code Parameter code. Either a single text value (in quotes) or a vector of text values.
 #' @param start_date Query start date in "mm/dd/yyyy" format.
 #' @param end_date Query end date in "mm/dd/yyyy" format.
-#' @param stringsAsFactors Logical. Passed to read.csv. See ?read.csv for more information.
+#' @param stringsAsFactors Logical. Deafult FALSE. Passed to read.csv. See ?read.csv for more information.
 #' @param print Logical. If TRUE (default), print summary table of facilities & parameters returned.
 #' @param ... additional arguments to be passed to ECHO query path. See optional arguments for effluent chart data reads.
 #' @return A flat data frame of EPA ECHO effluent chart data
@@ -27,7 +27,7 @@
 #' tp_flow=readECHO_ec(p_id=c("UT0025241","UT0021717"), parameter_code=c("50050","00665"))
 
 #' @export
-readECHO_ec<-function(..., print=TRUE, stringsAsFactors = default.stringsAsFactors(), progress=TRUE){
+readECHO_ec<-function(..., print=TRUE, stringsAsFactors = FALSE, progress=TRUE){
 args=list(...)
 
 base_path="https://echodata.epa.gov/echo/eff_rest_services.download_effluent_chart?"

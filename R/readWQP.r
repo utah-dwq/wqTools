@@ -63,18 +63,11 @@ if(!missing(auid)){
 	}
 	au_poly=wqTools::au_poly
 	aus=au_poly[au_poly$ASSESS_ID %in% auid,]
-	aus_dis=sf::st_union(aus)
-	aus_center=sf::st_centroid(aus_dis)
+	#aus_dis=sf::st_union(aus)
+	#aus_center=sf::st_centroid(aus_dis)
 	bbox=sf::st_bbox(aus)
-	#bBox=paste(bbox[1], bbox[2], bbox[3], bbox[4], sep='%2C')
-	#args$bBox=bBox
-	ab=as.vector((bbox$ymax-bbox$ymin)*69/2)
-	radius=sqrt(ab^2*2)*1.1
-	center_lat=aus_center[[1]][2]
-	center_lon=aus_center[[1]][1]
-	args$lat=center_lat
-	args$long=center_lon
-	args$within=radius
+	bBox=paste(bbox[1], bbox[2], bbox[3], bbox[4], sep='%2C')
+	args$bBox=bBox
 	args=args[!names(args) %in% 'auid']
 	geom_type='auid'
 }
@@ -157,7 +150,7 @@ if(geom_type=='auid'){
 			sites_url='https://www.waterqualitydata.us/data/Station/search?'
 			sites_url=paste0(sites_url, 'statecode=US:49', '&mimeType=csv&zip=no')
 		}
-		sites_url=paste0(sites_url, '&lat=',center_lat,  '&long=',center_lon,  '&within=',radius)
+		sites_url=paste0(sites_url, '&bBox=',bBox)
 		sites_bbox=as.data.frame(data.table::fread(sites_url))
 	}else{
 		sites_bbox=result
