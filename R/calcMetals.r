@@ -10,8 +10,8 @@
 #' @export
 calcMetals=function(hardness, cap400=T){
 
-hardness=c(50,100,150,200,250,300)
-cap400=T
+#hardness=c(50,100,150,200,250,300)
+#cap400=T
 
 hardness=unique(hardness)
 
@@ -38,9 +38,7 @@ calcs_flat=within(hardness_formulas, {
 calcs_flat$name=paste(calcs_flat$param, calcs_flat$type)
 calcs_wide=tidyr::pivot_wider(calcs_flat, id_cols=c("hardness"), names_from=name, values_from=calculated)
 
-
-
-return(list(calcs_flat=calcs_flat,calcs_wide=calcs_wide)
+return(list(calcs_flat=calcs_flat,calcs_wide=calcs_wide))
 
 }
 
