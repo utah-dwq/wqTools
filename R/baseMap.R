@@ -31,24 +31,28 @@ baseMap=function(layers_control=TRUE){
 	addPolygons(data=wqTools::wmu_poly,group="Watershed management units",fillOpacity = 0.1,weight=3,color="red", options = pathOptions(pane = "underlay_polygons"),
 		popup=wqTools::wmu_poly$Mgmt_Unit
 	) %>%
-	addPolygons(data=wqTools::antideg_poly,group="Antideg category",fillOpacity = 0.1,weight=3,color="yellow", options = pathOptions(pane = "underlay_polygons"),
+	addPolygons(data=wqTools::antideg_poly,group="Antideg category",fillOpacity = 0.1,weight=3,color="purple", options = pathOptions(pane = "underlay_polygons"),
 		popup=paste0(
 			"Antideg category: ", wqTools::antideg_poly$antideg_cat)
 	) %>% 
 	addPolygons(data=wqTools::hnnc_poly,group="Headwater NNC",fillOpacity = 0.4,weight=3,color="pink", options = pathOptions(pane = "underlay_polygons")) %>%
-	addPolygons(data=wqTools::ut_poly,group="UT boundary",fillOpacity = 0.1,weight=3,color="purple", options = pathOptions(pane = "underlay_polygons")) %>%
+	addPolygons(data=wqTools::counties_poly,group="Counties",fillOpacity = 0.1,weight=3,color="brown", options = pathOptions(pane = "underlay_polygons"), popup=~NAME) %>%
+	addPolygons(data=wqTools::l3eco_poly,group="Level III Ecoregions",fillOpacity = 0.1,weight=3,color="gray", options = pathOptions(pane = "underlay_polygons"), popup=~L3ECO) %>%
+	addPolygons(data=wqTools::ut_poly,group="UT boundary",fillOpacity = 0.1,weight=3,color="yellow", options = pathOptions(pane = "underlay_polygons")) %>%
 	hideGroup("Assessment units") %>%
 	hideGroup("Site-specific standards") %>%
 	hideGroup("Beneficial uses") %>%
 	hideGroup("Antideg category") %>%
 	hideGroup("Headwater NNC") %>%
+	hideGroup("Counties") %>%
+	hideGroup("Level III Ecoregions") %>%
 	hideGroup("UT boundary") %>%
 	hideGroup("Watershed management units")
 	
 	if(layers_control){
 		map=leaflet::addLayersControl(map,
 			position ="topleft",
-			baseGroups = c("World topo","USGS topo", "Hydrography", "Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards","Antideg category", "Headwater NNC", "Watershed management units", "UT boundary"),
+			baseGroups = c("World topo","USGS topo", "Hydrography", "Satellite"),overlayGroups = c("Assessment units","Beneficial uses", "Site-specific standards","Antideg category", "Headwater NNC", "Watershed management units", "Level III Ecoregions", "Counties", "UT boundary"),
 			options = leaflet::layersControlOptions(collapsed = TRUE, autoZIndex=FALSE))
 	}	
 	return(map)
