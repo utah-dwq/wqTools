@@ -21,6 +21,7 @@ Imports:
     jsonlite,
     leaflet.extras,
     lubridate,
+    mapview,
     mapedit,
     plyr,
     rLakeAnalyzer,

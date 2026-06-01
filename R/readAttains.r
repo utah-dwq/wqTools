@@ -5,6 +5,8 @@
 #'
 #' @param type ATTAINS data type to read. One of: "assessmentUnits", "assessments", or "actions".
 #' @param stateCode Two letter state code
+#' @param apiKey Optional Data.gov API key for ATTAINS 2.0. If `NULL`, the
+#' function uses `Sys.getenv("EPA_ATTAINS_API_KEY")`.
 #' @param ... Additional arguments to be passed to ATTAINS web service path.
 
 #' @importFrom jsonlite fromJSON
@@ -21,9 +23,12 @@
 #' 
 #' #Read Utah assessments
 #' UT_assessments=readAttains(type="assessments", stateCode="UT", reportingCycle=2020)
+#'
+#' #Supply API key directly
+#' #UT_AUs=readAttains(type="assessmentUnits", stateCode="UT", apiKey="YOUR_KEY")
 
 #' @export
-readAttains=function(type="assessments", stateCode=NULL, ...){
+readAttains=function(type="assessments", stateCode=NULL, apiKey=NULL, ...){
 
 if(missing(stateCode) & type!="domains"){
 	stop("Required argument, stateCode, missing without default.")
@@ -35,14 +40,26 @@ if(!type %in% c("assessmentUnits", "assessments", "actions")){
 
 pastecollapse=function(x){paste0(names(x), "=", x, collapse="&")}
 
-path="https://attains.epa.gov/attains-public/api/"
+path="https://api.epa.gov/attains/"
 
 args=list(...)
+
+if(is.null(apiKey) || !nzchar(apiKey)){
+	apiKey=Sys.getenv("EPA_ATTAINS_API_KEY", unset = "")
+}
+
+if(!nzchar(apiKey)){
+	stop("ATTAINS 2.0 requires an API key. Pass apiKey= or set EPA_ATTAINS_API_KEY in your environment. Reference the following page to create a key: https://www.epa.gov/waterdata/get-data-access-public-attains-data#WebServices")
+}
 
 if(type=="assessments"){
 	args$state=stateCode
 	args=args[names(args)!="stateCode"]
 }else{args$stateCode=stateCode}
+
+# prevent duplicate api_key arguments from ...
+args=args[names(args)!="api_key"]
+args$api_key=apiKey
 
 # Warn if reportingCycle not specified
 if(type=="assessments" & !any(names(args)==("reportingCycle"))){

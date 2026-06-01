@@ -4,12 +4,15 @@
 \alias{readAttains}
 \title{Read data from EPA's ATTAINS database}
 \usage{
-readAttains(type = "assessments", stateCode = NULL, ...)
+readAttains(type = "assessments", stateCode = NULL, apiKey = NULL, ...)
 }
 \arguments{
 \item{type}{ATTAINS data type to read. One of: "assessmentUnits", "assessments", or "actions".}
 
 \item{stateCode}{Two letter state code}
+
+\item{apiKey}{Optional Data.gov API key for ATTAINS 2.0. If \code{NULL}, the
+function uses \code{Sys.getenv("EPA_ATTAINS_API_KEY")}.}
 
 \item{...}{Additional arguments to be passed to ATTAINS web service path.}
 }
@@ -29,4 +32,7 @@ UT_actions=readAttains(type="actions", stateCode="UT")
 
 #Read Utah assessments
 UT_assessments=readAttains(type="assessments", stateCode="UT", reportingCycle=2020)
+
+#Supply API key directly
+#UT_AUs=readAttains(type="assessmentUnits", stateCode="UT", apiKey="YOUR_KEY")
 }
