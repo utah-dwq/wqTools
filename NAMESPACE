@@ -2,6 +2,7 @@
 
 export(addMapResetButton)
 export(assignAUs)
+export(assignBasin)
 export(assignHUCs)
 export(assignPolys)
 export(assignUses)
