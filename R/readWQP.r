@@ -11,6 +11,8 @@
 #' @param ... additional arguments to be passed to WQP query path. See https://www.waterqualitydata.us/portal/ for optional arguments.
 #' @param print Logical. Print summary table of sites & characteristics (only for result or narrowresult types).
 #' @param url_only Logical. If FALSE (default) read and return data. If TRUE, return just the query url.
+#' @param timeout Numeric. Download timeout in seconds. Defaults to 600 (10 minutes). Increase for very large queries.
+#' @param retries Integer. Maximum number of download attempts before giving up. Defaults to 10.
 #' @param auid Optional. A vector of Utah DWQ assessment unit identifiers for which to query data. Note that siteid is ignored if auid is specified.
 #' @return A data frame of WQP data
 #' @importFrom data.table fread
@@ -49,7 +51,7 @@
 #' plot(LatitudeMeasure~LongitudeMeasure, sites[sites$LatitudeMeasure>0 & sites$LongitudeMeasure<0,])
 
 #' @export
-readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE, url_only=FALSE, auid=NULL){
+readWQP<-function(type="result", ..., print=FALSE, coerce_num=FALSE, url_only=FALSE, timeout=600, retries=10, auid=NULL){
 args=list(...)
 
 pastecollapse=function(x){
@@ -84,7 +86,7 @@ if(any(names(args)=="start_date")){
 if(any(names(args)=="end_date")){
 	if(class(args$end_date)!="Date"){
 		args$startDateHi=format(as.Date(args$end_date, format='%m/%d/%Y'), format="%m-%d-%Y")
-	}else{args$startDateHi=args$args$end_date}
+	}else{args$startDateHi=args$end_date}
 	args=args[names(args)!="end_date"]
 }
 
@@ -124,11 +126,21 @@ path=gsub(",", "%2C", path)
 if(url_only==FALSE){
 print(path)
 
-for(attempt in 1:10){
+old_timeout=getOption("timeout")
+on.exit(options(timeout=old_timeout), add=TRUE)
+options(timeout=timeout)
+
+for(attempt in 1:retries){
+	message("Download attempt ", attempt, " of ", retries, "...")
 	result=try(as.data.frame(data.table::fread(path, na.strings=c("","NA"))))
-	if(!is(result, "error")) {
+	if(!inherits(result, "try-error")) {
 		break
 	}
+	if(attempt < retries) Sys.sleep(2)
+}
+
+if(inherits(result, "try-error")){
+	stop("Failed to download data after ", retries, " attempts. Check your internet connection or try a smaller query.")
 }
 
 if(geom_type=='auid'){
@@ -161,14 +173,14 @@ if(geom_type=='auid'){
 }
 
 
-if(print & exists('result',inherits=F) & (type=="result" | type=="narrowresult")){
+if(print && exists('result',inherits=F) && (type=="result" || type=="narrowresult")){
 	print("Queried sites and parameters:")
 	print(table(result$MonitoringLocationIdentifier, result$CharacteristicName))
 }
 if(!exists('result',inherits=F)){stop("Error - unable to download data - no data available for selected inputs or invalid query.")}
 
 
-if((type=="result" | type=="narrowresult") & class(result$ResultMeasureValue)!="numeric" & class(result$ResultMeasureValue)!="integer" & coerce_num){
+if((type=="result" || type=="narrowresult") && coerce_num && class(result$ResultMeasureValue)!="numeric" && class(result$ResultMeasureValue)!="integer"){
 	ResultMeasureValue=as.character(result$ResultMeasureValue)
 	ResultMeasureValue=gsub(",","",ResultMeasureValue)
 	ResultMeasureValue[ResultMeasureValue=="" | ResultMeasureValue==" "]="NA"
